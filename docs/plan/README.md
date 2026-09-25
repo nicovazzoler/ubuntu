@@ -15,7 +15,7 @@ carrito, sin backend.
 | 2 | [Contenido](02-contenido.md) | Qué dice la página y en qué orden |
 | 3 | [Redes sociales](03-redes-sociales.md) | WhatsApp con mensaje prearmado, Instagram, previsualización del link |
 | 4 | [Diseño](04-diseno.md) | Paleta del logo, tipografía, espaciado, grilla |
-| 5 | [Stack](05-stack.md) | React + Vite, y por qué no Angular |
+| 5 | [Stack](05-stack.md) | HTML, CSS y JS a mano. Sin framework, sin build |
 
 ## Datos de la marca
 
@@ -30,9 +30,9 @@ carrito, sin backend.
 
 ## Stack
 
-React + Vite en JavaScript. CSS a mano, sin librerías de UI. El catálogo sale
-de una carpeta pública de Google Drive leída desde el navegador: no hay
-backend y no hace falta.
+HTML, CSS y JavaScript a mano. Sin framework y sin paso de compilación. El
+catálogo sale de una carpeta pública de Google Drive leída desde el
+navegador: no hay backend y no hace falta.
 
 Se publica en Cloudflare Pages o Netlify, plan gratis. **Railway no**: cobra
 por proceso corriendo y esto son archivos estáticos.
