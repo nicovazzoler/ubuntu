@@ -111,7 +111,11 @@ catálogo y se lea como "acá termina y acá se actúa".
 
 ## 5. Qué falta
 
-- [ ] **Categorías del catálogo** — pendiente hasta ver cuántos productos
-      hay. Si son menos de ~15, arrancamos sin filtros y listo.
-- [ ] Fotos de los productos en el Drive.
 - [x] Lema, "quiénes somos", zona y envíos: definidos.
+- [x] **Categorías**: las cinco carpetas del Drive. Con 24 productos, los
+      filtros van (ver Plan 4 §5.2).
+- [x] Fotos: 24 productos cargados.
+- [ ] Acortar en Drive la carpeta `Velas en frasco de vidrio con sticker` →
+      `Velas con sticker`. Como chip de filtro, el nombre largo no entra.
+- [ ] Sacar `Set comunión.webp` de la grilla y recortar `Vela cruz grande.jpeg`
+      (Plan 4 §10).

@@ -163,12 +163,20 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
 ```
 
 - [x] Carpeta creada y compartida por link.
-- [ ] Subcarpetas de categorías — **pendiente**, se definen cuando se vea
-      cuántos productos hay de cada cosa. Si son pocos, puede arrancar sin
-      categorías y todo va en una sola grilla.
-- [ ] Subir 8–10 fotos reales, renombradas.
+- [x] Subcarpetas de categorías creadas: `Velas` (12), `Velas en frasco de
+      vidrio con sticker` (4), `Comunión` (4), `Souvenirs` (2), `Deco` (2).
+- [x] 24 productos cargados, **todos con el nombre correcto**. No hay nada
+      que renombrar: los nombres ya son el nombre del producto, sin precio.
+- [ ] Acortar `Velas en frasco de vidrio con sticker` → `Velas con sticker`
+      (como chip de filtro el nombre largo no entra, Plan 4 §5.2).
+- [ ] Mover `Comunión/Set comunión.webp` a `_borradores/`: es una placa de
+      Instagram, no una foto de producto.
 - [ ] Proyecto en Google Cloud, Drive API habilitada, API key restringida al
       dominio del sitio.
+
+Copia local para maquetar sin depender de la red: `assets/productos/` y
+`assets/catalogo.json`, generados desde un export de la carpeta. Sirven
+también de fallback (§3.5).
 
 ## 5. Fuera de alcance del v1
 

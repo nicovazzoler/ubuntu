@@ -147,21 +147,44 @@ vez de tres breakpoints escritos a mano.
 
 Sin precio, la tarjeta tiene tres cosas:
 
-1. **Imagen**, relación de aspecto fija 1:1, recortada al centro.
+1. **Imagen**, relación de aspecto fija **4:5**, recortada.
 2. **Nombre** del producto (máx. 2 renglones, con puntos suspensivos si se pasa).
 3. **Botón de consulta** de WhatsApp.
 
 Cuando un producto sí tiene precio en el nombre del archivo (Plan 1 §3.2), se
 muestra entre el nombre y el botón, en `--tinta`, peso 600. La tarjeta tiene
 que verse bien con y sin esa línea: si el precio cambia la altura, la grilla
-queda dentada. Se resuelve reservando el lugar o alineando el botón abajo.
+queda dentada. Se resuelve alineando el botón abajo.
+
+#### Por qué 4:5 y no cuadrado
+
+Habíamos planeado recorte 1:1. Con las fotos reales no se puede: **20 de las
+24 son verticales 9:16** (900×1600, formato historia de Instagram), y el
+producto está chico, en el centro, con pared arriba y mesa abajo.
+
+| Recorte | Altura que sobrevive |
+|---|---|
+| 1:1 | 56% |
+| **4:5** | **70%** |
+| 3:4 | 75% |
+
+Un cuadrado se come casi la mitad del alto y en varias fotos corta la base
+del producto. 4:5 conserva bastante más, es el formato de post de Instagram
+(donde estas fotos van a vivir igual), y en dos columnas de celular da
+tarjetas de ~215px de alto, que es cómodo.
+
+El recorte se ancla **apenas por debajo del centro** (`object-position: center
+55%`), porque el producto siempre está en el tercio medio-bajo del encuadre.
+Centrado puro le corta la base a varios.
+
+Las 4 fotos que no son 9:16 (tres 3:4 y una 0.46) entran en el mismo
+contenedor sin problema: pierden unos pocos píxeles de alto.
 
 Detalles que importan:
 
 - **La relación de aspecto se reserva antes de que cargue la imagen.** Si no,
   la página salta mientras cargan las fotos y el usuario toca lo que no
   quería. Es el problema más visible de un catálogo con imágenes remotas.
-- Recorte cuadrado forzado: las fotos van a venir en formatos distintos.
 - Mientras carga, el hueco va en crema, no en gris.
 - `loading="lazy"` en todas las imágenes salvo las primeras 4.
 - Bordes redondeados suaves (8–12px) y borde de 1px en vez de sombra.
@@ -169,12 +192,17 @@ Detalles que importan:
 
 ### 5.2 Filtros de categoría
 
-Pendiente de si van a existir (Plan 2 §5). Si hay menos de ~15 productos, no
-se muestran.
+Con 24 productos, **van**. Las categorías son las cinco carpetas del Drive:
 
-Si van: fila de chips arriba de la grilla, `Todos · Velas · Souvenirs · Deco`.
-En móvil scrollean horizontalmente. El activo lleva fondo `--accion` con texto
-crema; los inactivos, borde de 1px y `--tinta-suave`.
+`Todos · Velas · Velas con sticker · Comunión · Souvenirs · Deco`
+
+Fila de chips arriba de la grilla; en móvil scrollean horizontalmente. El
+activo lleva fondo `--accion` con texto crema; los inactivos, borde de 1px y
+`--tinta-suave`.
+
+Seis chips es el límite de lo cómodo. Por eso la carpeta
+`Velas en frasco de vidrio con sticker` hay que acortarla en Drive: como chip
+ocupa dos renglones y desarma la fila.
 
 ## 6. Botones
 
@@ -220,7 +248,44 @@ desde un celular con datos móviles.
 - Sin librerías de UI ni frameworks CSS.
 - Objetivo: **primera pantalla usable en menos de 2s en 4G**.
 
-## 10. Qué falta
+## 10. Las fotos
+
+Esta es la palanca más grande del proyecto, y no se resuelve con CSS.
+
+Las fotos actuales están sacadas de noche, con luz de techo, sobre la mesa de
+madera del comedor y contra una pared gris. Se entiende qué es cada producto,
+pero se ven como fotos de WhatsApp, no como un catálogo. El diseño puede
+darles un marco prolijo; no puede cambiar la luz.
+
+Lo que más sube la calidad, por orden de impacto y sin gastar casi nada:
+
+1. **Luz de día, al lado de una ventana, sin sol directo.** Es gratis y es el
+   80% de la diferencia. La luz de techo de noche genera sombras duras y
+   vuelve amarillo lo que es blanco — en velas color crema eso se nota mucho.
+2. **Un fondo liso y siempre el mismo.** Una cartulina blanca o crema de
+   librería, apoyada contra algo, curvada para que no se vea la línea donde
+   termina la mesa. Hoy hay pared gris, pared azul, madera clara, madera
+   oscura, tela lavanda y un fondo amarillo: la grilla se ve desordenada
+   aunque los productos sean lindos.
+3. **Que el producto llene más el encuadre.** Hoy ocupa como un tercio; el
+   resto es pared y mesa. Acercarse (o recortar antes de subir) hace que en
+   una tarjeta de 170px se vea el producto y no el ambiente.
+4. **Foto vertical 4:5 directamente**, que es lo que la página va a usar. Si
+   la sacan en 4:5, no se recorta nada.
+
+No hace falta cámara ni trípode ni aro de luz. Ventana, cartulina y acercarse.
+
+### Dos archivos para arreglar
+
+- **`Comunión/Set comunión.webp`** no es una foto de producto: es una placa
+  de Instagram con el logo, el texto "COMUNIONES" y un collage. En la grilla,
+  al lado de fotos de productos sueltos, desentona. Va a `_borradores/` hasta
+  tener una foto real del set.
+- **`Comunión/Vela cruz grande.jpeg`** tiene barras negras arriba y abajo: es
+  una captura de historia recortada. Hay que recortarlas o volver a sacar la
+  foto.
+
+## 11. Qué falta
 
 - [x] Logo (`assets/marca/logo.webp`) y paleta derivada.
 - [ ] Versión del logo en PNG con fondo transparente, para el encabezado. El

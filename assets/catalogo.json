@@ -1,0 +1,194 @@
+[
+  {
+    "id": "comunion--set-comunion",
+    "nombre": "Set comunión",
+    "precio": null,
+    "categoria": "Comunión",
+    "imagen": "assets/productos/comunion--set-comunion.webp",
+    "px": "1440x1920"
+  },
+  {
+    "id": "comunion--vela-cruz-grande",
+    "nombre": "Vela cruz grande",
+    "precio": null,
+    "categoria": "Comunión",
+    "imagen": "assets/productos/comunion--vela-cruz-grande.jpeg",
+    "px": "738x1600"
+  },
+  {
+    "id": "comunion--vela-de-angel",
+    "nombre": "Vela de ángel",
+    "precio": null,
+    "categoria": "Comunión",
+    "imagen": "assets/productos/comunion--vela-de-angel.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "comunion--velon-personalizado",
+    "nombre": "Velón personalizado",
+    "precio": null,
+    "categoria": "Comunión",
+    "imagen": "assets/productos/comunion--velon-personalizado.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "deco--florero-de-cemento",
+    "nombre": "Florero de cemento",
+    "precio": null,
+    "categoria": "Deco",
+    "imagen": "assets/productos/deco--florero-de-cemento.jpeg",
+    "px": "1200x1600"
+  },
+  {
+    "id": "deco--hornito-de-cemento",
+    "nombre": "Hornito de cemento",
+    "precio": null,
+    "categoria": "Deco",
+    "imagen": "assets/productos/deco--hornito-de-cemento.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "souvenirs--cola-de-sirena",
+    "nombre": "Cola de sirena",
+    "precio": null,
+    "categoria": "Souvenirs",
+    "imagen": "assets/productos/souvenirs--cola-de-sirena.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "souvenirs--revelacion-de-genero",
+    "nombre": "Revelación de género",
+    "precio": null,
+    "categoria": "Souvenirs",
+    "imagen": "assets/productos/souvenirs--revelacion-de-genero.jpeg",
+    "px": "1200x1600"
+  },
+  {
+    "id": "velas--burbuja",
+    "nombre": "Burbuja",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--burbuja.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--cubo-de-vela-corazon",
+    "nombre": "Cubo de vela (corazón)",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--cubo-de-vela-corazon.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--cubo-de-vela",
+    "nombre": "Cubo de vela",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--cubo-de-vela.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--estrella",
+    "nombre": "Estrella",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--estrella.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--flor",
+    "nombre": "Flor",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--flor.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--lapiz-de-vela",
+    "nombre": "Lápiz de vela",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--lapiz-de-vela.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--margarita",
+    "nombre": "Margarita",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--margarita.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--oso",
+    "nombre": "Oso",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--oso.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--ostra",
+    "nombre": "Ostra",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--ostra.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--remolino",
+    "nombre": "Remolino",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--remolino.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--telarana",
+    "nombre": "Telaraña",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--telarana.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas--trenzas",
+    "nombre": "Trenzas",
+    "precio": null,
+    "categoria": "Velas",
+    "imagen": "assets/productos/velas--trenzas.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas-en-frasco-de-vidrio-con-sticker--el-principito",
+    "nombre": "El principito",
+    "precio": null,
+    "categoria": "Velas en frasco de vidrio con sticker",
+    "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--el-principito.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas-en-frasco-de-vidrio-con-sticker--gorrito",
+    "nombre": "Gorrito",
+    "precio": null,
+    "categoria": "Velas en frasco de vidrio con sticker",
+    "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--gorrito.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas-en-frasco-de-vidrio-con-sticker--mafalda",
+    "nombre": "Mafalda",
+    "precio": null,
+    "categoria": "Velas en frasco de vidrio con sticker",
+    "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--mafalda.jpeg",
+    "px": "900x1600"
+  },
+  {
+    "id": "velas-en-frasco-de-vidrio-con-sticker--mundiales",
+    "nombre": "Mundiales",
+    "precio": null,
+    "categoria": "Velas en frasco de vidrio con sticker",
+    "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--mundiales.jpeg",
+    "px": "900x1600"
+  }
+]
