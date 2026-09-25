@@ -1,0 +1,30 @@
+/* Tokens de diseño — Plan 4. Valores derivados del logo. */
+:root {
+  /* Color. El taupe y el salvia salen del logo; la tinta se deriva del taupe
+     para llegar al contraste mínimo de texto (el del logo da 4.27:1). */
+  --crema: #FCF8F7;
+  --superficie: #FFFFFF;
+  --tinta: #4A423B;
+  --tinta-suave: #6E645B;
+  --taupe: #7F756D;
+  --salvia: #CCCEC2;
+  --salvia-suave: #E3E6DC;
+  --borde: #E8E0DA;
+  --accion: #5A5049;
+  --accion-hover: #423A34;
+  --wsp: #25D366;
+  --wsp-hover: #1EAE53;
+
+  /* Tipografía */
+  --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --texto: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --tracking-marca: 0.18em;
+
+  /* Espaciado, escala de 4px */
+  --e1: 4px;   --e2: 8px;   --e3: 12px;  --e4: 16px;
+  --e6: 24px;  --e8: 32px;  --e12: 48px; --e16: 64px; --e24: 96px;
+
+  --ancho-max: 1200px;
+  --radio: 10px;
+  --transicion: 150ms ease;
+}

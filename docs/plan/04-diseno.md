@@ -210,7 +210,13 @@ ocupa dos renglones y desarma la fila.
 |---|---|---|
 | Primario | Fondo `--accion`, texto crema | "Ver catálogo" |
 | Secundario | Transparente, borde 1px `--taupe` | Acciones alternativas |
-| WhatsApp | Fondo `--wsp` + ícono | Consulta de producto, cierre, flotante |
+| WhatsApp | Fondo `--wsp` + ícono | Cierre de página y botón flotante |
+| Consulta de tarjeta | Borde 1px `--borde`, texto `--tinta-suave`, ícono verde; en hover se llena de verde | El botón de cada producto |
+
+La última fila salió de ver la página armada: con 24 tarjetas, 24 botones
+verdes sólidos tapaban la paleta y la grilla terminaba pareciendo una página
+de spam. El verde queda en los dos CTA que importan y como ícono en cada
+tarjeta, que alcanza para que se lea "esto abre WhatsApp".
 
 - Altura mínima **44px** (48 en el flotante).
 - Estados obligatorios: normal, hover, **focus visible**, pressed.
@@ -244,7 +250,9 @@ desde un celular con datos móviles.
 
 - Imágenes servidas ya redimensionadas al ancho que se muestra (Plan 1),
   nunca la foto original del celular.
-- Dos fuentes, dos pesos cada una, con `font-display: swap`.
+- Dos fuentes, **auto-hospedadas** en `assets/fuentes/` (subsets latin, woff2,
+  `font-display: swap`). Sin pedido a Google en cada visita: una dependencia
+  menos, una conexión menos y nada que se caiga si Google no responde.
 - Sin librerías de UI ni frameworks CSS.
 - Objetivo: **primera pantalla usable en menos de 2s en 4G**.
 
@@ -288,9 +296,9 @@ No hace falta cámara ni trípode ni aro de luz. Ventana, cartulina y acercarse.
 ## 11. Qué falta
 
 - [x] Logo (`assets/marca/logo.webp`) y paleta derivada.
-- [ ] Versión del logo en PNG con fondo transparente, para el encabezado. El
-      archivo actual tiene el fondo crema pegado, así que solo sirve si el
-      encabezado va exactamente de ese color.
-- [ ] Versión horizontal del logo (dibujo al lado del texto), para el
-      encabezado en escritorio. La vertical ocupa demasiado alto.
+- [x] Logo en PNG con fondo transparente (`assets/marca/isotipo.png`),
+      recortado del original.
+- [x] Versión horizontal: el isotipo al lado del nombre escrito en Cormorant
+      con el tracking de la marca, en vez de una imagen. Escala mejor y pesa
+      cero.
 - [ ] Referencias visuales: quedó en que las buscamos nosotros.

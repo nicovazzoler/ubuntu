@@ -173,5 +173,5 @@ teléfono sea una línea:
 ## 6. Qué falta
 
 - [x] Número, Instagram, zona.
-- [ ] Imagen 1200×630 para la previsualización.
+- [x] Imagen 1200×630 para la previsualización (`assets/marca/og.png`).
 - [ ] Dominio final (define `og:url` y la restricción de la API key de Drive).

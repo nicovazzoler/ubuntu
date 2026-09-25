@@ -35,10 +35,15 @@ librería en vez del CSS.
 index.html              <- la página entera
 estado.html             <- validador de nombres de archivo (Plan 1 §3.3)
 assets/
-└── marca/
-    ├── logo.webp
-    └── og.png          <- imagen 1200×630 para compartir (Plan 3 §4)
+├── marca/
+│   ├── logo.webp
+│   ├── isotipo.png     <- el dibujo solo, con fondo transparente
+│   └── og.png          <- imagen 1200×630 para compartir (Plan 3 §4)
+├── fuentes/            <- woff2 de Cormorant Garamond e Inter
+├── productos/          <- copia local de las fotos, para maquetar y de fallback
+└── catalogo.json       <- la lista de productos mientras no esté Drive
 css/
+├── fuentes.css         <- @font-face de las fuentes auto-hospedadas
 ├── tokens.css          <- variables de color, tipografía y espaciado (Plan 4)
 └── estilos.css
 js/
@@ -67,8 +72,8 @@ un CDN sirve gratis y más rápido.
 
 ## 5. Orden de trabajo
 
-1. Maquetar la página completa con una lista de productos **fija, escrita a
-   mano** en un archivo. Sin Drive, sin red, sin nada asincrónico.
+1. ~~Maquetar la página completa con una lista de productos fija.~~ **Hecho**,
+   con los 24 productos reales en `assets/catalogo.json`.
 2. Aplicar el Plan 4 hasta que se vea bien en un celular de verdad.
 3. Recién ahí conectar Drive, reemplazando la lista fija.
 4. `estado.html`.
