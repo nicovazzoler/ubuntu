@@ -1,7 +1,10 @@
 # Plan 2 — Contenido de la página
 
-Qué dice la página, en qué orden, y con qué palabras. Esto se define antes
-del diseño: el diseño acomoda texto que existe, no al revés.
+Qué dice la página, en qué orden, y con qué palabras.
+
+> Actualizado con las respuestas del equipo. Se sacaron: preguntas
+> frecuentes, "cómo comprar" paso a paso, datos de materiales y el glosario
+> del rubro. Tampoco se publican precios ni tiempos de entrega.
 
 ---
 
@@ -10,148 +13,105 @@ del diseño: el diseño acomoda texto que existe, no al revés.
 Un **catálogo con contacto directo**, no una tienda. El visitante entra,
 mira, y se va a WhatsApp. El único objetivo medible es *mensajes recibidos*.
 
-Todo el contenido se escribe para empujar a eso. Si un bloque no ayuda a que
-alguien mande un mensaje, no va.
+Como **no se publican precios**, ese objetivo pesa todavía más: la única
+forma de saber cuánto sale algo es escribir. Entonces todo lo que se muestra
+tiene que terminar en un botón de WhatsApp que ya diga de qué producto
+estamos hablando.
 
 ## 2. Estructura, de arriba hacia abajo
 
 | # | Sección | Para qué está |
 |---|---|---|
-| 1 | Encabezado | Nombre de la marca + acceso a WhatsApp e Instagram, siempre visible |
-| 2 | Hero / presentación | En 3 segundos: qué venden, hecho a mano, dónde están |
-| 3 | Catálogo | El contenido real. Es el 80% de la página |
-| 4 | Sobre nosotros | Corto. La confianza de comprarle a una persona y no a una marca |
-| 5 | Cómo comprar | Saca la fricción: dice exactamente qué pasa cuando escriben |
-| 6 | Preguntas frecuentes | Contesta las 5 preguntas que si no están, llegan por WhatsApp |
-| 7 | Pie | Contacto, redes, zona de envío |
+| 1 | Encabezado | Logo + acceso a WhatsApp e Instagram, siempre visible |
+| 2 | Hero | El lema, qué hacen, y los dos botones |
+| 3 | Franja | Envíos a todo el país · Morón, Buenos Aires |
+| 4 | Catálogo | El contenido real. Es el 80% de la página |
+| 5 | Sobre nosotros | Corto. La confianza de comprarle a una familia |
+| 6 | Contanos tu idea | Cierre: el CTA de personalizados |
+| 7 | Pie | Instagram, WhatsApp, zona |
 
-**El catálogo va arriba, no al fondo.** Es el error más común: tres pantallas
-de "nuestra historia" antes de la primera foto. Si alguien llega desde el
-link de Instagram, ya sabe quién sos; viene a ver productos.
+**El catálogo va arriba, no al fondo.** Si alguien llega desde el link de
+Instagram, ya sabe quién sos; viene a ver productos.
 
-## 3. Copy propuesto
+Es una página corta a propósito. Sin FAQ y sin "cómo comprar", el camino de
+la primera pantalla al botón de WhatsApp es de dos scrolls.
 
-Esto es un borrador para que lo ajusten ellos, que conocen su voz. Está en
-segunda persona y en argentino.
+## 3. Copy
 
 ### 3.1 Hero
 
-> **Velas, souvenirs y deco hecho a mano.**
-> Cada pieza se hace de a una, en casa, con materiales que elegimos nosotros.
-> Mirá el catálogo y escribinos — te respondemos el mismo día.
+> # Hecho a mano, pensado para vos
 >
-> `[ Ver catálogo ]`  `[ Escribinos por WhatsApp ]`
+> Velas, souvenirs y objetos de deco artesanales, para transformar espacios
+> y momentos.
+>
+> `[ Ver catálogo ]`  `[ Escribinos ]`
 
-Por qué funciona: dice **qué** (línea 1), **por qué te importa** (línea 2,
-"de a una" y "elegimos nosotros" es lo que te diferencia de un mayorista), y
-**qué hacer ahora** (línea 3 + botones). Tres renglones, no un párrafo.
+El lema es el titular, como pidieron. La segunda línea sale del texto que
+mandaron ellos y hace el trabajo que el lema no hace: decir **qué venden**.
+El lema solo es lindo pero no informa, y alguien que cae de un link sin
+contexto tiene que entender el rubro en dos segundos.
 
-Alternativas de titular para probar:
-- *"Hecho a mano, de a una pieza por vez."*
-- *"Velas de soja, souvenirs y deco. Todo artesanal."*
-- *"Regalos que no se parecen a los demás."*
+### 3.2 Franja bajo el hero
 
-### 3.2 Encima del catálogo
+> Envíos a todo el país · Morón, Buenos Aires
 
-> **Nuestro catálogo**
-> Los precios están actualizados. Para pedidos por cantidad o personalizados,
-> escribinos y te pasamos presupuesto.
+Una línea, fondo salvia, sin botón. "Envíos a todo el país" es de las cosas
+que más desbloquean una compra y no cuesta nada decirla temprano. Sin
+precios de envío, como pidieron.
 
-Esa segunda línea hace dos cosas: justifica los productos que dicen
-"a consultar", y abre la puerta al pedido grande, que es el que deja plata.
+### 3.3 Encima del catálogo
 
-### 3.3 Sobre nosotros
+> **Nuestros productos**
+> Cada pieza se hace de a una. Tocá la que te guste y escribinos.
+
+Sin mención a precios. La segunda línea explica, sin decirlo, por qué las
+tarjetas llevan un botón en vez de un número.
+
+### 3.4 Sobre nosotros
+
+Texto del equipo, tal cual:
 
 > **Quiénes somos**
-> Somos [nombres], y hacemos velas, souvenirs y objetos de deco a mano en
-> [ciudad]. Empezamos [año/motivo, una línea]. Trabajamos con cera de soja,
-> fragancias de calidad y moldes que armamos nosotros. Si querés algo que no
-> está en el catálogo, se puede: contanos qué tenés en la cabeza.
+> Somos un emprendimiento familiar que trabaja con mucho amor y dedicación
+> para acompañarlos tanto en fechas especiales como en el día a día. Nos
+> dedicamos a la creación de objetos artesanales, pensados para transformar
+> espacios y momentos.
 
-Máximo 5 renglones y una foto de las manos trabajando, no un logo. En este
-rubro la foto del taller vende más que cualquier texto.
+Va con el logo al lado, o centrado y angosto. **No** lleva foto de taller:
+por ahora no hay, y una foto de stock se nota y resta.
 
-### 3.4 Cómo comprar
+### 3.5 Contanos tu idea
 
-Tres pasos numerados, sin texto de más:
+Reemplaza al "cómo comprar" de tres pasos. Es el cierre de la página:
 
-1. **Elegí** lo que te gusta del catálogo.
-2. **Escribinos** por WhatsApp con el producto y la cantidad.
-3. **Coordinamos** entrega o envío, y te pasamos los datos de pago.
+> **¿Tenés una idea?**
+> Escribinos por WhatsApp tu consulta o la idea que tengas, y la creamos.
+>
+> `[ Escribinos por WhatsApp ]`
 
-### 3.5 Preguntas frecuentes
-
-Estas son las que efectivamente preguntan en este rubro. Las respuestas las
-completan ellos:
-
-- ¿Hacen envíos? ¿A dónde y cuánto sale?
-- ¿Cuánto tardan en tener el pedido listo?
-- ¿Hacen souvenirs personalizados? ¿Mínimo de cantidad?
-- ¿Cómo se paga? ¿Piden seña?
-- ¿Cuánto dura encendida una vela?
-
-Si están en la página, dejan de llegar por WhatsApp. Cada FAQ bien escrita es
-una conversación menos.
+Este bloque es el que abre la puerta a los pedidos personalizados, que son
+los que más dejan. Va en fondo salvia o taupe claro para que se despegue del
+catálogo y se lea como "acá termina y acá se actúa".
 
 ## 4. Reglas de escritura
 
 - **Nada de relleno de agencia.** "Pasión por el detalle", "experiencias
-  únicas", "calidad premium" no dicen nada. Se reemplazan por hechos: "cera
-  de soja", "40 horas de quemado", "entregamos en 5 días".
-- **Precios visibles siempre que se pueda.** Un catálogo que dice "consultar"
-  en todo pierde el 80% de los mensajes. "Consultar" se reserva para lo que
-  de verdad se cotiza por cantidad.
-- **Los nombres de producto son parte del copy.** Salen del nombre del
-  archivo (ver Plan 1), así que la convención de nombres es decisión de
-  contenido, no técnica: `Vela lavanda` vende menos que
-  `Vela de soja lavanda 200g`.
-- Textos cortos. En el celular, un párrafo de 6 renglones es una pared.
+  únicas", "calidad premium" no dicen nada.
+- **Textos cortos.** En el celular, un párrafo de 6 renglones es una pared.
+- **Los nombres de producto son el copy.** Salen del nombre del archivo en
+  Drive (Plan 1), así que cómo se nombran es una decisión de contenido, no
+  técnica. `Vela lavanda` vende menos que `Vela de soja lavanda 200g` — pero
+  solo si el dato es cierto. Si no están seguros de gramos o materiales,
+  mejor un nombre simple y correcto que uno inventado.
+- **No prometer lo que no se puede cumplir.** Sin tiempos de entrega, sin
+  formas de pago, sin costos de envío hasta que ellos los tengan claros. Un
+  dato mal publicado genera un reclamo; un dato ausente genera un mensaje,
+  que es lo que buscamos igual.
 
-## 5. Glosario del rubro
+## 5. Qué falta
 
-Para que los textos suenen a alguien que sabe. Estos son los términos que la
-gente busca y reconoce:
-
-**Velas**
-- *Cera de soja*: vegetal, quema más limpio y más lento que la parafina. Es
-  el argumento de venta estándar hoy. La parafina es más barata y más común.
-- *Cera de abeja*: premium, olor propio, color ámbar.
-- *Pabilo* (o *mecha*): de algodón o de madera. El de madera crepita y se
-  vende como diferencial.
-- *Fragancia* vs *aceite esencial*: la fragancia es sintética, rinde más y
-  aguanta mejor el calor; el aceite esencial es natural y se comunica como
-  aromaterapia.
-- *Vaso / contenedor*: vidrio, lata, cemento, yeso. El recipiente es la mitad
-  del precio percibido.
-- *Tiempo de quemado*: horas que dura. Dato concreto que conviene publicar.
-- *Curado*: los días que la vela descansa antes de venderse (típico 1–2
-  semanas). Sirve para explicar tiempos de entrega.
-
-**Souvenirs**
-- Se vende **por cantidad**, casi nunca por unidad: packs de 10, 12, 20, 50.
-- Ocasiones: bautismo, comunión, casamiento, 15 años, baby shower, cumpleaños
-  infantil, egresados, corporativo.
-- *Personalizado*: nombre, fecha, color, etiqueta. Es lo que justifica el
-  precio y el plazo de producción.
-- Formatos típicos: mini velas, jabones, aromatizantes, macetitas, imanes,
-  llaveros de resina, cajitas.
-
-**Deco**
-- Yeso, cemento, resina, macramé, madera.
-- *Porta velas*, *bandejas*, *floreros*, *difusores*.
-
-**Comercial**
-- *Seña*: adelanto (habitual 50%) para arrancar un pedido grande. Estándar
-  del rubro, conviene decirlo en las FAQ.
-- *Tiempo de producción*: días desde que se confirma hasta que está listo.
-  Distinto del envío.
-- *Mínimo de compra*: cantidad mínima para souvenirs.
-
-## 6. Qué tiene que estar listo antes de codear
-
-- [ ] Nombres y ciudad para "Sobre nosotros".
-- [ ] Titular del hero elegido.
-- [ ] Las 5 FAQ respondidas.
-- [ ] Zona y costo de envío.
-- [ ] Una foto del taller o de las manos trabajando.
-- [ ] Nombres definitivos de las categorías (definen las subcarpetas del Plan 1).
+- [ ] **Categorías del catálogo** — pendiente hasta ver cuántos productos
+      hay. Si son menos de ~15, arrancamos sin filtros y listo.
+- [ ] Fotos de los productos en el Drive.
+- [x] Lema, "quiénes somos", zona y envíos: definidos.

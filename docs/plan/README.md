@@ -1,40 +1,48 @@
-# Planificación — Catálogo Ubuntu
+# Planificación — Ubuntu estudio
 
-Velas · Souvenirs · Deco hecho a mano.
-Catálogo web con contacto directo por WhatsApp. Sin backend, sin carrito.
+*Hecho a mano, pensado para vos.*
+Velas, souvenirs y deco artesanal. Morón, Buenos Aires.
+
+Catálogo web con contacto directo por WhatsApp. Sin precios publicados, sin
+carrito, sin backend.
 
 ## Los planes
 
 | # | Documento | De qué se trata |
 |---|---|---|
-| 1 | [Catálogo](01-catalogo.md) | De dónde salen los productos y cómo los cargan desde el celular |
+| 0 | [Preguntas](00-preguntas.md) | Lo que había que definir. **Respondido**, salvo categorías |
+| 1 | [Catálogo](01-catalogo.md) | De dónde salen los productos y cómo se cargan desde el celular |
 | 2 | [Contenido](02-contenido.md) | Qué dice la página y en qué orden |
 | 3 | [Redes sociales](03-redes-sociales.md) | WhatsApp con mensaje prearmado, Instagram, previsualización del link |
-| 4 | [Diseño](04-diseno.md) | Color, tipografía, espaciado, grilla, estados |
+| 4 | [Diseño](04-diseno.md) | Paleta del logo, tipografía, espaciado, grilla |
+| 5 | [Stack](05-stack.md) | React + Vite, y por qué no Angular |
+
+## Datos de la marca
+
+| | |
+|---|---|
+| Lema | Hecho a mano, pensado para vos |
+| WhatsApp | 11 7238-8119 (`5491172388119`) |
+| Instagram | `@Ubuntu.estudio` |
+| Zona | Morón, Buenos Aires · envíos a todo el país |
+| Logo | `assets/marca/logo.webp` |
+| Drive | `1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q` |
 
 ## Stack
 
-HTML, CSS y JavaScript sin frameworks. No hay backend y no hace falta: el
-único dato dinámico es la lista de productos, y eso se resuelve leyendo una
-carpeta pública de Google Drive desde el navegador.
+React + Vite en JavaScript. CSS a mano, sin librerías de UI. El catálogo sale
+de una carpeta pública de Google Drive leída desde el navegador: no hay
+backend y no hace falta.
 
-Sin build step, sin `npm install`. Se abre el `index.html` y funciona.
+Se publica en Cloudflare Pages o Netlify, plan gratis. **Railway no**: cobra
+por proceso corriendo y esto son archivos estáticos.
 
-## Dónde se publica
+## Qué falta para arrancar
 
-**Cloudflare Pages o Netlify**, plan gratis. Se conectan al repo de GitHub y
-cada push publica solo. HTTPS y dominio propio incluidos.
+1. **Fotos de productos en el Drive**, renombradas (Plan 1 §3.2).
+2. **Categorías** — se definen cuando se vea cuántos productos hay de cada
+   cosa. Con menos de ~15 productos, arrancamos sin filtros.
+3. Logo en PNG con fondo transparente y una versión horizontal (Plan 4 §10).
+4. Imagen 1200×630 para la previsualización del link (Plan 3 §4).
 
-**No usar Railway acá.** Railway está pensado para procesos que corren
-(servidores, bases de datos). Un sitio estático en Railway consume horas de
-la suscripción para servir archivos que un CDN sirve gratis y más rápido.
-Guardate esa suscripción para cuando haya algo que de verdad necesite un
-servidor.
-
-## Orden de trabajo
-
-1. Cerrar los checklists de "qué tiene que estar listo" de cada plan — sobre
-   todo el número de WhatsApp y la carpeta de Drive con productos reales.
-2. Maquetar con datos de prueba.
-3. Conectar Drive.
-4. Publicar y probar desde un celular con datos móviles, no con WiFi.
+Nada de eso frena el paso 1 del Plan 5: maquetar con productos de mentira.

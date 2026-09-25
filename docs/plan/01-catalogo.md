@@ -45,14 +45,14 @@ productos, así que cambiar de fuente toca un archivo y no el resto.
 ```
 Catálogo Ubuntu/            <- carpeta compartida "cualquiera con el link puede ver"
 ├── Velas/
-│   ├── Vela de soja lavanda - 4500.jpg
-│   ├── Vela mármol grande - 7200.jpg
-│   └── Set 3 velas navideñas - 9900.jpg
+│   ├── Vela de soja lavanda.jpg
+│   ├── Vela mármol grande.jpg
+│   └── Set 3 velas navideñas.jpg
 ├── Souvenirs/
-│   ├── Souvenir bautismo pack x12 - consultar.jpg
-│   └── Jabón artesanal individual - 1200.jpg
+│   ├── Souvenir bautismo.jpg
+│   └── Jabón artesanal.jpg
 ├── Deco/
-│   └── Portavelas de yeso - 3800.jpg
+│   └── Portavelas de yeso - 3800.jpg     <- este sí muestra precio
 └── _borradores/            <- la página ignora todo lo que empiece con "_"
     └── prueba.jpg
 ```
@@ -60,32 +60,52 @@ Catálogo Ubuntu/            <- carpeta compartida "cualquiera con el link puede
 ### 3.2 Convención de nombre
 
 ```
+<nombre del producto>.<extensión>
 <nombre del producto> - <precio>.<extensión>
 ```
 
-Reglas, en orden de importancia:
+**El precio es opcional.** Hoy no se publican precios, así que alcanza con
+que el archivo se llame como el producto:
 
-- El separador es **espacio, guion, espacio** (` - `). Se parsea por el
-  **último** ` - ` del nombre, así que "Vela 2 en 1 - edición limitada - 4500.jpg"
-  funciona bien: nombre = `Vela 2 en 1 - edición limitada`, precio = `4500`.
-- El precio va **solo en números, sin puntos ni signo peso**: `4500`, no
-  `$4.500` ni `4.500`. La página lo formatea como `$ 4.500`.
-- La palabra **`consultar`** en lugar del número es válida y muestra
-  "Precio a consultar". Sirve para souvenirs que se cotizan por cantidad.
+```
+Vela de soja lavanda.jpg
+Portavelas de yeso.jpg
+```
+
+El día que quieran publicar el precio de algo, le agregan ` - ` y el número
+al final del nombre, y aparece solo. No hay que tocar la página:
+
+```
+Vela de soja lavanda - 4500.jpg
+```
+
+Reglas:
+
+- Algo cuenta como precio **solo si lo que viene después del último ` - `
+  son puros dígitos**. Por eso `Set 3 velas - navideñas.jpg` no se rompe: no
+  es un número, así que el nombre queda entero y el producto va sin precio.
+- El separador es **espacio, guion, espacio** (` - `).
+- El precio va **solo en números**: `4500`, no `$4.500`. La página lo
+  formatea como `$ 4.500`.
 - Las **subcarpetas son las categorías** y se muestran como filtros. Las
   fotos sueltas en la raíz caen en "Otros".
 - Carpetas o archivos que empiezan con `_` no se muestran. Es la forma de
   despublicar algo sin borrarlo.
 - El **orden** es alfabético. Si quieren mandar algo arriba, le ponen un
-  prefijo numérico: `01. Vela lavanda - 4500.jpg`. La página corta el
-  `01. ` al mostrar.
+  prefijo numérico: `01. Vela lavanda.jpg`. La página corta el `01. ` al
+  mostrar.
+
+No existe un valor "a consultar". Un producto sin precio simplemente no
+muestra precio: muestra el botón de consulta.
 
 ### 3.3 Qué pasa si escriben mal el nombre
 
-Nada se rompe. El archivo simplemente **no aparece en la página**, y aparece
-listado en una página oculta `estado.html` que dice, literal:
+Con el precio opcional, casi nada rompe. Lo único que queda feo es un
+archivo que sigue con el nombre que le puso la cámara. Esos no se muestran, y
+aparecen listados en una página oculta `estado.html` que dice, literal:
 
-> `IMG_20240912.jpg` — falta el precio. Debería ser algo como `Nombre del producto - 4500.jpg`
+> `IMG_20240912.jpg` — el nombre del archivo es el nombre del producto.
+> Renombralo a algo como `Vela de soja lavanda.jpg`
 
 Esa página es el manual de uso en vivo. Sin eso, el primer typo termina en un
 mensaje de WhatsApp a las 11 de la noche preguntando por qué desapareció una
@@ -124,7 +144,7 @@ La página no sabe qué es Drive. Consume una lista de objetos así:
 |---|---|---|---|
 | `id` | string | `1a2B3c...` | id del archivo, sirve de key |
 | `nombre` | string | `Vela de soja lavanda` | ya sin el precio ni el prefijo de orden |
-| `precio` | number \| null | `4500` | `null` = "a consultar" |
+| `precio` | number \| null | `4500` | `null` = no se muestra precio |
 | `categoria` | string | `Velas` | nombre de la subcarpeta, `Otros` si está suelto |
 | `imagen` | string (URL) | `https://...=w800` | versión redimensionada |
 | `imagenGrande` | string (URL) | `https://...=w1600` | para el detalle / zoom |
@@ -132,18 +152,27 @@ La página no sabe qué es Drive. Consume una lista de objetos así:
 Cambiar de Drive a Sheets, a Airtable o a un JSON estático = escribir otra
 función que devuelva esta misma lista. El resto de la página no se toca.
 
-## 4. Qué tiene que estar listo antes de codear
+## 4. Estado
 
-- [ ] Crear la carpeta `Catálogo Ubuntu` en el Drive de la marca (no en el tuyo personal).
-- [ ] Compartirla como "cualquier persona con el enlace — Lector".
-- [ ] Crear las subcarpetas de categorías con los nombres definitivos.
-- [ ] Sacar el ID de la carpeta (está en la URL).
-- [ ] Crear el proyecto en Google Cloud, habilitar Drive API, generar la API key y restringirla al dominio del sitio.
-- [ ] Cargar 8–10 productos reales para probar con contenido de verdad, no con placeholders.
+Carpeta ya creada por Nico (después se migra a una cuenta del emprendimiento;
+es cambiar un ID):
+
+```
+https://drive.google.com/drive/folders/1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
+ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
+```
+
+- [x] Carpeta creada y compartida por link.
+- [ ] Subcarpetas de categorías — **pendiente**, se definen cuando se vea
+      cuántos productos hay de cada cosa. Si son pocos, puede arrancar sin
+      categorías y todo va en una sola grilla.
+- [ ] Subir 8–10 fotos reales, renombradas.
+- [ ] Proyecto en Google Cloud, Drive API habilitada, API key restringida al
+      dominio del sitio.
 
 ## 5. Fuera de alcance del v1
 
-Carrito, stock, checkout, pagos, buscador, precios por cantidad, variantes
-(color/aroma) como campo aparte. Todo eso empuja hacia un backend o hacia
+Carrito, stock, checkout, pagos, buscador, variantes (color/aroma) como
+campo aparte. Todo eso empuja hacia un backend o hacia
 Tienda Nube. Si el día de mañana quieren vender con pago online, la
 conversación no es "agrandamos esto", es "migramos a una plataforma".
