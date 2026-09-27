@@ -14,6 +14,14 @@ export const CONFIG = {
     idea: 'Hola Ubuntu! Tengo una idea para un pedido y quería contarles 😊',
   },
 
-  // Fuente del catálogo. Al conectar Drive se cambia acá y en js/catalogo.js.
-  catalogo: 'assets/catalogo.json',
+  drive: {
+    carpeta: '1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q',
+    // Key de navegador, solo lectura, restringida al dominio del sitio. Queda a
+    // la vista en el código y está bien: solo sirve para leer una carpeta que
+    // ya es pública. Vacía, la página usa la copia local de assets/.
+    apiKey: '',
+  },
+
+  // Copia de respaldo: se usa si no hay key o si Drive no responde.
+  catalogoLocal: 'assets/catalogo.json',
 };

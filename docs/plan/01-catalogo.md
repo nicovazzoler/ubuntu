@@ -100,6 +100,9 @@ muestra precio: muestra el botón de consulta.
 
 ### 3.3 Qué pasa si escriben mal el nombre
 
+La página `estado.html` está implementada y avisa, archivo por archivo, qué
+se muestra y qué no.
+
 Con el precio opcional, casi nada rompe. Lo único que queda feo es un
 archivo que sigue con el nombre que le puso la cámara. Esos no se muestran, y
 aparecen listados en una página oculta `estado.html` que dice, literal:
@@ -118,15 +121,29 @@ funciona desde el navegador con una **API key restringida por dominio**. No
 hay login, no hay backend, no hay secreto real: la key solo sirve para leer
 una carpeta que ya es pública.
 
-De cada archivo se necesita: `id`, `name`, `mimeType`, `parents`.
-La imagen se arma con el `id` y un parámetro de ancho, para no servir la foto
-original de 4 MB que salió del celular.
+Son **dos pedidos**, no uno por categoría:
 
-**Punto a validar antes de escribir la página:** Drive sirve bien las
-miniaturas, pero no es un CDN de imágenes. Si el catálogo pasa de ~40 fotos o
-la página tarda, la migración natural es Cloudinary (plan gratis, resize por
-URL, misma idea de carpeta). No lo hacemos ahora, pero por eso la carga de
-imágenes también va detrás de una función propia.
+1. `'<ID de la carpeta>' in parents` — devuelve las subcarpetas (las
+   categorías) y lo que haya suelto en la raíz.
+2. `'<sub1>' in parents or '<sub2>' in parents or ...` — todas las fotos de
+   todas las categorías de una sola vez.
+
+Con cinco categorías eso son 2 llamadas en vez de 6.
+
+De cada archivo se usan `id`, `name`, `mimeType` y `parents`. Se descarta lo
+que no sea imagen, y lo que empiece con `_`.
+
+La imagen se arma con el id:
+
+```
+https://lh3.googleusercontent.com/d/<id>=w800
+```
+
+Eso sirve la foto **ya redimensionada**, en vez de la original de 4 MB que
+salió del celular. Es un endpoint que Google no documenta: anda hoy y podría
+dejar de andar. Por eso está en una sola función (`imagen()` en
+`js/catalogo.js`): si cambia, se toca ahí y nada más, y la migración prevista
+es Cloudinary.
 
 ### 3.5 Cache y fallback
 
@@ -171,8 +188,11 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
       (como chip de filtro el nombre largo no entra, Plan 4 §5.2).
 - [ ] Mover `Comunión/Set comunión.webp` a `_borradores/`: es una placa de
       Instagram, no una foto de producto.
-- [ ] Proyecto en Google Cloud, Drive API habilitada, API key restringida al
-      dominio del sitio.
+- [ ] **Proyecto en Google Cloud, Drive API habilitada, API key restringida
+      al dominio del sitio.** Es lo único que falta: el código ya está
+      escrito y probado contra una respuesta simulada de Drive. Se pega la
+      key en `js/config.js` (`drive.apiKey`) y la página deja de usar la
+      copia local.
 
 Copia local para maquetar sin depender de la red: `assets/productos/` y
 `assets/catalogo.json`, generados desde un export de la carpeta. Sirven

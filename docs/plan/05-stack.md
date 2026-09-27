@@ -47,8 +47,8 @@ css/
 ├── tokens.css          <- variables de color, tipografía y espaciado (Plan 4)
 └── estilos.css
 js/
-├── config.js           <- WhatsApp, Instagram, ID de Drive, mensajes (Plan 3 §5)
-├── catalogo.js         <- lee Drive y devuelve la lista de productos
+├── config.js           <- WhatsApp, Instagram, Drive, mensajes (Plan 3 §5)
+├── catalogo.js         <- lee Drive, cachea, cae a la copia local, y revisa
 ├── whatsapp.js         <- arma los links wa.me
 └── ui.js               <- dibuja la grilla y maneja los filtros
 ```
@@ -74,9 +74,11 @@ un CDN sirve gratis y más rápido.
 
 1. ~~Maquetar la página completa con una lista de productos fija.~~ **Hecho**,
    con los 24 productos reales en `assets/catalogo.json`.
-2. Aplicar el Plan 4 hasta que se vea bien en un celular de verdad.
-3. Recién ahí conectar Drive, reemplazando la lista fija.
-4. `estado.html`.
+2. ~~Aplicar el Plan 4 hasta que se vea bien en un celular de verdad.~~
+   **Hecho**, incluido un pase de pulido sobre ritmo vertical y contraste.
+3. ~~Conectar Drive.~~ **Hecho.** Falta solo pegar la API key en
+   `js/config.js`; sin key la página usa la copia local de `assets/`.
+4. ~~`estado.html`.~~ **Hecho.**
 5. Publicar.
 
 Ese orden importa: si conectás Drive el primer día, cada problema de diseño se
