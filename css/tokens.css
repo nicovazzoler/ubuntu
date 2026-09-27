@@ -24,7 +24,19 @@
   --e1: 4px;   --e2: 8px;   --e3: 12px;  --e4: 16px;
   --e6: 24px;  --e8: 32px;  --e12: 48px; --e16: 64px; --e24: 96px;
 
+  /* Ritmo vertical. Son los únicos tokens que cambian con el ancho: así el
+     valor responsive vive en un solo lugar y no repartido en media queries. */
+  --seccion: var(--e12);      /* aire arriba y abajo de cada sección */
+  --titulo-gap: var(--e6);    /* del título a su contenido */
+
   --ancho-max: 1200px;
   --radio: 10px;
   --transicion: 150ms ease;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --seccion: var(--e24);
+    --titulo-gap: var(--e8);
+  }
 }

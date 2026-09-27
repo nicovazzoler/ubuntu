@@ -52,12 +52,17 @@ El resultado se sigue sintiendo Ubuntu, pero se lee.
 | `--superficie` | `#FFFFFF` | — | Tarjetas de producto |
 | `--tinta` | `#4A423B` | 9.3:1 ✅ | Texto principal |
 | `--tinta-suave` | `#6E645B` | 5.5:1 ✅ | Texto secundario, pie |
-| `--taupe` | `#7F756D` | 4.3:1 ⚠️ | **Solo** títulos grandes (≥24px), íconos, bordes |
+| `--taupe` | `#7F756D` | 4.3:1 ⚠️ | **Solo** el logotipo del encabezado, íconos y bordes. Nunca texto corrido |
 | `--salvia` | `#CCCEC2` | 1.2:1 ❌ | **Solo** fondos y detalles. Nunca texto |
 | `--borde` | `#E8E0DA` | — | Divisores y bordes de tarjeta, 1px |
 | `--accion` | `#5A5049` | 7.4:1 ✅ | Fondo de botón primario, con texto crema |
 | `--accion-hover` | `#423A34` | — | Hover / pressed |
 | `--wsp` | `#25D366` | — | Solo botones de WhatsApp |
+
+Los títulos de sección van en `--tinta-suave`, no en `--taupe`. Se probó con
+el taupe y no pasa: a 18px (celular) y 22px (escritorio) el texto no califica
+como "grande" para WCAG, y la excepción arranca recién en 24px. El
+`--tinta-suave` mantiene el tono apagado y llega a 5.5:1.
 
 Reglas:
 
@@ -113,13 +118,47 @@ Escala de 4px. Todos los márgenes y paddings salen de acá:
 
 `4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96`
 
+**Ningún hueco de la página puede ser un número que no elegiste.** El caso
+típico es un `<p>` o un `<h2>` que se queda con el margen por defecto del
+navegador y lo suma al padding que sí decidiste: el resultado es un 62 donde
+esperabas 48, y a partir de ahí la escala deja de significar nada.
+
+### 4.1 Los dos tokens que cambian con el ancho
+
+El ritmo vertical es lo único responsive del sistema, y vive en dos tokens en
+vez de repartido en media queries por toda la hoja:
+
+| Token | Móvil | ≥768px | Para qué |
+|---|---|---|---|
+| `--seccion` | 48px | 96px | aire arriba y abajo de cada sección |
+| `--titulo-gap` | 24px | 32px | del título a su contenido |
+
+### 4.2 Dos secciones seguidas no suman sus aires
+
+Si `.catalogo` pone 96 abajo y `.nosotros` 96 arriba, el hueco real es 192 y
+nadie lo decidió. La regla:
+
+```
+.seccion + .seccion { padding-block-start: 0; }
+```
+
+La de abajo se apoya en la de arriba. **Con una banda de color en el medio
+sí se suman**, porque ahí el borde se ve y cada lado necesita su propio aire:
+por eso la franja de envíos tiene 96 arriba (del hero) y 96 abajo (del
+catálogo), y el bloque de cierre conserva su padding propio.
+
 | Dónde | Móvil | Escritorio |
 |---|---|---|
 | Margen lateral de la página | 16px | auto, ancho máximo 1200px |
 | Separación entre secciones | 48px | 96px |
 | Separación título → contenido | 24px | 32px |
-| Padding interno de tarjeta | 12px | 16px |
+| Título → su bajada | 12px | 12px |
+| Padding interno de tarjeta | 8 / 12 / 12 | 8 / 16 / 16 |
 | Gap de la grilla | 12px | 24px |
+
+El título y su bajada son **un par**, no dos bloques: van a 12px entre sí y el
+aire grande queda del otro lado. Si se los separa con el mismo hueco que al
+contenido, la bajada deja de leerse como parte del título.
 
 El error más frecuente: poner el mismo espacio entre todo. **El espacio
 arriba de un título tiene que ser claramente mayor que el de abajo**, o el
@@ -150,6 +189,15 @@ Sin precio, la tarjeta tiene tres cosas:
 1. **Imagen**, relación de aspecto fija **4:5**, recortada.
 2. **Nombre** del producto (máx. 2 renglones, con puntos suspensivos si se pasa).
 3. **Botón de consulta** de WhatsApp.
+
+El nombre lleva `min-height` de dos renglones aunque ocupe uno solo. Sin eso,
+en una misma fila el botón queda a distinta altura en cada tarjeta según
+cuánto mida el nombre, y la fila se ve desprolija. Se nota en celular, donde
+las tarjetas son angostas y muchos nombres pasan a dos líneas.
+
+El aire dentro de la tarjeta respeta proximidad: **foto → nombre 8px, nombre →
+botón 12px o más.** La foto y el nombre son el producto; el botón es otra
+cosa. Al revés, el ojo agrupa mal.
 
 Cuando un producto sí tiene precio en el nombre del archivo (Plan 1 §3.2), se
 muestra entre el nombre y el botón, en `--tinta`, peso 600. La tarjeta tiene
