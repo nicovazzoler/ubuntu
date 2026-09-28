@@ -2,6 +2,8 @@ import { obtenerProductos, categoriasDe, formatearPrecio } from './catalogo.js';
 import { linkProducto, linkGeneral, linkIdea } from './whatsapp.js';
 import { CONFIG } from './config.js';
 import { seguirTonos } from './tonos.js';
+import { abrirVisor } from './visor.js';
+import { aparecer } from './aparecer.js';
 
 const ICONO_WSP = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>`;
 
@@ -9,22 +11,24 @@ const grilla = document.querySelector('#grilla');
 const filtros = document.querySelector('#filtros');
 const estado = { productos: [], categoria: 'Todos' };
 
-function tarjeta(p) {
+// Dos gestos por tarjeta: la foto abre el visor, "Consultar" va a WhatsApp.
+function tarjeta(p, i, lista) {
   const li = document.createElement('li');
+  li.className = 'tarjeta';
   const precio = p.precio !== null
     ? `<p class="tarjeta__precio">${formatearPrecio(p.precio)}</p>`
     : '';
 
-  // Toda la tarjeta es un link: un solo elemento interactivo, todo el área tocable.
   li.innerHTML = `
-    <a class="tarjeta" href="${linkProducto(p.nombre)}" target="_blank" rel="noopener noreferrer">
+    <button class="tarjeta__zoom" type="button" aria-label="Ver foto grande: ${p.nombre}">
       <img class="tarjeta__foto" src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async">
-      <div class="tarjeta__cuerpo">
-        <h3 class="tarjeta__nombre">${p.nombre}</h3>
-        ${precio}
-        <span class="tarjeta__accion">${ICONO_WSP} Consultar</span>
-      </div>
-    </a>`;
+    </button>
+    <div class="tarjeta__cuerpo">
+      <h3 class="tarjeta__nombre">${p.nombre}</h3>
+      ${precio}
+      <a class="tarjeta__accion" href="${linkProducto(p.nombre)}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Consultar</a>
+    </div>`;
+  li.querySelector('.tarjeta__zoom').addEventListener('click', () => abrirVisor(lista, i));
   return li;
 }
 
@@ -42,7 +46,7 @@ function dibujarProductos() {
 
   // Las primeras 4 sin lazy: son las que se ven al entrar.
   visibles.forEach((p, i) => {
-    const li = tarjeta(p);
+    const li = tarjeta(p, i, visibles);
     if (i < 4) li.querySelector('img').loading = 'eager';
     grilla.append(li);
   });
@@ -91,6 +95,7 @@ function dibujarCategorias(categorias) {
     lista.append(li);
   });
   seccion.hidden = false;
+  aparecer('.categorias__lista > li', 70);
 }
 
 function dibujarEsqueletos(cantidad = 8) {
@@ -161,6 +166,8 @@ function enlazarContacto() {
 }
 
 enlazarContacto();
+aparecer('.hero__texto, .hero__imagen', 120);
+aparecer('.titulo-seccion, .catalogo__intro, .nosotros__texto, .nosotros__marca, .cierre .contenedor');
 seguirTonos();
 iniciar();
 botonFlotante();

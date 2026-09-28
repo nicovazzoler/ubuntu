@@ -239,7 +239,10 @@ Detalles que importan:
 - Mientras carga, el hueco va en crema, no en gris.
 - `loading="lazy"` en todas las imágenes salvo las primeras 4.
 - Bordes redondeados suaves (8–12px) y borde de 1px en vez de sombra.
-- Toda la tarjeta es tocable, no solo el botón.
+- **Dos gestos por tarjeta** (desde la versión 2): la foto abre el visor en
+  grande, "Consultar" va directo a WhatsApp. Antes toda la tarjeta era un
+  link a WhatsApp; con el visor hay que separarlos, y el botón de consulta
+  sigue a un toque de distancia.
 
 ### 5.2 Filtros de categoría
 

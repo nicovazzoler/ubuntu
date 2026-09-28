@@ -242,6 +242,14 @@ img { display: block; max-width: 100%; }
 }
 .tarjeta:hover { border-color: var(--taupe); transform: translateY(-2px); }
 
+.tarjeta__zoom {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
 /* 4:5 y no 1:1: las fotos son 9:16 y un cuadrado corta la base del producto. */
 .tarjeta__foto {
   aspect-ratio: 4 / 5;
@@ -283,15 +291,16 @@ img { display: block; max-width: 100%; }
   color: var(--tinta-suave);
   font-size: 0.8125rem;
   font-weight: 500;
+  text-decoration: none;
   transition: background var(--transicion), border-color var(--transicion), color var(--transicion);
 }
 .tarjeta__accion svg { color: var(--wsp); transition: color var(--transicion); }
-.tarjeta:hover .tarjeta__accion {
+.tarjeta__accion:hover {
   background: var(--wsp);
   border-color: var(--wsp);
   color: #fff;
 }
-.tarjeta:hover .tarjeta__accion svg { color: currentColor; }
+.tarjeta__accion:hover svg { color: currentColor; }
 .tarjeta__accion svg { width: 15px; height: 15px; }
 
 /* Esqueletos de carga */
@@ -439,3 +448,81 @@ body { padding-bottom: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ---------- Visor de fotos ---------- */
+
+.sin-scroll { overflow: hidden; }
+
+.visor {
+  width: min(100vw - 2 * var(--e4), 960px);
+  max-height: calc(100dvh - 2 * var(--e4));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  background: var(--tono-crema);
+  color: var(--tinta);
+  overflow: hidden;
+}
+.visor::backdrop { background: rgb(42 36 32 / 0.72); }
+.visor[open] { display: flex; flex-direction: column; animation: visor-entra 200ms ease; }
+@keyframes visor-entra { from { opacity: 0; transform: scale(0.98); } }
+
+.visor__marco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  background: var(--superficie);
+}
+.visor__foto {
+  max-width: 100%;
+  max-height: calc(100dvh - 190px);
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.visor__foto.cargada { opacity: 1; }
+
+.visor__cerrar, .visor__nav {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(252 248 247 / 0.9);
+  color: var(--tinta);
+  cursor: pointer;
+}
+.visor__cerrar svg, .visor__nav svg { width: 22px; height: 22px; }
+.visor__cerrar { position: absolute; top: var(--e3); right: var(--e3); z-index: 1; }
+.visor__nav { position: absolute; top: 50%; translate: 0 -50%; }
+.visor__nav--ant { left: var(--e3); }
+.visor__nav--sig { right: var(--e3); }
+.visor__cerrar:hover, .visor__nav:hover { background: var(--superficie); }
+
+.visor__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3) var(--e6);
+  padding: var(--e4) var(--e6);
+}
+.visor__categoria { margin: 0; font-size: 0.8125rem; color: var(--tinta-suave); }
+.visor__nombre { margin: 0; font-family: var(--display); font-size: 1.5rem; font-weight: 500; line-height: 1.2; }
+.visor__precio { margin: 0; font-weight: 600; }
+.visor__precio:empty { display: none; }
+
+/* ---------- Aparición al scrollear ---------- */
+
+/* .anima la pone js/aparecer.js solo si el sistema no pide reducir movimiento:
+   sin JS o con movimiento reducido, todo está visible desde el principio. */
+.anima [data-aparecer] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  transition-delay: var(--retraso, 0ms);
+}
+.anima [data-aparecer].visible { opacity: 1; transform: none; }
