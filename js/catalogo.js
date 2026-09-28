@@ -65,7 +65,7 @@ async function leerDeDrive() {
   return [...enRaiz, ...enSubcarpetas]
     .filter((f) => f.mimeType.startsWith('image/') && !oculto(f.name))
     .map((f) => aProducto(f, categorias))
-    .sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+    .sort(porCategoria);
 }
 
 function aProducto(archivo, categorias) {
@@ -90,6 +90,11 @@ const imagen = (id) => `${API}/${id}?alt=media&key=${CONFIG.drive.apiKey}`;
 const PESO_MAX = 500 * 1024;
 
 const oculto = (nombre) => nombre.startsWith('_');
+
+// En "Todos" los productos salen agrupados por categoría y, dentro de cada
+// una, por nombre. Mismo orden que los filtros.
+const porCategoria = (a, b) =>
+  a.categoria.localeCompare(b.categoria, 'es') || a.nombre.localeCompare(b.nombre, 'es');
 
 /* ---------- Nombre del archivo ---------- */
 
@@ -123,7 +128,7 @@ async function leerCopiaLocal() {
     categoria: item.categoria || 'Otros',
     imagen: item.imagen,
     imagenGrande: item.imagenGrande || item.imagen,
-  }));
+  })).sort(porCategoria);
 }
 
 /* ---------- Cache ---------- */

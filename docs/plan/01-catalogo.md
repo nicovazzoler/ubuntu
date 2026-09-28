@@ -91,7 +91,7 @@ Reglas:
   fotos sueltas en la raíz caen en "Otros".
 - Carpetas o archivos que empiezan con `_` no se muestran. Es la forma de
   despublicar algo sin borrarlo.
-- El **orden** es alfabético. Si quieren mandar algo arriba, le ponen un
+- El **orden** es por categoría y, dentro de cada una, alfabético. Si quieren mandar algo arriba, le ponen un
   prefijo numérico: `01. Vela lavanda.jpg`. La página corta el `01. ` al
   mostrar.
 

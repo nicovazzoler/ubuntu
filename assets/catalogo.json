@@ -163,7 +163,7 @@
     "id": "velas-en-frasco-de-vidrio-con-sticker--el-principito",
     "nombre": "El principito",
     "precio": null,
-    "categoria": "Velas en frasco de vidrio con sticker",
+    "categoria": "Velas con sticker",
     "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--el-principito.jpeg",
     "px": "900x1600"
   },
@@ -171,7 +171,7 @@
     "id": "velas-en-frasco-de-vidrio-con-sticker--gorrito",
     "nombre": "Gorrito",
     "precio": null,
-    "categoria": "Velas en frasco de vidrio con sticker",
+    "categoria": "Velas con sticker",
     "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--gorrito.jpeg",
     "px": "900x1600"
   },
@@ -179,7 +179,7 @@
     "id": "velas-en-frasco-de-vidrio-con-sticker--mafalda",
     "nombre": "Mafalda",
     "precio": null,
-    "categoria": "Velas en frasco de vidrio con sticker",
+    "categoria": "Velas con sticker",
     "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--mafalda.jpeg",
     "px": "900x1600"
   },
@@ -187,7 +187,7 @@
     "id": "velas-en-frasco-de-vidrio-con-sticker--mundiales",
     "nombre": "Mundiales",
     "precio": null,
-    "categoria": "Velas en frasco de vidrio con sticker",
+    "categoria": "Velas con sticker",
     "imagen": "assets/productos/velas-en-frasco-de-vidrio-con-sticker--mundiales.jpeg",
     "px": "900x1600"
   }
