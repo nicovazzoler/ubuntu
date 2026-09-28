@@ -19,7 +19,7 @@ export const CONFIG = {
     // Key de navegador, solo lectura, restringida al dominio del sitio. Queda a
     // la vista en el código y está bien: solo sirve para leer una carpeta que
     // ya es pública. Vacía, la página usa la copia local de assets/.
-    apiKey: '',
+    apiKey: 'AIzaSyBTIRHrcbpOXe1CVppc4lvQiUe-YA5VQH4',
   },
 
   // Copia de respaldo: se usa si no hay key o si Drive no responde.

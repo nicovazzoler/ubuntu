@@ -32,13 +32,21 @@ async function consultar(condicion) {
   const url = new URL(API);
   url.searchParams.set('q', `(${condicion}) and trashed = false`);
   url.searchParams.set('key', CONFIG.drive.apiKey);
-  url.searchParams.set('fields', 'files(id,name,mimeType,parents)');
+  url.searchParams.set('fields', 'files(id,name,mimeType,parents,size)');
   url.searchParams.set('pageSize', '1000');
 
   const respuesta = await fetch(url);
   if (!respuesta.ok) throw new Error(`Drive respondió ${respuesta.status}`);
   const { files = [] } = await respuesta.json();
   return files;
+}
+
+// Un pedido por carpeta, todos en paralelo. Un solo pedido con
+// "'a' in parents or 'b' in parents" sería más prolijo, pero con API key
+// (acceso anónimo) Drive lo rechaza con 403 aunque cada carpeta sola responda.
+async function hijosDe(ids) {
+  const listas = await Promise.all(ids.map((id) => consultar(`'${id}' in parents`)));
+  return listas.flat();
 }
 
 async function leerDeDrive() {
@@ -51,11 +59,8 @@ async function leerDeDrive() {
     if (f.mimeType === CARPETA && !oculto(f.name)) categorias.set(f.id, f.name);
   }
 
-  // Un solo pedido para todas las subcarpetas en vez de uno por categoría.
   const subcarpetas = [...categorias.keys()].filter((id) => id !== raiz);
-  const enSubcarpetas = subcarpetas.length
-    ? await consultar(subcarpetas.map((id) => `'${id}' in parents`).join(' or '))
-    : [];
+  const enSubcarpetas = await hijosDe(subcarpetas);
 
   return [...enRaiz, ...enSubcarpetas]
     .filter((f) => f.mimeType.startsWith('image/') && !oculto(f.name))
@@ -70,15 +75,19 @@ function aProducto(archivo, categorias) {
     nombre,
     precio,
     categoria: categorias.get((archivo.parents || [])[0]) || 'Otros',
-    imagen: imagen(archivo.id, 800),
-    imagenGrande: imagen(archivo.id, 1600),
+    imagen: imagen(archivo.id),
+    imagenGrande: imagen(archivo.id),
   };
 }
 
-// Miniatura ya redimensionada, en vez de la foto original del celular. El
-// endpoint no está documentado por Google; si deja de andar, la migración
-// prevista es Cloudinary (Plan 1 §3.4). Por eso vive en una sola función.
-const imagen = (id, ancho) => `https://lh3.googleusercontent.com/d/${id}=w${ancho}`;
+// La foto original, pedida por la API oficial. Sirve tal cual se subió, sin
+// redimensionar: por eso estado.html avisa si una pesa demasiado. El endpoint
+// de miniaturas (lh3.googleusercontent.com) redimensiona, pero no está
+// documentado y respondió 403 en las pruebas. Si hace falta achicar fotos, la
+// migración prevista es Cloudinary (Plan 1 §3.4).
+const imagen = (id) => `${API}/${id}?alt=media&key=${CONFIG.drive.apiKey}`;
+
+const PESO_MAX = 500 * 1024;
 
 const oculto = (nombre) => nombre.startsWith('_');
 
@@ -151,9 +160,7 @@ export async function revisar() {
   for (const f of enRaiz) if (f.mimeType === CARPETA) categorias.set(f.id, f.name);
 
   const visibles = [...categorias].filter(([, n]) => !oculto(n)).map(([id]) => id);
-  const enSubcarpetas = visibles.length
-    ? await consultar(visibles.map((id) => `'${id}' in parents`).join(' or '))
-    : [];
+  const enSubcarpetas = await hijosDe(visibles);
 
   return [...enRaiz, ...enSubcarpetas]
     .filter((f) => f.mimeType !== CARPETA)
@@ -177,6 +184,13 @@ function diagnosticar(archivo, categorias) {
   }
 
   const { nombre, precio } = parsearNombre(archivo.name);
+  const kb = Math.round(Number(archivo.size) / 1024);
+  if (Number(archivo.size) > PESO_MAX) {
+    return {
+      ...base, nivel: 'aviso', nombre,
+      detalle: `Pesa ${kb} KB y se descarga entera en cada visita. Conviene achicarla antes de subirla (menos de 500 KB).`,
+    };
+  }
   const cola = nombre.split(' - ').pop();
   if (precio === null && /[\d$]/.test(cola) && cola !== nombre) {
     return {

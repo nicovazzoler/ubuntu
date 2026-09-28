@@ -121,29 +121,40 @@ funciona desde el navegador con una **API key restringida por dominio**. No
 hay login, no hay backend, no hay secreto real: la key solo sirve para leer
 una carpeta que ya es pública.
 
-Son **dos pedidos**, no uno por categoría:
+Primero un pedido a la carpeta raíz, que devuelve las subcarpetas (las
+categorías) y lo que haya suelto. Después **un pedido por subcarpeta, todos
+en paralelo**: con cinco categorías son 1 + 5 pedidos, pero el tiempo de
+espera es el de dos.
 
-1. `'<ID de la carpeta>' in parents` — devuelve las subcarpetas (las
-   categorías) y lo que haya suelto en la raíz.
-2. `'<sub1>' in parents or '<sub2>' in parents or ...` — todas las fotos de
-   todas las categorías de una sola vez.
-
-Con cinco categorías eso son 2 llamadas en vez de 6.
+Lo lógico sería un solo pedido con `'a' in parents or 'b' in parents`, y así
+estaba escrito al principio. Probado contra la carpeta real, **Drive lo
+rechaza con 403** cuando el acceso es anónimo con API key, aunque cada
+carpeta por separado responda bien. La prueba con datos simulados no lo podía
+detectar: el simulador aceptaba cualquier consulta.
 
 De cada archivo se usan `id`, `name`, `mimeType` y `parents`. Se descarta lo
 que no sea imagen, y lo que empiece con `_`.
 
-La imagen se arma con el id:
+La imagen se pide por la misma API, con el id:
 
 ```
-https://lh3.googleusercontent.com/d/<id>=w800
+https://www.googleapis.com/drive/v3/files/<id>?alt=media&key=<API key>
 ```
 
-Eso sirve la foto **ya redimensionada**, en vez de la original de 4 MB que
-salió del celular. Es un endpoint que Google no documenta: anda hoy y podría
-dejar de andar. Por eso está en una sola función (`imagen()` en
-`js/catalogo.js`): si cambia, se toca ahí y nada más, y la migración prevista
-es Cloudinary.
+Eso sirve **la foto original, sin redimensionar**. Con las fotos actuales
+(60–175 KB cada una) está bien. El riesgo es que alguien suba una foto de 4 MB
+directo del celular: por eso `estado.html` avisa cuando un archivo pasa los
+500 KB.
+
+La idea original era el endpoint de miniaturas
+(`lh3.googleusercontent.com/d/<id>=w800`), que redimensiona solo. Probado
+contra la carpeta real respondió 403, y no está documentado por Google. Si
+más adelante el peso de las fotos se vuelve un problema, la migración
+prevista es Cloudinary, que redimensiona por URL.
+
+Cada foto vista es un pedido a la API y cuenta para la cuota del proyecto.
+La cuota gratuita de Drive API está muy por encima de lo que usa un catálogo
+de este tamaño.
 
 ### 3.5 Cache y fallback
 
