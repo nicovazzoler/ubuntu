@@ -2,7 +2,8 @@
 
 body {
   margin: 0;
-  background: var(--crema);
+  background: var(--fondo);
+  transition: background-color 700ms ease;
   color: var(--tinta);
   font-family: var(--texto);
   font-size: 1rem;
@@ -67,7 +68,8 @@ img { display: block; max-width: 100%; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: color-mix(in srgb, var(--crema) 92%, transparent);
+  background: color-mix(in srgb, var(--fondo) 92%, transparent);
+  transition: background-color 700ms ease, border-color var(--transicion);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid transparent;
   transition: border-color var(--transicion);
@@ -117,10 +119,19 @@ img { display: block; max-width: 100%; }
 /* Dos secciones seguidas no suman sus aires: la de abajo se apoya en la de
    arriba. Con una banda de color en el medio sí, porque el borde se ve. */
 .seccion { padding-block: var(--seccion); }
-.seccion + .seccion { padding-block-start: 0; }
+.seccion:not([hidden]) + .seccion { padding-block-start: 0; }
 
 .hero { text-align: center; }
 .hero__logo { width: clamp(96px, 22vw, 132px); margin: 0 auto var(--e6); }
+.hero__imagen { margin: var(--e12) 0 0; }
+.hero__imagen img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1196 / 563;
+  object-fit: cover;
+  border-radius: var(--radio);
+}
+
 .hero h1 {
   font-family: var(--display);
   font-size: clamp(2rem, 7vw, 3.25rem);
@@ -136,6 +147,24 @@ img { display: block; max-width: 100%; }
   margin: 0 auto var(--e8);
 }
 .hero__acciones { display: flex; flex-wrap: wrap; gap: var(--e3); justify-content: center; }
+
+/* Va después de las reglas base del hero: a igual especificidad gana la
+   última. En escritorio el hero ocupa el ancho: texto a la izquierda, foto a la derecha.
+   El isotipo sale porque ya está en el encabezado. */
+@media (min-width: 900px) {
+  .hero {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--e16);
+    align-items: center;
+    text-align: left;
+  }
+  .hero__logo { display: none; }
+  .hero h1, .hero__bajada { margin-inline: 0; }
+  .hero__acciones { justify-content: flex-start; }
+  .hero__imagen { margin: 0; }
+  .hero__imagen img { aspect-ratio: 4 / 3; }
+}
 
 /* ---------- Franja ---------- */
 
@@ -276,14 +305,94 @@ img { display: block; max-width: 100%; }
 .aviso { text-align: center; padding: var(--e16) var(--e4); color: var(--tinta-suave); }
 .aviso p { margin: 0 0 var(--e6); }
 
+/* ---------- Categorías ---------- */
+
+/* En celular es una fila que se desliza con el dedo; en escritorio, cinco columnas. */
+.categorias__lista {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 42%;
+  gap: var(--e3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  margin: 0 calc(var(--e4) * -1);
+  padding: 0 var(--e4) var(--e2);
+  scrollbar-width: none;
+}
+.categorias__lista::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .categorias__lista {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--e6);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+}
+.categoria {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+.categoria__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 55%;
+  border-radius: var(--radio);
+  background: var(--superficie);
+  transition: transform 300ms ease;
+}
+.categoria:hover .categoria__foto { transform: scale(1.02); }
+.categoria__nombre {
+  display: block;
+  margin-top: var(--e3);
+  font-family: var(--display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--tinta);
+}
+.categoria__cantidad { display: block; font-size: 0.8125rem; color: var(--tinta-suave); }
+
 /* ---------- Sobre nosotros ---------- */
 
 .nosotros { text-align: center; }
 .nosotros p { max-width: 58ch; margin: 0 auto; color: var(--tinta-suave); }
+.nosotros__marca {
+  display: grid;
+  place-items: center;
+  margin-top: var(--e8);
+  padding: var(--e8);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--superficie) 70%, transparent);
+}
+.nosotros__marca img { width: min(40%, 180px); height: auto; }
+
+@media (min-width: 900px) {
+  .nosotros {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--e16);
+    align-items: center;
+    text-align: left;
+  }
+  .nosotros p { margin: 0; font-size: 1.0625rem; }
+  .nosotros__marca { margin: 0; aspect-ratio: 5 / 4; }
+}
 
 /* ---------- Cierre ---------- */
 
-.cierre { background: var(--salvia-suave); padding-block: var(--seccion); text-align: center; }
+.cierre { padding-block: var(--seccion); text-align: center; }
 .cierre h2 {
   font-family: var(--display);
   font-size: clamp(1.5rem, 5vw, 2.25rem);

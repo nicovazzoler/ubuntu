@@ -1,6 +1,7 @@
 import { obtenerProductos, categoriasDe, formatearPrecio } from './catalogo.js';
 import { linkProducto, linkGeneral, linkIdea } from './whatsapp.js';
 import { CONFIG } from './config.js';
+import { seguirTonos } from './tonos.js';
 
 const ICONO_WSP = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>`;
 
@@ -55,15 +56,41 @@ function dibujarFiltros(categorias) {
     boton.className = 'filtro';
     boton.textContent = cat;
     boton.setAttribute('aria-pressed', String(cat === estado.categoria));
-    boton.addEventListener('click', () => {
-      estado.categoria = cat;
-      filtros.querySelectorAll('.filtro').forEach((b) =>
-        b.setAttribute('aria-pressed', String(b.textContent === cat))
-      );
-      dibujarProductos();
-    });
+    boton.addEventListener('click', () => elegirCategoria(cat));
     filtros.append(boton);
   });
+}
+
+function elegirCategoria(cat) {
+  estado.categoria = cat;
+  filtros.querySelectorAll('.filtro').forEach((b) =>
+    b.setAttribute('aria-pressed', String(b.textContent === cat))
+  );
+  dibujarProductos();
+}
+
+// Cada bloque usa la foto del primer producto de su categoría: con el prefijo
+// "01." en Drive eligen cuál va de portada.
+function dibujarCategorias(categorias) {
+  const seccion = document.querySelector('#categorias');
+  const lista = document.querySelector('#categorias-lista');
+  lista.replaceChildren();
+  categorias.forEach((cat) => {
+    const deLaCategoria = estado.productos.filter((p) => p.categoria === cat);
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <button type="button" class="categoria">
+        <img class="categoria__foto" src="${deLaCategoria[0].imagen}" alt="" loading="lazy" decoding="async">
+        <span class="categoria__nombre">${cat}</span>
+        <span class="categoria__cantidad">${deLaCategoria.length} ${deLaCategoria.length === 1 ? 'producto' : 'productos'}</span>
+      </button>`;
+    li.querySelector('button').addEventListener('click', () => {
+      elegirCategoria(cat);
+      document.querySelector('#catalogo').scrollIntoView({ behavior: 'smooth' });
+    });
+    lista.append(li);
+  });
+  seccion.hidden = false;
 }
 
 function dibujarEsqueletos(cantidad = 8) {
@@ -92,7 +119,10 @@ async function iniciar() {
     estado.productos = await obtenerProductos();
     const categorias = categoriasDe(estado.productos);
     // Con pocos productos los filtros son ruido.
-    if (estado.productos.length >= 15 && categorias.length > 1) dibujarFiltros(categorias);
+    if (estado.productos.length >= 15 && categorias.length > 1) {
+      dibujarFiltros(categorias);
+      dibujarCategorias(categorias);
+    }
     dibujarProductos();
   } catch (error) {
     console.error(error);
@@ -131,6 +161,7 @@ function enlazarContacto() {
 }
 
 enlazarContacto();
+seguirTonos();
 iniciar();
 botonFlotante();
 bordeEncabezado();

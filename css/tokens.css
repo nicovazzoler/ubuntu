@@ -15,6 +15,14 @@
   --wsp: #25D366;
   --wsp-hover: #1EAE53;
 
+  /* Tonos de fondo por sección. Todos dejan el texto por encima de 4.5:1
+     (el más justo es salvia: --tinta-suave da 4.61). */
+  --tono-crema: #FCF8F7;
+  --tono-arena: #F5EFE8;
+  --tono-salvia: #E4E7DD;
+  --tono-lino: #EEE7E0;
+  --fondo: var(--tono-crema);   /* lo va cambiando js/tonos.js al scrollear */
+
   /* Tipografía */
   --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --texto: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -22,21 +30,21 @@
 
   /* Espaciado, escala de 4px */
   --e1: 4px;   --e2: 8px;   --e3: 12px;  --e4: 16px;
-  --e6: 24px;  --e8: 32px;  --e12: 48px; --e16: 64px; --e24: 96px;
+  --e6: 24px;  --e8: 32px;  --e12: 48px; --e16: 64px; --e20: 80px; --e24: 96px;
 
   /* Ritmo vertical. Son los únicos tokens que cambian con el ancho: así el
      valor responsive vive en un solo lugar y no repartido en media queries. */
   --seccion: var(--e12);      /* aire arriba y abajo de cada sección */
   --titulo-gap: var(--e6);    /* del título a su contenido */
 
-  --ancho-max: 1200px;
+  --ancho-max: 1280px;
   --radio: 10px;
   --transicion: 150ms ease;
 }
 
 @media (min-width: 768px) {
   :root {
-    --seccion: var(--e24);
+    --seccion: var(--e20);
     --titulo-gap: var(--e8);
   }
 }

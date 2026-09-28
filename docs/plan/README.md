@@ -16,6 +16,7 @@ carrito, sin backend.
 | 3 | [Redes sociales](03-redes-sociales.md) | WhatsApp con mensaje prearmado, Instagram, previsualización del link |
 | 4 | [Diseño](04-diseno.md) | Paleta del logo, tipografía, espaciado, grilla |
 | 5 | [Stack](05-stack.md) | HTML, CSS y JS a mano. Sin framework, sin build |
+| 6 | [Versión 2](06-v2.md) | Fotos, escritorio, tonos por sección, video |
 
 ## Datos de la marca
 
