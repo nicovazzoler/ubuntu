@@ -91,9 +91,15 @@ Reglas:
   fotos sueltas en la raíz caen en "Otros".
 - Carpetas o archivos que empiezan con `_` no se muestran. Es la forma de
   despublicar algo sin borrarlo.
-- El **orden** es por categoría y, dentro de cada una, alfabético. Si quieren mandar algo arriba, le ponen un
-  prefijo numérico: `01. Vela lavanda.jpg`. La página corta el `01. ` al
-  mostrar.
+- El **orden** es por categoría y, dentro de cada una, alfabético. Para mandar
+  algo arriba se le pone un número adelante: `01. Vela de ángel.jpg`.
+  **Número, punto, espacio** (sin el espacio no se reconoce). La página corta
+  el `01. ` al mostrar, pero ordena con él. Los números se comparan como
+  números: `2.` va antes que `10.`. Lo que no tiene número va después, en
+  orden alfabético.
+- La **portada de cada categoría** (los bloques con foto) es el primer
+  producto de esa carpeta. Sin prefijos, el primero alfabético; con `01.`, el
+  que ellos elijan.
 
 No existe un valor "a consultar". Un producto sin precio simplemente no
 muestra precio: muestra el botón de consulta.

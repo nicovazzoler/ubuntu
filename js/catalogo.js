@@ -73,6 +73,7 @@ function aProducto(archivo, categorias) {
   return {
     id: archivo.id,
     nombre,
+    orden: archivo.name,   // con el prefijo "01." que el nombre visible ya no tiene
     precio,
     categoria: categorias.get((archivo.parents || [])[0]) || 'Otros',
     imagen: imagen(archivo.id),
@@ -91,10 +92,12 @@ const PESO_MAX = 500 * 1024;
 
 const oculto = (nombre) => nombre.startsWith('_');
 
-// En "Todos" los productos salen agrupados por categoría y, dentro de cada
-// una, por nombre. Mismo orden que los filtros.
+// Agrupados por categoría (mismo orden que los filtros) y, adentro, por nombre
+// de archivo: así "01. Vela de ángel" queda primera aunque se muestre sin el
+// número. numeric hace que "2." vaya antes que "10.".
 const porCategoria = (a, b) =>
-  a.categoria.localeCompare(b.categoria, 'es') || a.nombre.localeCompare(b.nombre, 'es');
+  a.categoria.localeCompare(b.categoria, 'es') ||
+  (a.orden || a.nombre).localeCompare(b.orden || b.nombre, 'es', { numeric: true });
 
 /* ---------- Nombre del archivo ---------- */
 
