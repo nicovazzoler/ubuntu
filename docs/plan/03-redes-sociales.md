@@ -12,7 +12,7 @@ WhatsApp es el checkout de esta página. Instagram es de dónde viene la gente.
 |---|---|
 | WhatsApp (como lo escribe una persona) | 11 7238-8119 |
 | WhatsApp (formato para el link) | `5491172388119` |
-| Instagram | `@Ubuntu.estudio` |
+| Instagram | `@Ubuntu.Estudio` |
 | Zona | Morón, Buenos Aires |
 
 El número del link va **sin `+`, sin espacios, sin guiones**, con código de
@@ -99,9 +99,9 @@ en cinco minutos y lo vemos funcionando antes de decidir.
 
 ## 3. Instagram
 
-Un botón que abre el perfil `@Ubuntu.estudio`. Nada más.
+Un botón que abre el perfil `@Ubuntu.Estudio`. Nada más.
 
-- Va en el encabezado (ícono) y en el pie (ícono + `@Ubuntu.estudio` escrito).
+- Va en el encabezado (ícono) y en el pie (ícono + `@Ubuntu.Estudio` escrito).
 - Abre en pestaña nueva.
 - El usuario escrito al menos una vez: mucha gente prefiere buscarlo a mano
   antes que tocar un link.
@@ -134,7 +134,7 @@ Un rectángulo gris con la URL. Parece un link de spam, y la gente no lo toca.
 │  ███  (foto de una vela)    ███  │
 │  ██████████████████████████████  │
 │                                  │
-│  Ubuntu estudio                  │
+│  Ubuntu Estudio                  │
 │  Hecho a mano, pensado para vos  │
 │  ubuntu-estudio.pages.dev        │
 └──────────────────────────────────┘
@@ -152,7 +152,7 @@ sola vez:
 
 | etiqueta | valor |
 |---|---|
-| `og:title` | Ubuntu estudio |
+| `og:title` | Ubuntu Estudio |
 | `og:description` | Hecho a mano, pensado para vos |
 | `og:image` | Imagen fija de 1200×630, guardada en el repo |
 | `og:url` | URL final del sitio |
