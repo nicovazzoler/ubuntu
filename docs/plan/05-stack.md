@@ -42,6 +42,8 @@ assets/
 ├── fuentes/            <- woff2 de Cormorant Garamond e Inter
 ├── productos/          <- copia local de las fotos, para maquetar y de fallback
 └── catalogo.json       <- la lista de productos mientras no esté Drive
+herramientas/
+└── copia-local.mjs     <- regenera assets/productos desde Drive (se corre a mano)
 css/
 ├── fuentes.css         <- @font-face de las fuentes auto-hospedadas
 ├── tokens.css          <- variables de color, tipografía y espaciado (Plan 4)

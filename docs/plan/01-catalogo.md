@@ -211,9 +211,18 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
       key en `js/config.js` (`drive.apiKey`) y la página deja de usar la
       copia local.
 
-Copia local para maquetar sin depender de la red: `assets/productos/` y
-`assets/catalogo.json`, generados desde un export de la carpeta. Sirven
-también de fallback (§3.5).
+Copia local de respaldo: `assets/productos/` y `assets/catalogo.json`. La
+página la usa si no hay API key o si Drive no responde (§3.5). **Se regenera
+desde Drive con un comando**, cada vez que cambian los productos:
+
+```
+node herramientas/copia-local.mjs
+```
+
+Baja todo a una carpeta temporal y reemplaza la copia vieja recién al final:
+si algo falla, la anterior queda intacta. Google frena descargas seguidas con
+403 de forma intermitente (el mismo archivo baja bien al reintentar), así que
+reintenta hasta 5 veces esperando 1, 2, 4, 8 y 16 segundos.
 
 ## 5. Fuera de alcance del v1
 
