@@ -28,6 +28,7 @@ carrito, sin backend.
 | Zona | Morón, Buenos Aires |
 | Logo | `assets/marca/logo.webp` |
 | Drive | `1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q` |
+| Sitio | https://ubuntu-estudio.pages.dev (se publica desde `main`) |
 
 ## Stack
 
