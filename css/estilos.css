@@ -123,13 +123,25 @@ img { display: block; max-width: 100%; }
 
 .hero { text-align: center; }
 .hero__logo { width: clamp(96px, 22vw, 132px); margin: 0 auto var(--e6); }
-.hero__imagen { margin: var(--e12) 0 0; }
+.hero__imagen {
+  margin: var(--e12) 0 0;
+  overflow: hidden;             /* el zoom no se sale del marco */
+  border-radius: var(--radio);
+}
 .hero__imagen img {
   width: 100%;
   height: auto;
   aspect-ratio: 1196 / 563;
   object-fit: cover;
-  border-radius: var(--radio);
+  animation: acercar 24s ease-in-out infinite alternate;
+}
+/* Zoom y paneo lentos sobre la foto fija: da movimiento sin archivo de video. */
+@keyframes acercar {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.08) translate(-1.5%, -1%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__imagen img { animation: none; }
 }
 
 .hero h1 {
