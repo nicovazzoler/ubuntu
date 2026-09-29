@@ -6,7 +6,7 @@ export const CONFIG = {
 
   whatsapp: '5491172388119',   // con 54 y el 9 de celular, sin + ni espacios
   instagram: 'Ubuntu.estudio',
-  sitio: '',                   // URL pública; se agrega a los mensajes cuando exista
+  sitio: 'https://ubuntu-estudio.pages.dev',   // se agrega al final de los mensajes de WhatsApp
 
   mensajes: {
     general: 'Hola Ubuntu! Vi la página y quería hacerles una consulta 😊',

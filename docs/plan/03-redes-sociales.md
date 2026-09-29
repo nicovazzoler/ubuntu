@@ -177,4 +177,9 @@ teléfono sea una línea:
 
 - [x] Número, Instagram, zona.
 - [x] Imagen 1200×630 para la previsualización (`assets/marca/og.png`).
-- [ ] Dominio final (define `og:url` y la restricción de la API key de Drive).
+- [x] Dirección publicada: `https://ubuntu-estudio.pages.dev` (Cloudflare Pages,
+      rama `main`). Está en `og:url`, en la imagen de la vista previa y al final
+      de los mensajes de WhatsApp.
+- [ ] Dominio propio (`.com.ar` en nic.ar), si lo deciden. Al tenerlo: cambiar
+      la dirección en `index.html` (canonical y og) y en `js/config.js`, y
+      agregarlo a las restricciones de la API key.
