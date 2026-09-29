@@ -533,7 +533,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Pie ---------- */
 
-.pie { border-top: 1px solid var(--borde); padding-block: var(--seccion); font-size: 0.875rem; color: var(--tinta-suave); }
+.pie { background: var(--noche-profunda); padding-block: var(--seccion); font-size: 0.875rem; color: var(--tinta-suave); }
 .pie__fila { display: flex; flex-wrap: wrap; gap: var(--e6); align-items: center; justify-content: space-between; }
 .pie__redes { display: flex; gap: var(--e6); }
 .pie a { color: var(--tinta-suave); text-decoration: none; display: inline-flex; align-items: center; gap: var(--e2); }

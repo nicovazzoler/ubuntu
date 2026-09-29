@@ -10,7 +10,7 @@ export const CONFIG = {
 
   mensajes: {
     general: 'Hola Ubuntu! Vi la página y quería hacerles una consulta 😊',
-    producto: (nombre) => `Hola Ubuntu! Me interesa este producto:\n*${nombre}*\n¿Me pasan precio y disponibilidad?`,
+    producto: (detalle) => `Hola Ubuntu! Me interesa este producto:\n${detalle}\n¿Me pasan precio y disponibilidad?`,
     idea: 'Hola Ubuntu! Tengo una idea para un pedido y quería contarles 😊',
   },
 

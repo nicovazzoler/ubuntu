@@ -28,7 +28,7 @@ function mostrar(i) {
   visor.querySelector('#visor-nombre').textContent = p.nombre;
   visor.querySelector('#visor-categoria').textContent = p.categoria;
   visor.querySelector('#visor-precio').textContent = p.precio !== null ? formatearPrecio(p.precio) : '';
-  visor.querySelector('#visor-consultar').href = linkProducto(p.nombre);
+  visor.querySelector('#visor-consultar').href = linkProducto(p);
   visor.querySelector('#visor-posicion').textContent = `${estado.i + 1} / ${n}`;
 
   const hayMas = n > 1;

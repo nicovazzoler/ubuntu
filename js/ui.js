@@ -26,7 +26,7 @@ function tarjeta(p, i, lista) {
     <div class="tarjeta__cuerpo">
       <h3 class="tarjeta__nombre">${p.nombre}</h3>
       ${precio}
-      <a class="tarjeta__accion" href="${linkProducto(p.nombre)}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Consultar</a>
+      <a class="tarjeta__accion" href="${linkProducto(p)}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Consultar</a>
     </div>`;
   li.querySelector('.tarjeta__zoom').addEventListener('click', () => abrirVisor(lista, i));
   return li;

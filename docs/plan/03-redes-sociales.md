@@ -44,8 +44,11 @@ escribe el link a mano.
 **b) Por producto — el botón de cada tarjeta del catálogo**
 
 > Hola Ubuntu! Me interesa este producto:
-> *Vela de soja lavanda*
+> Velas - Vela de soja lavanda
 > ¿Me pasan precio y disponibilidad?
+
+Va la categoría y el producto, sin asteriscos (pedido de Nico). Si el producto
+está suelto en la raíz de Drive, su categoría es "Otros" y va solo el nombre.
 >
 > https://ubuntu-estudio.pages.dev
 

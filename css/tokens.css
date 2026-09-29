@@ -25,6 +25,7 @@
   /* Secciones oscuras (intro, quiénes somos, cierre, pie). Es el mismo
      marrón que la tinta: el texto claro encima da 8.4:1. */
   --noche: #4A423B;
+  --noche-profunda: #1E1A18;    /* pie: casi negro cálido; el texto secundario da 10.4:1 */
   --fondo: var(--tono-crema);   /* lo va cambiando js/tonos.js al scrollear */
 
   /* Tipografía */
