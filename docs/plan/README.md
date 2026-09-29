@@ -1,4 +1,4 @@
-# Planificación — Ubuntu estudio
+# Planificación — Ubuntu Estudio
 
 *Hecho a mano, pensado para vos.*
 Velas, souvenirs y deco artesanal. Morón, Buenos Aires.
@@ -24,7 +24,7 @@ carrito, sin backend.
 |---|---|
 | Lema | Hecho a mano, pensado para vos |
 | WhatsApp | 11 7238-8119 (`5491172388119`) |
-| Instagram | `@Ubuntu.estudio` |
+| Instagram | `@Ubuntu.Estudio` |
 | Zona | Morón, Buenos Aires |
 | Logo | `assets/marca/logo.webp` |
 | Drive | `1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q` |
