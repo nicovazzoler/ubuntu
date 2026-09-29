@@ -25,7 +25,7 @@ carrito, sin backend.
 | Lema | Hecho a mano, pensado para vos |
 | WhatsApp | 11 7238-8119 (`5491172388119`) |
 | Instagram | `@Ubuntu.estudio` |
-| Zona | Morón, Buenos Aires · envíos a todo el país |
+| Zona | Morón, Buenos Aires |
 | Logo | `assets/marca/logo.webp` |
 | Drive | `1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q` |
 

@@ -24,7 +24,6 @@ estamos hablando.
 |---|---|---|
 | 1 | Encabezado | Logo + acceso a WhatsApp e Instagram, siempre visible |
 | 2 | Hero | El lema, qué hacen, y los dos botones |
-| 3 | Franja | Envíos a todo el país · Morón, Buenos Aires |
 | 4 | Catálogo | El contenido real. Es el 80% de la página |
 | 5 | Sobre nosotros | Corto. La confianza de comprarle a una familia |
 | 6 | Contanos tu idea | Cierre: el CTA de personalizados |
@@ -54,11 +53,10 @@ contexto tiene que entender el rubro en dos segundos.
 
 ### 3.2 Franja bajo el hero
 
-> Envíos a todo el país · Morón, Buenos Aires
-
-Una línea, fondo salvia, sin botón. "Envíos a todo el país" es de las cosas
-que más desbloquean una compra y no cuesta nada decirla temprano. Sin
-precios de envío, como pidieron.
+**Eliminada.** Decía "Envíos a todo el país · Morón, Buenos Aires", y no hacen
+envíos a todo el país. Tampoco figura en la descripción del sitio (la que
+muestran Google y WhatsApp al compartir el link). No volver a agregar nada de
+envíos hasta que ellos lo confirmen.
 
 ### 3.3 Encima del catálogo
 

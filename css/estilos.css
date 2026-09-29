@@ -114,6 +114,105 @@ img { display: block; max-width: 100%; }
 .icono-link:hover { background: var(--salvia-suave); color: var(--tinta); }
 .icono-link svg { width: 21px; height: 21px; }
 
+/* ---------- Intro ---------- */
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+.intro {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(calc(100svh - 64px), 820px);   /* la primera pantalla entera, menos el encabezado */
+  padding: var(--e12) var(--e4);
+  overflow: hidden;
+  text-align: center;
+}
+.intro__contenido { position: relative; }
+
+/* Luz cálida detrás del texto, que respira como la llama de una vela. */
+.intro__luz {
+  position: absolute;
+  width: min(90vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(236 218 186 / 0.75) 0%, rgb(236 218 186 / 0.25) 38%, transparent 68%);
+  animation: luz-entra 2.4s ease-out both, respirar 7s ease-in-out 2.4s infinite;
+}
+@keyframes luz-entra { from { opacity: 0; transform: scale(0.85); } }
+@keyframes respirar {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  30%      { opacity: 0.8;  transform: scale(0.97); }
+  55%      { opacity: 0.95; transform: scale(1.03); }
+  70%      { opacity: 0.75; transform: scale(0.99); }
+}
+
+.intro__marca {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.25rem, 15vw, 8rem);
+  line-height: 1;
+  letter-spacing: 0.2em;
+  margin-right: -0.2em;         /* el tracking deja aire después de la última letra */
+  color: var(--taupe);          /* texto grande: 4.27:1 alcanza (mínimo 3:1) */
+}
+/* Cada letra aparece desenfocada y se asienta, una detrás de otra. */
+.intro__letras span {
+  display: inline-block;
+  animation: letra 1.4s cubic-bezier(.2, .7, .2, 1) both;
+}
+.intro__letras span:nth-child(1) { animation-delay: 0.20s; }
+.intro__letras span:nth-child(2) { animation-delay: 0.34s; }
+.intro__letras span:nth-child(3) { animation-delay: 0.48s; }
+.intro__letras span:nth-child(4) { animation-delay: 0.62s; }
+.intro__letras span:nth-child(5) { animation-delay: 0.76s; }
+.intro__letras span:nth-child(6) { animation-delay: 0.90s; }
+@keyframes letra {
+  from { opacity: 0; transform: translateY(0.12em); filter: blur(8px); }
+}
+
+.intro__linea {
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: var(--e6) auto;
+  background: var(--taupe);
+  transform-origin: center;
+  animation: linea 1s ease 1.6s both;
+}
+@keyframes linea { from { transform: scaleX(0); } }
+
+.intro__lema {
+  margin: 0;
+  font-size: clamp(0.75rem, 2.6vw, 0.9375rem);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  animation: aparece 1.2s ease 2.1s both;
+}
+@keyframes aparece { from { opacity: 0; transform: translateY(6px); } }
+
+.intro__bajar {
+  position: absolute;
+  bottom: var(--e6);
+  left: 50%;
+  translate: -50% 0;
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  color: var(--tinta-suave);
+  animation: aparece 1s ease 3s both, flotar 2.4s ease-in-out 4s infinite;
+}
+.intro__bajar svg { width: 26px; height: 26px; }
+@keyframes flotar { 50% { transform: translateY(6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__luz, .intro__letras span, .intro__linea, .intro__lema, .intro__bajar { animation: none; }
+}
+
 /* ---------- Hero ---------- */
 
 /* Dos secciones seguidas no suman sus aires: la de abajo se apoya en la de
@@ -131,7 +230,7 @@ img { display: block; max-width: 100%; }
 .hero__imagen img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1196 / 563;
+  aspect-ratio: 1096 / 638;
   object-fit: cover;
   animation: acercar 24s ease-in-out infinite alternate;
 }
@@ -175,19 +274,6 @@ img { display: block; max-width: 100%; }
   .hero h1, .hero__bajada { margin-inline: 0; }
   .hero__acciones { justify-content: flex-start; }
   .hero__imagen { margin: 0; }
-  .hero__imagen img { aspect-ratio: 4 / 3; }
-}
-
-/* ---------- Franja ---------- */
-
-.franja {
-  margin: 0;                  /* es un <p>: sin esto arrastra el margen del navegador */
-  background: var(--salvia);
-  color: var(--tinta);
-  text-align: center;
-  padding: var(--e3) var(--e4);
-  font-size: 0.875rem;
-  letter-spacing: 0.02em;
 }
 
 /* ---------- Catálogo ---------- */

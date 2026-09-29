@@ -135,14 +135,14 @@ async function iniciar() {
   }
 }
 
-// El flotante entra recién cuando el hero salió de pantalla.
+// El flotante entra recién cuando la primera pantalla (la intro) salió de vista.
 function botonFlotante() {
   const flotante = document.querySelector('#flotante');
-  const hero = document.querySelector('#hero');
+  const portada = document.querySelector('.intro');
   new IntersectionObserver(
     ([entrada]) => flotante.setAttribute('data-visible', String(!entrada.isIntersecting)),
     { rootMargin: '-120px 0px 0px 0px' }
-  ).observe(hero);
+  ).observe(portada);
 }
 
 function bordeEncabezado() {

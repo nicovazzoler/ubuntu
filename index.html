@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ubuntu estudio — Velas, souvenirs y deco artesanal</title>
-<meta name="description" content="Hecho a mano, pensado para vos. Velas, souvenirs y objetos de deco artesanales. Morón, Buenos Aires. Envíos a todo el país.">
+<meta name="description" content="Hecho a mano, pensado para vos. Velas, souvenirs y objetos de deco artesanales. Morón, Buenos Aires.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ubuntu estudio">
@@ -42,6 +42,23 @@
 </header>
 
 <main>
+  <!-- Portada animada: se ve como un video en loop, pero es texto con CSS.
+       Nítido a cualquier tamaño, no pesa nada y el texto se edita acá. -->
+  <section class="intro" data-tono="crema" aria-label="Ubuntu estudio">
+    <div class="intro__luz" aria-hidden="true"></div>
+    <div class="intro__contenido">
+      <p class="intro__marca">
+        <span class="solo-lectores">Ubuntu</span>
+        <span class="intro__letras" aria-hidden="true"><span>U</span><span>B</span><span>U</span><span>N</span><span>T</span><span>U</span></span>
+      </p>
+      <span class="intro__linea" aria-hidden="true"></span>
+      <p class="intro__lema">Recuerdos que permanecen</p>
+    </div>
+    <a class="intro__bajar" href="#hero" aria-label="Ver más">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
   <section class="seccion hero contenedor" id="hero" data-tono="crema">
     <div class="hero__texto">
       <img class="hero__logo" src="assets/marca/isotipo.png" alt="" width="132">
@@ -53,11 +70,9 @@
       </div>
     </div>
     <figure class="hero__imagen">
-      <img src="assets/hero.jpg" alt="Velas de comunión: cuenco, cruz y ángel sobre lino" width="1196" height="563" fetchpriority="high">
+      <img src="assets/hero.jpg" alt="Velas de comunión: cuenco, cruz y ángel sobre lino" width="1096" height="638">
     </figure>
   </section>
-
-  <p class="franja">Envíos a todo el país · Morón, Buenos Aires</p>
 
   <section class="seccion categorias contenedor" id="categorias" data-tono="arena" hidden>
     <h2 class="titulo-seccion">Categorías</h2>

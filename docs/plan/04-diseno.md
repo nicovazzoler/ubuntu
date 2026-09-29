@@ -71,7 +71,7 @@ Reglas:
   "para que resalte" rompe el tono del logo.
 - El verde de WhatsApp es la única excepción, porque es un color que la gente
   reconoce sin leer.
-- El salvia se usa en **superficies grandes**: la franja de envíos, el bloque
+- El salvia se usa en **superficies grandes**: el bloque
   de "contanos tu idea", el chip de categoría activo. Nunca en tipografía.
 - Modo oscuro: **no va en el v1.** Duplica el trabajo de tokens y las fotos de
   producto sobre fondo oscuro se ven peor.
@@ -109,7 +109,7 @@ breakpoints.
 | Sección (h2) | 1.125rem → 1.375rem | Cormorant, mayúsculas, tracking 0.18em | 500 | 1.2 |
 | Producto (h3) | 1rem | Inter | 500 | 1.3 |
 | Cuerpo | 1rem | Inter | 400 | 1.6 |
-| Chico (pie, franja) | 0.875rem | Inter | 400 | 1.5 |
+| Chico (pie) | 0.875rem | Inter | 400 | 1.5 |
 
 - Nunca texto de cuerpo por debajo de 16px en móvil: iOS hace zoom solo.
 - Ancho de línea máximo **65 caracteres** en párrafos.
