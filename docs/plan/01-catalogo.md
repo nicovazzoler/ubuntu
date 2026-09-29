@@ -231,18 +231,33 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
       key en `js/config.js` (`drive.apiKey`) y la página deja de usar la
       copia local.
 
-Copia local de respaldo: `assets/productos/` y `assets/catalogo.json`. La
-página la usa si no hay API key o si Drive no responde (§3.5). **Se regenera
-desde Drive con un comando**, cada vez que cambian los productos:
+Copia local: `assets/productos/` (originales), `assets/productos/mini/`
+(versión chica) y `assets/catalogo.json`. De ahí salen las fotos del sitio y es
+el respaldo si Drive no responde (§3.5).
 
-```
-node herramientas/copia-local.mjs
-```
+**Se regenera sola, cada hora**, con GitHub Actions
+(`.github/workflows/copia-local.yml`): corre `herramientas/copia-local.mjs`
+sobre `main` y, si algo cambió en Drive, hace el commit; Cloudflare publica
+solo. Nadie tiene que correr nada. Se puede forzar desde GitHub → Actions →
+"Copia local desde Drive" → Run workflow.
 
-Baja todo a una carpeta temporal y reemplaza la copia vieja recién al final:
-si algo falla, la anterior queda intacta. Google frena descargas seguidas con
-403 de forma intermitente (el mismo archivo baja bien al reintentar), así que
-reintenta hasta 5 veces esperando 1, 2, 4, 8 y 16 segundos.
+- Solo baja las fotos que cambiaron: guarda el `md5Checksum` que Drive
+  calcula de cada archivo y reutiliza las que coinciden. Sin cambios en
+  Drive, no descarga nada y no hace commit.
+- Eso importa por Cloudflare: el plan gratis tiene 500 publicaciones por mes, y
+  un commit por hora serían 720.
+- Todo se arma en una carpeta temporal; la copia vieja se reemplaza recién al
+  final. Google frena descargas seguidas con 403 intermitentes, así que cada
+  descarga reintenta hasta 5 veces (1, 2, 4, 8 y 16 s).
+- A mano, si hace falta: `npm install --prefix herramientas` (una vez) y
+  `node herramientas/copia-local.mjs`.
+
+**Ojo al trabajar en `pruebas`:** el bot commitea en `main`. Antes de seguir
+trabajando, traer `main` a `pruebas` (`git pull origin main`), o el próximo
+merge puede chocar en `assets/catalogo.json`.
+
+**GitHub pausa los flujos programados** si el repo pasa 60 días sin actividad
+(manda un mail). Se reactiva desde la pestaña Actions.
 
 ## 5. Fuera de alcance del v1
 

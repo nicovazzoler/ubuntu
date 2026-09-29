@@ -1,0 +1,47 @@
+# Cada hora regenera la copia local desde Drive y, si algo cambió, lo commitea
+# en main: Cloudflare Pages publica solo. También se puede correr a mano desde
+# GitHub → Actions → "Copia local desde Drive" → Run workflow.
+name: Copia local desde Drive
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # minuto 17 de cada hora (UTC); en punto las colas de GitHub se llenan
+  workflow_dispatch:
+
+permissions:
+  contents: write           # para poder hacer el commit
+
+concurrency:
+  group: copia-local        # si una corrida se atrasa, no se pisan
+  cancel-in-progress: false
+
+jobs:
+  copia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar herramientas
+        run: npm ci --prefix herramientas
+
+      - name: Regenerar la copia desde Drive
+        run: node herramientas/copia-local.mjs
+
+      - name: Commit si hubo cambios
+        run: |
+          if [ -z "$(git status --porcelain assets)" ]; then
+            echo "Drive sin cambios: no hay nada que publicar."
+            exit 0
+          fi
+          git config user.name  "copia-local[bot]"
+          git config user.email "copia-local@users.noreply.github.com"
+          git add assets
+          git commit -m "chore: actualizar copia local desde Drive"
+          git push

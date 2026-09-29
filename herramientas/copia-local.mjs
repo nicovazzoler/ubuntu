@@ -12,7 +12,7 @@
 // La API key está restringida por dominio: el pedido se hace con el Referer de
 // localhost:8000, que es uno de los permitidos.
 
-import { mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { CONFIG } from '../js/config.js';
 import { parsearNombre } from '../js/catalogo.js';
 import sharp from 'sharp';
@@ -45,7 +45,7 @@ const slug = (s) => s.normalize('NFKD').replace(/[̀-ͯ]/g, '')
 async function hijosDe(id) {
   const url = new URL(API);
   url.searchParams.set('q', `'${id}' in parents and trashed = false`);
-  url.searchParams.set('fields', 'files(id,name,mimeType,size)');
+  url.searchParams.set('fields', 'files(id,name,mimeType,size,md5Checksum)');
   url.searchParams.set('pageSize', '1000');
   url.searchParams.set('key', CONFIG.drive.apiKey);
   const r = await fetch(url, { headers: REFERER });
@@ -63,7 +63,16 @@ const porCarpeta = await Promise.all(
 const archivos = [...sueltos, ...porCarpeta.flat()]
   .filter((f) => EXTENSION[f.mimeType] && !oculto(f.name));
 
-// Todo se baja a una carpeta aparte; la copia vieja se reemplaza recién al final.
+// md5Checksum es la huella que Drive calcula de cada archivo: si no cambió, la
+// foto (y su versión chica) se reutilizan de la copia anterior en vez de
+// bajarse de nuevo. Corre cada hora en GitHub Actions: sin esto serían 24
+// descargas por hora aunque nada cambie, justo lo que hace que Google frene.
+const anterior = new Map();
+try {
+  for (const p of JSON.parse(await readFile('assets/catalogo.json', 'utf8'))) if (p.md5) anterior.set(p.md5, p);
+} catch { /* primera vez o copia vieja sin huellas: se baja todo */ }
+
+// Todo se arma en una carpeta aparte; la copia vieja se reemplaza recién al final.
 await rm(TEMPORAL, { recursive: true, force: true });
 await mkdir(`${TEMPORAL}/mini`, { recursive: true });
 
@@ -71,14 +80,21 @@ const productos = [];
 for (const f of archivos) {
   const { nombre, precio } = parsearNombre(f.name);
   const archivo = `${slug(f.categoria)}--${slug(nombre)}.${EXTENSION[f.mimeType]}`;
-  const original = await bajar(f.id, f.name);
   const mini = `mini/${archivo.replace(/\.[^.]+$/, '.webp')}`;
-  await writeFile(`${TEMPORAL}/${archivo}`, original);
-  await sharp(original).rotate()   // respeta la orientación que guarda el celular
-    .resize({ width: 600, withoutEnlargement: true })
-    .webp({ quality: 78 })
-    .toFile(`${TEMPORAL}/${mini}`);
-  process.stdout.write('.');
+  const previo = anterior.get(f.md5Checksum);
+  if (previo?.mini) {
+    await copyFile(previo.imagen, `${TEMPORAL}/${archivo}`);
+    await copyFile(previo.mini, `${TEMPORAL}/${mini}`);
+    process.stdout.write('=');   // sin cambios
+  } else {
+    const original = await bajar(f.id, f.name);
+    await writeFile(`${TEMPORAL}/${archivo}`, original);
+    await sharp(original).rotate()   // respeta la orientación que guarda el celular
+      .resize({ width: 600, withoutEnlargement: true })
+      .webp({ quality: 78 })
+      .toFile(`${TEMPORAL}/${mini}`);
+    process.stdout.write('↓');   // bajada de Drive
+  }
   productos.push({
     id: `${slug(f.categoria)}--${slug(nombre)}`,
     nombre,
@@ -87,6 +103,7 @@ for (const f of archivos) {
     categoria: f.categoria,
     imagen: `${DESTINO}/${archivo}`,
     mini: `${DESTINO}/${mini}`,
+    md5: f.md5Checksum,
   });
 }
 
