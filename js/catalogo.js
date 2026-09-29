@@ -6,25 +6,31 @@ import { CONFIG } from './config.js';
 
 const API = 'https://www.googleapis.com/drive/v3/files';
 const CARPETA = 'application/vnd.google-apps.folder';
-const CACHE_MS = 10 * 60 * 1000;
 
-export async function obtenerProductos() {
-  if (!CONFIG.drive.apiKey) return leerCopiaLocal();
+// Devuelve enseguida lo último conocido (lo que quedó guardado en el navegador o,
+// si es la primera visita, la copia local) y consulta Drive por detrás: si hay
+// cambios, llama a alActualizar con la lista nueva. Así la página no espera a
+// Drive para mostrar algo, y Drive sigue mandando sobre nombres y productos.
+export async function obtenerProductos(alActualizar) {
+  const local = await leerCopiaLocal().catch(() => []);
+  if (!CONFIG.drive.apiKey) return local;
 
-  const cacheado = leerCache();
-  if (cacheado) return cacheado;
-
-  try {
-    const productos = await leerDeDrive();
+  const deDrive = leerDeDrive(local).then((productos) => {
     guardarCache(productos);
     return productos;
-  } catch (error) {
-    // Sin internet, cuota agotada o key mal configurada: mejor la copia vieja
-    // que una pantalla vacía.
-    console.warn('Drive no respondió; se usa la copia local.', error);
-    return leerCopiaLocal();
-  }
+  });
+
+  const primero = leerCache() ?? (local.length ? local : null);
+  if (!primero) return deDrive;   // no hay nada que mostrar mientras tanto
+
+  deDrive
+    .then((nuevos) => { if (firma(nuevos) !== firma(primero)) alActualizar?.(nuevos); })
+    .catch((error) => console.warn('Drive no respondió; queda lo último conocido.', error));
+  return primero;
 }
+
+const firma = (productos) =>
+  JSON.stringify(productos.map((p) => [p.categoria, p.nombre, p.precio, p.imagen]));
 
 /* ---------- Drive ---------- */
 
@@ -49,7 +55,7 @@ async function hijosDe(ids) {
   return listas.flat();
 }
 
-async function leerDeDrive() {
+async function leerDeDrive(local) {
   const raiz = CONFIG.drive.carpeta;
   const enRaiz = await consultar(`'${raiz}' in parents`);
 
@@ -62,24 +68,31 @@ async function leerDeDrive() {
   const subcarpetas = [...categorias.keys()].filter((id) => id !== raiz);
   const enSubcarpetas = await hijosDe(subcarpetas);
 
+  // La foto sale del propio sitio si el producto está en la copia local: Drive no
+  // deja que el navegador la guarde (max-age=0) y la manda en tamaño original.
+  const delSitio = new Map(local.map((p) => [clave(p), p]));
   return [...enRaiz, ...enSubcarpetas]
     .filter((f) => f.mimeType.startsWith('image/') && !oculto(f.name))
-    .map((f) => aProducto(f, categorias))
+    .map((f) => aProducto(f, categorias, delSitio))
     .sort(porCategoria);
 }
 
-function aProducto(archivo, categorias) {
+function aProducto(archivo, categorias, delSitio) {
   const { nombre, precio } = parsearNombre(archivo.name);
+  const categoria = categorias.get((archivo.parents || [])[0]) || 'Otros';
+  const copia = delSitio.get(clave({ categoria, nombre }));
   return {
     id: archivo.id,
     nombre,
     orden: archivo.name,   // con el prefijo "01." que el nombre visible ya no tiene
     precio,
-    categoria: categorias.get((archivo.parents || [])[0]) || 'Otros',
-    imagen: imagen(archivo.id),
-    imagenGrande: imagen(archivo.id),
+    categoria,
+    imagen: copia?.imagen ?? imagen(archivo.id),
+    imagenGrande: copia?.imagenGrande ?? imagen(archivo.id),
   };
 }
+
+export const clave = (p) => `${p.categoria}|${p.nombre}`;
 
 // La foto original, pedida por la API oficial. Sirve tal cual se subió, sin
 // redimensionar: por eso estado.html avisa si una pesa demasiado. El endpoint
@@ -129,21 +142,22 @@ async function leerCopiaLocal() {
     nombre: item.nombre,
     precio: typeof item.precio === 'number' ? item.precio : null,
     categoria: item.categoria || 'Otros',
-    imagen: item.imagen,
-    imagenGrande: item.imagenGrande || item.imagen,
+    imagen: item.mini || item.imagen,   // versión chica para tarjetas
+    imagenGrande: item.imagen,          // original para el visor
   })).sort(porCategoria);
 }
 
 /* ---------- Cache ---------- */
 
-const clave = () => `ubuntu:catalogo:${CONFIG.drive.carpeta}`;
+const claveCache = () => `ubuntu:catalogo:${CONFIG.drive.carpeta}`;
 
 function leerCache() {
   try {
-    const crudo = localStorage.getItem(clave());
+    const crudo = localStorage.getItem(claveCache());
     if (!crudo) return null;
-    const { ts, productos } = JSON.parse(crudo);
-    return Date.now() - ts > CACHE_MS ? null : productos;
+    // Sin vencimiento: se usa solo para mostrar algo enseguida; Drive se
+    // consulta igual en cada visita.
+    return JSON.parse(crudo).productos;
   } catch {
     return null;   // incógnito, storage bloqueado o JSON viejo
   }
@@ -151,7 +165,7 @@ function leerCache() {
 
 function guardarCache(productos) {
   try {
-    localStorage.setItem(clave(), JSON.stringify({ ts: Date.now(), productos }));
+    localStorage.setItem(claveCache(), JSON.stringify({ ts: Date.now(), productos }));
   } catch {
     /* sin cache se sigue igual, solo más lento */
   }

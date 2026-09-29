@@ -1,0 +1,15 @@
+# Cloudflare Pages lee este archivo y aplica estos encabezados de caché.
+
+# Las fuentes no cambian nunca: el navegador las guarda un año.
+/assets/fuentes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fotos y marca: frescas por una hora; después se muestran igual mientras se
+# revisa por detrás si cambiaron (hasta un día). Una foto reemplazada en la
+# copia local se ve en la visita siguiente, no al instante.
+/assets/productos/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/assets/marca/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/assets/hero.jpg
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

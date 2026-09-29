@@ -5,7 +5,8 @@
     "orden": "01. Set comunión.jpeg",
     "precio": null,
     "categoria": "Comunión",
-    "imagen": "assets/productos/comunion--set-comunion.jpeg"
+    "imagen": "assets/productos/comunion--set-comunion.jpeg",
+    "mini": "assets/productos/mini/comunion--set-comunion.webp"
   },
   {
     "id": "comunion--vela-cruz-grande",
@@ -13,7 +14,8 @@
     "orden": "Vela cruz grande.jpeg",
     "precio": null,
     "categoria": "Comunión",
-    "imagen": "assets/productos/comunion--vela-cruz-grande.jpeg"
+    "imagen": "assets/productos/comunion--vela-cruz-grande.jpeg",
+    "mini": "assets/productos/mini/comunion--vela-cruz-grande.webp"
   },
   {
     "id": "comunion--vela-de-angel",
@@ -21,7 +23,8 @@
     "orden": "Vela de ángel.jpeg",
     "precio": null,
     "categoria": "Comunión",
-    "imagen": "assets/productos/comunion--vela-de-angel.jpeg"
+    "imagen": "assets/productos/comunion--vela-de-angel.jpeg",
+    "mini": "assets/productos/mini/comunion--vela-de-angel.webp"
   },
   {
     "id": "comunion--velon-personalizado",
@@ -29,7 +32,8 @@
     "orden": "Velón personalizado.jpeg",
     "precio": null,
     "categoria": "Comunión",
-    "imagen": "assets/productos/comunion--velon-personalizado.jpeg"
+    "imagen": "assets/productos/comunion--velon-personalizado.jpeg",
+    "mini": "assets/productos/mini/comunion--velon-personalizado.webp"
   },
   {
     "id": "deco--florero-de-cemento",
@@ -37,7 +41,8 @@
     "orden": "Florero de cemento.jpeg",
     "precio": null,
     "categoria": "Deco",
-    "imagen": "assets/productos/deco--florero-de-cemento.jpeg"
+    "imagen": "assets/productos/deco--florero-de-cemento.jpeg",
+    "mini": "assets/productos/mini/deco--florero-de-cemento.webp"
   },
   {
     "id": "deco--hornito-de-cemento",
@@ -45,7 +50,8 @@
     "orden": "Hornito de cemento.jpeg",
     "precio": null,
     "categoria": "Deco",
-    "imagen": "assets/productos/deco--hornito-de-cemento.jpeg"
+    "imagen": "assets/productos/deco--hornito-de-cemento.jpeg",
+    "mini": "assets/productos/mini/deco--hornito-de-cemento.webp"
   },
   {
     "id": "souvenirs--cola-de-sirena",
@@ -53,7 +59,8 @@
     "orden": "Cola de sirena.jpeg",
     "precio": null,
     "categoria": "Souvenirs",
-    "imagen": "assets/productos/souvenirs--cola-de-sirena.jpeg"
+    "imagen": "assets/productos/souvenirs--cola-de-sirena.jpeg",
+    "mini": "assets/productos/mini/souvenirs--cola-de-sirena.webp"
   },
   {
     "id": "souvenirs--revelacion-de-genero",
@@ -61,7 +68,8 @@
     "orden": "Revelación de género.jpeg",
     "precio": null,
     "categoria": "Souvenirs",
-    "imagen": "assets/productos/souvenirs--revelacion-de-genero.jpeg"
+    "imagen": "assets/productos/souvenirs--revelacion-de-genero.jpeg",
+    "mini": "assets/productos/mini/souvenirs--revelacion-de-genero.webp"
   },
   {
     "id": "velas--burbuja",
@@ -69,7 +77,8 @@
     "orden": "Burbuja.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--burbuja.jpeg"
+    "imagen": "assets/productos/velas--burbuja.jpeg",
+    "mini": "assets/productos/mini/velas--burbuja.webp"
   },
   {
     "id": "velas--cubo-de-vela-corazon",
@@ -77,7 +86,8 @@
     "orden": "Cubo de vela (corazón).jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--cubo-de-vela-corazon.jpeg"
+    "imagen": "assets/productos/velas--cubo-de-vela-corazon.jpeg",
+    "mini": "assets/productos/mini/velas--cubo-de-vela-corazon.webp"
   },
   {
     "id": "velas--cubo-de-vela",
@@ -85,7 +95,8 @@
     "orden": "Cubo de vela.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--cubo-de-vela.jpeg"
+    "imagen": "assets/productos/velas--cubo-de-vela.jpeg",
+    "mini": "assets/productos/mini/velas--cubo-de-vela.webp"
   },
   {
     "id": "velas--estrella",
@@ -93,7 +104,8 @@
     "orden": "Estrella.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--estrella.jpeg"
+    "imagen": "assets/productos/velas--estrella.jpeg",
+    "mini": "assets/productos/mini/velas--estrella.webp"
   },
   {
     "id": "velas--flor",
@@ -101,7 +113,8 @@
     "orden": "Flor.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--flor.jpeg"
+    "imagen": "assets/productos/velas--flor.jpeg",
+    "mini": "assets/productos/mini/velas--flor.webp"
   },
   {
     "id": "velas--lapiz-de-vela",
@@ -109,7 +122,8 @@
     "orden": "Lápiz de vela.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--lapiz-de-vela.jpeg"
+    "imagen": "assets/productos/velas--lapiz-de-vela.jpeg",
+    "mini": "assets/productos/mini/velas--lapiz-de-vela.webp"
   },
   {
     "id": "velas--margarita",
@@ -117,7 +131,8 @@
     "orden": "Margarita.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--margarita.jpeg"
+    "imagen": "assets/productos/velas--margarita.jpeg",
+    "mini": "assets/productos/mini/velas--margarita.webp"
   },
   {
     "id": "velas--oso",
@@ -125,7 +140,8 @@
     "orden": "Oso.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--oso.jpeg"
+    "imagen": "assets/productos/velas--oso.jpeg",
+    "mini": "assets/productos/mini/velas--oso.webp"
   },
   {
     "id": "velas--ostra",
@@ -133,7 +149,8 @@
     "orden": "Ostra.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--ostra.jpeg"
+    "imagen": "assets/productos/velas--ostra.jpeg",
+    "mini": "assets/productos/mini/velas--ostra.webp"
   },
   {
     "id": "velas--remolino",
@@ -141,7 +158,8 @@
     "orden": "Remolino.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--remolino.jpeg"
+    "imagen": "assets/productos/velas--remolino.jpeg",
+    "mini": "assets/productos/mini/velas--remolino.webp"
   },
   {
     "id": "velas--telarana",
@@ -149,7 +167,8 @@
     "orden": "Telaraña.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--telarana.jpeg"
+    "imagen": "assets/productos/velas--telarana.jpeg",
+    "mini": "assets/productos/mini/velas--telarana.webp"
   },
   {
     "id": "velas--trenzas",
@@ -157,7 +176,8 @@
     "orden": "Trenzas.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--trenzas.jpeg"
+    "imagen": "assets/productos/velas--trenzas.jpeg",
+    "mini": "assets/productos/mini/velas--trenzas.webp"
   },
   {
     "id": "velas-con-sticker--el-principito",
@@ -165,7 +185,8 @@
     "orden": "El principito.jpeg",
     "precio": null,
     "categoria": "Velas con sticker",
-    "imagen": "assets/productos/velas-con-sticker--el-principito.jpeg"
+    "imagen": "assets/productos/velas-con-sticker--el-principito.jpeg",
+    "mini": "assets/productos/mini/velas-con-sticker--el-principito.webp"
   },
   {
     "id": "velas-con-sticker--gorrito",
@@ -173,7 +194,8 @@
     "orden": "Gorrito.jpeg",
     "precio": null,
     "categoria": "Velas con sticker",
-    "imagen": "assets/productos/velas-con-sticker--gorrito.jpeg"
+    "imagen": "assets/productos/velas-con-sticker--gorrito.jpeg",
+    "mini": "assets/productos/mini/velas-con-sticker--gorrito.webp"
   },
   {
     "id": "velas-con-sticker--mafalda",
@@ -181,7 +203,8 @@
     "orden": "Mafalda.jpeg",
     "precio": null,
     "categoria": "Velas con sticker",
-    "imagen": "assets/productos/velas-con-sticker--mafalda.jpeg"
+    "imagen": "assets/productos/velas-con-sticker--mafalda.jpeg",
+    "mini": "assets/productos/mini/velas-con-sticker--mafalda.webp"
   },
   {
     "id": "velas-con-sticker--mundiales",
@@ -189,6 +212,7 @@
     "orden": "Mundiales.jpeg",
     "precio": null,
     "categoria": "Velas con sticker",
-    "imagen": "assets/productos/velas-con-sticker--mundiales.jpeg"
+    "imagen": "assets/productos/velas-con-sticker--mundiales.jpeg",
+    "mini": "assets/productos/mini/velas-con-sticker--mundiales.webp"
   }
 ]

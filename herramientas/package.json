@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "description": "Herramientas de mantenimiento del catálogo. No se usan para publicar el sitio.",
+  "type": "module",
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

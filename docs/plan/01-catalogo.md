@@ -141,34 +141,40 @@ detectar: el simulador aceptaba cualquier consulta.
 De cada archivo se usan `id`, `name`, `mimeType` y `parents`. Se descarta lo
 que no sea imagen, y lo que empiece con `_`.
 
-La imagen se pide por la misma API, con el id:
+**Las fotos salen del propio sitio, no de Drive**, siempre que el producto esté
+en la copia local. Publicada la página, en el celular tardaban demasiado, por
+tres motivos medidos:
+
+- Drive responde las fotos con `Cache-Control: private, max-age=0`: el
+  navegador no puede guardarlas y las vuelve a bajar en cada visita.
+- Las manda en tamaño original: 121 KB y 900x1600 en promedio (2,9 MB las 24)
+  para tarjetas de ~170px en el celular.
+- La primera consulta a Drive tardó casi un segundo, y nada aparecía antes.
+
+Ahora `js/catalogo.js` usa Drive para el **listado** (nombres, categorías,
+precios, productos nuevos) y, para cada producto, busca su foto en la copia
+local por categoría + nombre. Si está, usa la versión chica
+(`assets/productos/mini/`, 600px webp, 867 KB las 24) en las tarjetas y la
+original en el visor, servidas por Cloudflare y con caché (`_headers`). Si no
+está (producto nuevo o renombrado), la pide a Drive:
 
 ```
 https://www.googleapis.com/drive/v3/files/<id>?alt=media&key=<API key>
 ```
 
-Eso sirve **la foto original, sin redimensionar**. Con las fotos actuales
-(60–175 KB cada una) está bien. El riesgo es que alguien suba una foto de 4 MB
-directo del celular: por eso `estado.html` avisa cuando un archivo pasa los
-500 KB.
+Hasta que se corre `node herramientas/copia-local.mjs` y se publica, ese
+producto carga desde Drive, más lento; después, desde el sitio.
 
-La idea original era el endpoint de miniaturas
-(`lh3.googleusercontent.com/d/<id>=w800`), que redimensiona solo. Probado
-contra la carpeta real respondió 403, y no está documentado por Google. Si
-más adelante el peso de las fotos se vuelve un problema, la migración
-prevista es Cloudinary, que redimensiona por URL.
+### 3.5 Carga instantánea y fallback
 
-Cada foto vista es un pedido a la API y cuenta para la cuota del proyecto.
-La cuota gratuita de Drive API está muy por encima de lo que usa un catálogo
-de este tamaño.
+- La página muestra **enseguida** lo último conocido: lo que quedó guardado en
+  el navegador o, en la primera visita, la copia local. No espera a Drive.
+- En paralelo consulta Drive. Si hay cambios (un nombre, un producto nuevo),
+  vuelve a dibujar con la lista nueva y la guarda para la próxima visita.
+- Si Drive no responde, queda lo que ya se mostró. **Nunca se muestra una
+  página vacía.**
 
-### 3.5 Cache y fallback
-
-- Al cargar, la página pide la lista a Drive y la guarda en `localStorage`
-  con un TTL corto (~10 min). Segunda visita: instantánea.
-- Si la llamada a Drive falla (sin internet, cuota, key mal configurada), la
-  página cae a un `catalogo.json` versionado en el repo, que es una copia del
-  último estado conocido. **Nunca se muestra una página vacía.**
+Medido con Drive tardando 3 s: la primera tarjeta aparece a los 0,19 s.
 
 **Respaldo por foto** (`js/imagenes.js`). Publicada la página, algunas fotos
 de Drive no cargaban: Google corta descargas con 403 de forma intermitente, y

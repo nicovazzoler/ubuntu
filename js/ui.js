@@ -121,17 +121,26 @@ function dibujarError() {
     </li>`;
 }
 
+function mostrar(productos) {
+  estado.productos = productos;
+  const categorias = categoriasDe(productos);
+  if (!categorias.includes(estado.categoria)) estado.categoria = 'Todos';
+  // Con pocos productos los filtros son ruido.
+  if (productos.length >= 15 && categorias.length > 1) {
+    dibujarFiltros(categorias);
+    dibujarCategorias(categorias);
+  } else {
+    filtros.replaceChildren();
+    document.querySelector('#categorias').hidden = true;
+  }
+  dibujarProductos();
+}
+
 async function iniciar() {
   dibujarEsqueletos();
   try {
-    estado.productos = await obtenerProductos();
-    const categorias = categoriasDe(estado.productos);
-    // Con pocos productos los filtros son ruido.
-    if (estado.productos.length >= 15 && categorias.length > 1) {
-      dibujarFiltros(categorias);
-      dibujarCategorias(categorias);
-    }
-    dibujarProductos();
+    // Si Drive trae cambios después, se vuelve a dibujar con la lista nueva.
+    mostrar(await obtenerProductos(mostrar));
   } catch (error) {
     console.error(error);
     dibujarError();

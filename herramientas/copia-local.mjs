@@ -2,7 +2,12 @@
 // con lo que hay hoy en la carpeta de Drive. La página la usa si Drive no
 // responde, así que conviene correrlo cada vez que cambian los productos.
 //
+//   npm install --prefix herramientas     (una sola vez, instala sharp)
 //   node herramientas/copia-local.mjs
+//
+// Además de la foto original (para el visor) genera una versión chica en
+// assets/productos/mini/ para las tarjetas: 600px de ancho en webp. Las
+// originales pesan ~120 KB y miden 900x1600 para tarjetas de ~170px en el celular.
 //
 // La API key está restringida por dominio: el pedido se hace con el Referer de
 // localhost:8000, que es uno de los permitidos.
@@ -10,6 +15,7 @@
 import { mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { CONFIG } from '../js/config.js';
 import { parsearNombre } from '../js/catalogo.js';
+import sharp from 'sharp';
 
 const API = 'https://www.googleapis.com/drive/v3/files';
 const CARPETA = 'application/vnd.google-apps.folder';
@@ -59,13 +65,19 @@ const archivos = [...sueltos, ...porCarpeta.flat()]
 
 // Todo se baja a una carpeta aparte; la copia vieja se reemplaza recién al final.
 await rm(TEMPORAL, { recursive: true, force: true });
-await mkdir(TEMPORAL, { recursive: true });
+await mkdir(`${TEMPORAL}/mini`, { recursive: true });
 
 const productos = [];
 for (const f of archivos) {
   const { nombre, precio } = parsearNombre(f.name);
   const archivo = `${slug(f.categoria)}--${slug(nombre)}.${EXTENSION[f.mimeType]}`;
-  await writeFile(`${TEMPORAL}/${archivo}`, await bajar(f.id, f.name));
+  const original = await bajar(f.id, f.name);
+  const mini = `mini/${archivo.replace(/\.[^.]+$/, '.webp')}`;
+  await writeFile(`${TEMPORAL}/${archivo}`, original);
+  await sharp(original).rotate()   // respeta la orientación que guarda el celular
+    .resize({ width: 600, withoutEnlargement: true })
+    .webp({ quality: 78 })
+    .toFile(`${TEMPORAL}/${mini}`);
   process.stdout.write('.');
   productos.push({
     id: `${slug(f.categoria)}--${slug(nombre)}`,
@@ -74,6 +86,7 @@ for (const f of archivos) {
     precio,
     categoria: f.categoria,
     imagen: `${DESTINO}/${archivo}`,
+    mini: `${DESTINO}/${mini}`,
   });
 }
 
@@ -88,4 +101,7 @@ await writeFile('assets/catalogo.json', JSON.stringify(productos, null, 2) + '\n
 const porCategoria = {};
 for (const p of productos) porCategoria[p.categoria] = (porCategoria[p.categoria] ?? 0) + 1;
 console.log(`${productos.length} productos`, porCategoria);
-console.log(`${(await readdir(DESTINO)).length} archivos en ${DESTINO}`);
+const pesa = async (dir) => (await Promise.all((await readdir(dir, { withFileTypes: true }))
+  .filter((e) => e.isFile()).map(async (e) => (await import('node:fs/promises')).stat(`${dir}/${e.name}`).then((s) => s.size))))
+  .reduce((a, b) => a + b, 0);
+console.log(`originales: ${Math.round(await pesa(DESTINO) / 1024)} KB | mini: ${Math.round(await pesa(`${DESTINO}/mini`) / 1024)} KB`);
