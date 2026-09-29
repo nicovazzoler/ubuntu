@@ -47,10 +47,11 @@ escribe el link a mano.
 > Velas - Vela de soja lavanda
 > ¿Me pasan precio y disponibilidad?
 
-Va la categoría y el producto, sin asteriscos (pedido de Nico). Si el producto
-está suelto en la raíz de Drive, su categoría es "Otros" y va solo el nombre.
->
-> https://ubuntu-estudio.pages.dev
+Va la categoría y el producto, sin asteriscos y **sin el link de la página**
+(pedidos de Nico). El link se había agregado para que viajara si alguien
+reenviaba la conversación, pero lo reciben ellas: era texto de más en cada
+consulta. Si el producto está suelto en la raíz de Drive, su categoría es
+"Otros" y va solo el nombre.
 
 **c) Idea / personalizado — botón de cierre de la página**
 

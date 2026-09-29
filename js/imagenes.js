@@ -1,4 +1,5 @@
 import { CONFIG } from './config.js';
+import { clave } from './catalogo.js';
 
 // Google corta a veces las descargas de Drive (403 intermitente): la misma foto
 // baja bien un segundo después. Cada imagen que falla reintenta una vez y, si
@@ -8,19 +9,25 @@ import { CONFIG } from './config.js';
 const REEMPLAZO = 'assets/marca/isotipo.png';
 let copiaLocal = null;   // se carga recién con la primera falla
 
-const clave = (p) => `${p.categoria}|${p.nombre}`;
-
-function fotoLocal(producto) {
+// grande: la original, para el visor; si no, la versión chica de las tarjetas.
+function fotoLocal(producto, grande = false) {
   copiaLocal ??= fetch(CONFIG.catalogoLocal)
     .then((r) => (r.ok ? r.json() : []))
-    .then((lista) => new Map(lista.map((p) => [clave(p), p.imagen])))
+    .then((lista) => new Map(lista.map((p) => [clave(p), p])))
     .catch(() => new Map());
-  return copiaLocal.then((mapa) => mapa.get(clave(producto)));
+  return copiaLocal.then((mapa) => {
+    const p = mapa.get(clave(producto));
+    return p && (grande ? p.imagen : p.mini || p.imagen);
+  });
 }
+
+const reemplazar = (img) => { img.src = REEMPLAZO; img.classList.add('foto-reemplazo'); };
 
 export function conRespaldo(img, producto) {
   let paso = 0;
   img.addEventListener('error', async () => {
+    // Una foto del propio sitio que falla no mejora reintentando ni en Drive.
+    if (!img.src.includes('googleapis.com')) { if (!img.src.endsWith(REEMPLAZO)) reemplazar(img); return; }
     paso++;
     if (paso === 1) {
       // espera al azar entre 0,8 y 1,6 s: si fallaron varias juntas, no reintentan todas a la vez
@@ -46,7 +53,7 @@ export function visorConRespaldo(img) {
     if (!p) return;
     intento++;
     if (intento === 1) {
-      const local = await fotoLocal(p);
+      const local = await fotoLocal(p, true);
       if (p !== actual) return;   // mientras esperaba, pasaron a otro producto
       if (local) img.src = local;
       else { img.src = REEMPLAZO; img.classList.add('foto-reemplazo'); }

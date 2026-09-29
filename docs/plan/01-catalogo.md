@@ -141,34 +141,40 @@ detectar: el simulador aceptaba cualquier consulta.
 De cada archivo se usan `id`, `name`, `mimeType` y `parents`. Se descarta lo
 que no sea imagen, y lo que empiece con `_`.
 
-La imagen se pide por la misma API, con el id:
+**Las fotos salen del propio sitio, no de Drive**, siempre que el producto esté
+en la copia local. Publicada la página, en el celular tardaban demasiado, por
+tres motivos medidos:
+
+- Drive responde las fotos con `Cache-Control: private, max-age=0`: el
+  navegador no puede guardarlas y las vuelve a bajar en cada visita.
+- Las manda en tamaño original: 121 KB y 900x1600 en promedio (2,9 MB las 24)
+  para tarjetas de ~170px en el celular.
+- La primera consulta a Drive tardó casi un segundo, y nada aparecía antes.
+
+Ahora `js/catalogo.js` usa Drive para el **listado** (nombres, categorías,
+precios, productos nuevos) y, para cada producto, busca su foto en la copia
+local por categoría + nombre. Si está, usa la versión chica
+(`assets/productos/mini/`, 600px webp, 867 KB las 24) en las tarjetas y la
+original en el visor, servidas por Cloudflare y con caché (`_headers`). Si no
+está (producto nuevo o renombrado), la pide a Drive:
 
 ```
 https://www.googleapis.com/drive/v3/files/<id>?alt=media&key=<API key>
 ```
 
-Eso sirve **la foto original, sin redimensionar**. Con las fotos actuales
-(60–175 KB cada una) está bien. El riesgo es que alguien suba una foto de 4 MB
-directo del celular: por eso `estado.html` avisa cuando un archivo pasa los
-500 KB.
+Hasta que se corre `node herramientas/copia-local.mjs` y se publica, ese
+producto carga desde Drive, más lento; después, desde el sitio.
 
-La idea original era el endpoint de miniaturas
-(`lh3.googleusercontent.com/d/<id>=w800`), que redimensiona solo. Probado
-contra la carpeta real respondió 403, y no está documentado por Google. Si
-más adelante el peso de las fotos se vuelve un problema, la migración
-prevista es Cloudinary, que redimensiona por URL.
+### 3.5 Carga instantánea y fallback
 
-Cada foto vista es un pedido a la API y cuenta para la cuota del proyecto.
-La cuota gratuita de Drive API está muy por encima de lo que usa un catálogo
-de este tamaño.
+- La página muestra **enseguida** lo último conocido: lo que quedó guardado en
+  el navegador o, en la primera visita, la copia local. No espera a Drive.
+- En paralelo consulta Drive. Si hay cambios (un nombre, un producto nuevo),
+  vuelve a dibujar con la lista nueva y la guarda para la próxima visita.
+- Si Drive no responde, queda lo que ya se mostró. **Nunca se muestra una
+  página vacía.**
 
-### 3.5 Cache y fallback
-
-- Al cargar, la página pide la lista a Drive y la guarda en `localStorage`
-  con un TTL corto (~10 min). Segunda visita: instantánea.
-- Si la llamada a Drive falla (sin internet, cuota, key mal configurada), la
-  página cae a un `catalogo.json` versionado en el repo, que es una copia del
-  último estado conocido. **Nunca se muestra una página vacía.**
+Medido con Drive tardando 3 s: la primera tarjeta aparece a los 0,19 s.
 
 **Respaldo por foto** (`js/imagenes.js`). Publicada la página, algunas fotos
 de Drive no cargaban: Google corta descargas con 403 de forma intermitente, y
@@ -225,18 +231,33 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
       key en `js/config.js` (`drive.apiKey`) y la página deja de usar la
       copia local.
 
-Copia local de respaldo: `assets/productos/` y `assets/catalogo.json`. La
-página la usa si no hay API key o si Drive no responde (§3.5). **Se regenera
-desde Drive con un comando**, cada vez que cambian los productos:
+Copia local: `assets/productos/` (originales), `assets/productos/mini/`
+(versión chica) y `assets/catalogo.json`. De ahí salen las fotos del sitio y es
+el respaldo si Drive no responde (§3.5).
 
-```
-node herramientas/copia-local.mjs
-```
+**Se regenera sola, cada hora**, con GitHub Actions
+(`.github/workflows/copia-local.yml`): corre `herramientas/copia-local.mjs`
+sobre `main` y, si algo cambió en Drive, hace el commit; Cloudflare publica
+solo. Nadie tiene que correr nada. Se puede forzar desde GitHub → Actions →
+"Copia local desde Drive" → Run workflow.
 
-Baja todo a una carpeta temporal y reemplaza la copia vieja recién al final:
-si algo falla, la anterior queda intacta. Google frena descargas seguidas con
-403 de forma intermitente (el mismo archivo baja bien al reintentar), así que
-reintenta hasta 5 veces esperando 1, 2, 4, 8 y 16 segundos.
+- Solo baja las fotos que cambiaron: guarda el `md5Checksum` que Drive
+  calcula de cada archivo y reutiliza las que coinciden. Sin cambios en
+  Drive, no descarga nada y no hace commit.
+- Eso importa por Cloudflare: el plan gratis tiene 500 publicaciones por mes, y
+  un commit por hora serían 720.
+- Todo se arma en una carpeta temporal; la copia vieja se reemplaza recién al
+  final. Google frena descargas seguidas con 403 intermitentes, así que cada
+  descarga reintenta hasta 5 veces (1, 2, 4, 8 y 16 s).
+- A mano, si hace falta: `npm install --prefix herramientas` (una vez) y
+  `node herramientas/copia-local.mjs`.
+
+**Ojo al trabajar en `pruebas`:** el bot commitea en `main`. Antes de seguir
+trabajando, traer `main` a `pruebas` (`git pull origin main`), o el próximo
+merge puede chocar en `assets/catalogo.json`.
+
+**GitHub pausa los flujos programados** si el repo pasa 60 días sin actividad
+(manda un mail). Se reactiva desde la pestaña Actions.
 
 ## 5. Fuera de alcance del v1
 
