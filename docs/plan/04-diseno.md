@@ -57,7 +57,10 @@ El resultado se sigue sintiendo Ubuntu, pero se lee.
 | `--borde` | `#E8E0DA` | — | Divisores y bordes de tarjeta, 1px |
 | `--accion` | `#5A5049` | 7.4:1 ✅ | Fondo de botón primario, con texto crema |
 | `--accion-hover` | `#423A34` | — | Hover / pressed |
-| `--wsp` | `#25D366` | — | Solo botones de WhatsApp |
+| `--wsp` | `#25D366` | — | Solo botones de WhatsApp, **con texto oscuro** |
+| `--sobre-wsp` | `#1F2A22` | 7.50:1 sobre `--wsp` | Texto e ícono de los botones de WhatsApp |
+| `--wsp-hover` | `#4BDB82` | 8.32:1 con `--sobre-wsp` | Hover: aclara, no oscurece |
+| `--wsp-icono` | `#128C7E` | 4.14:1 sobre blanco | Ícono chico de la tarjeta |
 
 Los títulos de sección van en `--tinta-suave`, no en `--taupe`. Se probó con
 el taupe y no pasa: a 18px (celular) y 22px (escritorio) el texto no califica
@@ -70,7 +73,8 @@ Reglas:
   lo hace el peso y el tamaño, no el color. Meter un terracota o un dorado
   "para que resalte" rompe el tono del logo.
 - El verde de WhatsApp es la única excepción, porque es un color que la gente
-  reconoce sin leer.
+  reconoce sin leer. **Lleva texto oscuro, nunca blanco**: blanco sobre
+  `#25D366` da 1.98:1. Estuvo así en la primera versión y se corrigió.
 - El salvia se usa en **superficies grandes**: el bloque
   de "contanos tu idea", el chip de categoría activo. Nunca en tipografía.
 - Modo oscuro: **no va en el v1.** Duplica el trabajo de tokens y las fotos de

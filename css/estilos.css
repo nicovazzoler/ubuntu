@@ -58,7 +58,7 @@ img { display: block; max-width: 100%; }
 .boton--primario:hover { background: var(--accion-hover); }
 .boton--secundario { background: transparent; color: var(--tinta); border-color: var(--taupe); }
 .boton--secundario:hover { background: var(--salvia-suave); }
-.boton--wsp { background: var(--wsp); color: #fff; }
+.boton--wsp { background: var(--wsp); color: var(--sobre-wsp); }
 .boton--wsp:hover { background: var(--wsp-hover); }
 .boton svg { width: 18px; height: 18px; flex: none; }
 
@@ -415,11 +415,11 @@ img { display: block; max-width: 100%; }
   text-decoration: none;
   transition: background var(--transicion), border-color var(--transicion), color var(--transicion);
 }
-.tarjeta__accion svg { color: var(--wsp); transition: color var(--transicion); }
+.tarjeta__accion svg { color: var(--wsp-icono); transition: color var(--transicion); }
 .tarjeta__accion:hover {
   background: var(--wsp);
   border-color: var(--wsp);
-  color: #fff;
+  color: var(--sobre-wsp);
 }
 .tarjeta__accion:hover svg { color: currentColor; }
 .tarjeta__accion svg { width: 15px; height: 15px; }
@@ -551,7 +551,7 @@ img { display: block; max-width: 100%; }
   display: grid; place-items: center;
   border-radius: 999px;
   background: var(--wsp);
-  color: #fff;
+  color: var(--sobre-wsp);
   box-shadow: 0 4px 16px rgb(74 66 59 / 0.22);
   opacity: 0;
   visibility: hidden;

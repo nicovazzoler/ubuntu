@@ -12,8 +12,11 @@
   --borde: #E8E0DA;
   --accion: #5A5049;
   --accion-hover: #423A34;
+  /* Verde de WhatsApp con texto oscuro: blanco encima daba 1.98:1. */
   --wsp: #25D366;
-  --wsp-hover: #1EAE53;
+  --wsp-hover: #4BDB82;         /* aclara en vez de oscurecer: el contraste sube (8.32:1) */
+  --sobre-wsp: #1F2A22;         /* 7.50:1 sobre --wsp */
+  --wsp-icono: #128C7E;         /* ícono chico sobre blanco: 4.14:1 */
 
   /* Fondos de las secciones claras. --tinta-suave queda en 4.89 y 4.59:1. */
   --tono-crema: #F3EBE2;
