@@ -1,0 +1,55 @@
+/* Tokens de diseño — Plan 4. Valores derivados del logo. */
+:root {
+  /* Color. El taupe y el salvia salen del logo; la tinta se deriva del taupe
+     para llegar al contraste mínimo de texto (el del logo da 4.27:1). */
+  --crema: #FCF8F7;
+  --superficie: #FFFFFF;
+  --tinta: #4A423B;
+  --tinta-suave: #6E645B;
+  --taupe: #7F756D;
+  --salvia: #CCCEC2;
+  --salvia-suave: #E3E6DC;
+  --borde: #E8E0DA;
+  --accion: #5A5049;
+  --accion-hover: #423A34;
+  /* Verde de WhatsApp con texto oscuro: blanco encima daba 1.98:1. */
+  --wsp: #25D366;
+  --wsp-hover: #4BDB82;         /* aclara en vez de oscurecer: el contraste sube (8.32:1) */
+  --sobre-wsp: #1F2A22;         /* 7.50:1 sobre --wsp */
+  --wsp-icono: #128C7E;         /* ícono chico sobre blanco: 4.14:1 */
+
+  /* Fondos de las secciones claras. --tinta-suave queda en 4.89 y 4.59:1. */
+  --tono-crema: #F3EBE2;
+  --tono-arena: #EDE4D8;
+
+  /* Secciones oscuras (intro, quiénes somos, cierre, pie). Es el mismo
+     marrón que la tinta: el texto claro encima da 8.4:1. */
+  --noche: #4A423B;
+  --noche-profunda: #1E1A18;    /* pie: casi negro cálido; el texto secundario da 10.4:1 */
+  --fondo: var(--tono-crema);   /* lo va cambiando js/tonos.js al scrollear */
+
+  /* Tipografía */
+  --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --texto: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --tracking-marca: 0.18em;
+
+  /* Espaciado, escala de 4px */
+  --e1: 4px;   --e2: 8px;   --e3: 12px;  --e4: 16px;
+  --e6: 24px;  --e8: 32px;  --e12: 48px; --e16: 64px; --e20: 80px; --e24: 96px;
+
+  /* Ritmo vertical. Son los únicos tokens que cambian con el ancho: así el
+     valor responsive vive en un solo lugar y no repartido en media queries. */
+  --seccion: var(--e12);      /* aire arriba y abajo de cada sección */
+  --titulo-gap: var(--e6);    /* del título a su contenido */
+
+  --ancho-max: 1280px;
+  --radio: 10px;
+  --transicion: 150ms ease;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --seccion: var(--e20);
+    --titulo-gap: var(--e8);
+  }
+}

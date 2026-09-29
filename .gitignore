@@ -1,0 +1,11 @@
+node_modules/
+assets/.productos-nuevo/
+
+# Credenciales: nunca van al repo (el repo es público). La API key de
+# js/config.js es la excepción: es de navegador y está restringida.
+.env
+.env.*
+*credencial*.json
+*credential*.json
+*service-account*.json
+*client_secret*.json

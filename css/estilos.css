@@ -1,0 +1,649 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  transition: background-color 700ms ease;
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+:focus-visible {
+  outline: 2px solid var(--accion);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.contenedor {
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--e4);
+}
+
+/* Título de sección: mayúsculas con el tracking del logo. */
+.titulo-seccion {
+  font-family: var(--display);
+  font-size: clamp(1.125rem, 3vw, 1.375rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-marca);
+  color: var(--tinta-suave);
+  margin: 0 0 var(--titulo-gap);
+}
+
+/* ---------- Botones ---------- */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e2);
+  min-height: 44px;
+  padding: 0 var(--e6);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transicion), border-color var(--transicion);
+}
+.boton--primario { background: var(--accion); color: var(--crema); }
+.boton--primario:hover { background: var(--accion-hover); }
+.boton--secundario { background: transparent; color: var(--tinta); border-color: var(--taupe); }
+.boton--secundario:hover { background: var(--salvia-suave); }
+.boton--wsp { background: var(--wsp); color: var(--sobre-wsp); }
+.boton--wsp:hover { background: var(--wsp-hover); }
+.boton svg { width: 18px; height: 18px; flex: none; }
+
+/* ---------- Encabezado ---------- */
+
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--fondo) 92%, transparent);
+  transition: background-color 700ms ease, border-color var(--transicion);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transicion);
+}
+.encabezado[data-scrolleado="true"] { border-bottom-color: var(--borde); }
+/* Sobre una sección oscura el encabezado también se oscurece (lo marca js/tonos.js). */
+:root[data-cabecera="oscura"] .encabezado {
+  --tinta: #F3ECE4;
+  --tinta-suave: #D3C7BA;
+  --taupe: #E3D6C5;
+  --borde: rgb(255 255 255 / 0.14);
+  background: color-mix(in srgb, var(--noche) 92%, transparent);
+}
+:root[data-cabecera="oscura"] .marca img { filter: brightness(1.9) saturate(0.8); }
+:root[data-cabecera="oscura"] .icono-link:hover { background: rgb(255 255 255 / 0.1); }
+.encabezado__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e4);
+  min-height: 64px;
+}
+.marca { display: flex; align-items: center; gap: var(--e3); text-decoration: none; }
+.marca img { width: 34px; height: auto; }
+.marca__texto { display: flex; flex-direction: column; line-height: 1; }
+.marca__nombre {
+  font-family: var(--display);
+  font-size: 1.125rem;
+  letter-spacing: var(--tracking-marca);
+  color: var(--taupe);
+  margin-right: calc(var(--tracking-marca) * -1);
+}
+/* El tracking suma espacio también al final del renglón: se descuenta para
+   que el bloque quede ópticamente alineado con el isotipo. */
+.marca__bajada {
+  font-family: var(--display);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-marca);
+  color: var(--tinta-suave);
+  margin-top: 3px;
+  margin-right: calc(var(--tracking-marca) * -1);
+}
+.encabezado__acciones { display: flex; align-items: center; gap: var(--e1); }
+.icono-link {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  color: var(--taupe);
+  transition: background var(--transicion), color var(--transicion);
+}
+.icono-link:hover { background: var(--salvia-suave); color: var(--tinta); }
+.icono-link svg { width: 21px; height: 21px; }
+
+/* ---------- Intro ---------- */
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+.intro {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(calc(100svh - 64px), 820px);   /* la primera pantalla entera, menos el encabezado */
+  padding: var(--e12) var(--e4);
+  overflow: hidden;
+  text-align: center;
+}
+.intro__contenido { position: relative; }
+
+/* Luz cálida detrás del texto, que respira como la llama de una vela. */
+.intro__luz {
+  position: absolute;
+  width: min(90vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(230 190 130 / 0.30) 0%, rgb(230 190 130 / 0.10) 40%, transparent 68%);
+  animation: luz-entra 2.4s ease-out both, respirar 7s ease-in-out 2.4s infinite;
+}
+@keyframes luz-entra { from { opacity: 0; transform: scale(0.85); } }
+@keyframes respirar {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  30%      { opacity: 0.8;  transform: scale(0.97); }
+  55%      { opacity: 0.95; transform: scale(1.03); }
+  70%      { opacity: 0.75; transform: scale(0.99); }
+}
+
+.intro__marca {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.25rem, 15vw, 8rem);
+  line-height: 1;
+  letter-spacing: 0.2em;
+  margin-right: -0.2em;         /* el tracking deja aire después de la última letra */
+  color: var(--taupe);          /* texto grande: 4.27:1 alcanza (mínimo 3:1) */
+}
+/* Cada letra aparece desenfocada y se asienta, una detrás de otra. */
+.intro__letras span {
+  display: inline-block;
+  animation: letra 1.4s cubic-bezier(.2, .7, .2, 1) both;
+}
+.intro__letras span:nth-child(1) { animation-delay: 0.20s; }
+.intro__letras span:nth-child(2) { animation-delay: 0.34s; }
+.intro__letras span:nth-child(3) { animation-delay: 0.48s; }
+.intro__letras span:nth-child(4) { animation-delay: 0.62s; }
+.intro__letras span:nth-child(5) { animation-delay: 0.76s; }
+.intro__letras span:nth-child(6) { animation-delay: 0.90s; }
+@keyframes letra {
+  from { opacity: 0; transform: translateY(0.12em); filter: blur(8px); }
+}
+
+.intro__linea {
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: var(--e6) auto;
+  background: var(--taupe);
+  transform-origin: center;
+  animation: linea 1s ease 1.6s both;
+}
+@keyframes linea { from { transform: scaleX(0); } }
+
+.intro__lema {
+  margin: 0;
+  font-size: clamp(0.75rem, 2.6vw, 0.9375rem);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  animation: aparece 1.2s ease 2.1s both;
+}
+@keyframes aparece { from { opacity: 0; transform: translateY(6px); } }
+
+.intro__bajar {
+  position: absolute;
+  bottom: var(--e6);
+  left: 50%;
+  translate: -50% 0;
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  color: var(--tinta-suave);
+  animation: aparece 1s ease 3s both, flotar 2.4s ease-in-out 4s infinite;
+}
+.intro__bajar svg { width: 26px; height: 26px; }
+@keyframes flotar { 50% { transform: translateY(6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__luz, .intro__letras span, .intro__linea, .intro__lema, .intro__bajar { animation: none; }
+}
+
+/* ---------- Hero ---------- */
+
+/* Dos secciones seguidas no suman sus aires: la de abajo se apoya en la de
+   arriba. Con una banda de color en el medio sí, porque el borde se ve. */
+.seccion { padding-block: var(--seccion); }
+.seccion:not([hidden]) + .seccion:not([data-tema]) { padding-block-start: 0; }
+
+/* Secciones oscuras: redefinen los colores de texto para lo que tienen adentro.
+   Los componentes siguen usando var(--tinta) y compañía sin saber del tema. */
+[data-tema="oscuro"] {
+  --tinta: #F3ECE4;
+  --tinta-suave: #D3C7BA;
+  --taupe: #E3D6C5;
+  --borde: rgb(255 255 255 / 0.14);
+  background: var(--noche);
+  color: var(--tinta);
+}
+/* Dos oscuras seguidas son un solo bloque: no suman aire. */
+.nosotros + .cierre { padding-block-start: 0; }
+
+.hero { text-align: center; }
+.hero__logo { width: clamp(96px, 22vw, 132px); margin: 0 auto var(--e6); }
+.hero__imagen {
+  margin: var(--e12) 0 0;
+  overflow: hidden;             /* el zoom no se sale del marco */
+  border-radius: var(--radio);
+}
+.hero__imagen img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1096 / 638;
+  object-fit: cover;
+  animation: acercar 24s ease-in-out infinite alternate;
+}
+/* Zoom y paneo lentos sobre la foto fija: da movimiento sin archivo de video. */
+@keyframes acercar {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.08) translate(-1.5%, -1%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__imagen img { animation: none; }
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 7vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--tinta);
+  margin: 0 auto var(--e4);
+  max-width: 16ch;
+}
+.hero__bajada {
+  color: var(--tinta-suave);
+  max-width: 46ch;
+  margin: 0 auto var(--e8);
+}
+.hero__acciones { display: flex; flex-wrap: wrap; gap: var(--e3); justify-content: center; }
+
+/* Va después de las reglas base del hero: a igual especificidad gana la
+   última. En escritorio el hero ocupa el ancho: texto a la izquierda, foto a la derecha.
+   El isotipo sale porque ya está en el encabezado. */
+@media (min-width: 900px) {
+  .hero {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--e16);
+    align-items: center;
+    text-align: left;
+  }
+  .hero__logo { display: none; }
+  .hero h1, .hero__bajada { margin-inline: 0; }
+  .hero__acciones { justify-content: flex-start; }
+  .hero__imagen { margin: 0; }
+}
+
+/* ---------- Catálogo ---------- */
+
+
+/* La bajada es parte del título, no contenido: va cerca de él y el aire
+   grande queda del otro lado. */
+.catalogo .titulo-seccion { margin-bottom: var(--e3); }
+.catalogo__intro { color: var(--tinta-suave); margin: 0 0 var(--titulo-gap); max-width: 46ch; }
+
+.filtros {
+  display: flex;
+  gap: var(--e2);
+  overflow-x: auto;
+  padding-bottom: var(--e2);
+  margin-bottom: var(--e8);
+  scrollbar-width: none;
+}
+.filtros::-webkit-scrollbar { display: none; }
+.filtro {
+  flex: none;
+  min-height: 38px;
+  padding: 0 var(--e4);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transicion), color var(--transicion), border-color var(--transicion);
+}
+.filtro:hover { border-color: var(--taupe); color: var(--tinta); }
+.filtro[aria-pressed="true"] {
+  background: var(--accion);
+  border-color: var(--accion);
+  color: var(--crema);
+  font-weight: 500;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--e3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 768px)  { .grilla { grid-template-columns: repeat(3, 1fr); gap: var(--e6); } }
+@media (min-width: 1100px) { .grilla { grid-template-columns: repeat(4, 1fr); } }
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transicion), transform var(--transicion);
+}
+.tarjeta:hover { border-color: var(--taupe); transform: translateY(-2px); }
+
+.tarjeta__zoom {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* 4:5 y no 1:1: las fotos son 9:16 y un cuadrado corta la base del producto. */
+.tarjeta__foto {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  background: var(--crema);
+}
+.tarjeta__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e3);
+  flex: 1;
+  padding: var(--e2) var(--e3) var(--e3);
+}
+@media (min-width: 768px) { .tarjeta__cuerpo { padding: var(--e2) var(--e4) var(--e4); } }
+
+.tarjeta__nombre {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  min-height: 2.6em;          /* dos renglones siempre, o el botón baila entre tarjetas de la misma fila */
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tarjeta__precio { font-weight: 600; color: var(--tinta); margin: 0; }
+.tarjeta__accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e2);
+  margin-top: auto;           /* pega el botón abajo: con y sin precio la grilla queda pareja */
+  min-height: 38px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+.tarjeta__accion svg { color: var(--wsp-icono); transition: color var(--transicion); }
+.tarjeta__accion:hover {
+  background: var(--wsp);
+  border-color: var(--wsp);
+  color: var(--sobre-wsp);
+}
+.tarjeta__accion:hover svg { color: currentColor; }
+.tarjeta__accion svg { width: 15px; height: 15px; }
+
+/* Esqueletos de carga */
+.esqueleto { border: 1px solid var(--borde); border-radius: var(--radio); overflow: hidden; background: var(--superficie); }
+.esqueleto__foto { aspect-ratio: 4 / 5; background: var(--salvia-suave); }
+.esqueleto__linea { height: 12px; margin: var(--e3); border-radius: 4px; background: var(--salvia-suave); }
+.esqueleto__linea--corta { width: 55%; }
+.esqueleto, .esqueleto__foto, .esqueleto__linea { animation: latir 1.4s ease-in-out infinite; }
+@keyframes latir { 50% { opacity: 0.55; } }
+
+.aviso { text-align: center; padding: var(--e16) var(--e4); color: var(--tinta-suave); }
+.aviso p { margin: 0 0 var(--e6); }
+
+/* ---------- Categorías ---------- */
+
+/* En celular es una fila que se desliza con el dedo; en escritorio, cinco columnas. */
+.categorias__lista {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 42%;
+  gap: var(--e3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  margin: 0 calc(var(--e4) * -1);
+  padding: 0 var(--e4) var(--e2);
+  scrollbar-width: none;
+}
+.categorias__lista::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .categorias__lista {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--e6);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+}
+.categoria {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+.categoria__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 55%;
+  border-radius: var(--radio);
+  background: var(--superficie);
+  transition: transform 300ms ease;
+}
+.categoria:hover .categoria__foto { transform: scale(1.02); }
+.categoria__nombre {
+  display: block;
+  margin-top: var(--e3);
+  font-family: var(--display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--tinta);
+}
+.categoria__cantidad { display: block; font-size: 0.8125rem; color: var(--tinta-suave); }
+
+/* ---------- Sobre nosotros ---------- */
+
+.nosotros { text-align: center; }
+.nosotros p { max-width: 58ch; margin: 0 auto; color: var(--tinta-suave); }
+.nosotros__marca {
+  display: grid;
+  place-items: center;
+  margin-top: var(--e8);
+  padding: var(--e8);
+  border-radius: var(--radio);
+  background: var(--tono-crema);   /* panel claro: el isotipo es trazo fino y sobre el oscuro se pierde */
+}
+.nosotros__marca img { width: min(40%, 180px); height: auto; }
+
+@media (min-width: 900px) {
+  .nosotros__grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--e16);
+    align-items: center;
+    text-align: left;
+  }
+  .nosotros p { margin: 0; font-size: 1.0625rem; }
+  .nosotros__marca { margin: 0; aspect-ratio: 5 / 4; }
+}
+
+/* ---------- Cierre ---------- */
+
+.cierre { padding-block: var(--seccion); text-align: center; }
+.cierre h2 {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 500;
+  margin: 0 0 var(--e3);
+}
+.cierre p { color: var(--tinta-suave); max-width: 42ch; margin: 0 auto var(--e8); }
+
+/* ---------- Pie ---------- */
+
+.pie { background: var(--noche-profunda); padding-block: var(--seccion); font-size: 0.875rem; color: var(--tinta-suave); }
+.pie__fila { display: flex; flex-wrap: wrap; gap: var(--e6); align-items: center; justify-content: space-between; }
+.pie__redes { display: flex; gap: var(--e6); }
+.pie a { color: var(--tinta-suave); text-decoration: none; display: inline-flex; align-items: center; gap: var(--e2); }
+.pie a:hover { color: var(--tinta); }
+.pie svg { width: 17px; height: 17px; }
+
+/* ---------- Botón flotante ---------- */
+
+.flotante {
+  position: fixed;
+  right: var(--e4);
+  bottom: var(--e4);
+  z-index: 20;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: var(--wsp);
+  color: var(--sobre-wsp);
+  box-shadow: 0 4px 16px rgb(74 66 59 / 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transicion), transform var(--transicion), visibility var(--transicion);
+}
+.flotante[data-visible="true"] { opacity: 1; visibility: visible; transform: none; }
+.flotante:hover { background: var(--wsp-hover); }
+.flotante svg { width: 27px; height: 27px; }
+
+/* El flotante no puede tapar el último producto. */
+body { padding-bottom: 0; }
+.pie { padding-bottom: calc(var(--e12) + 60px); }   /* deja lugar al botón flotante */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---------- Visor de fotos ---------- */
+
+.sin-scroll { overflow: hidden; }
+
+.visor {
+  width: min(100vw - 2 * var(--e4), 960px);
+  max-height: calc(100dvh - 2 * var(--e4));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  background: var(--tono-crema);
+  color: var(--tinta);
+  overflow: hidden;
+}
+.visor::backdrop { background: rgb(42 36 32 / 0.72); }
+.visor[open] { display: flex; flex-direction: column; animation: visor-entra 200ms ease; }
+@keyframes visor-entra { from { opacity: 0; transform: scale(0.98); } }
+
+.visor__marco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  background: var(--superficie);
+}
+.visor__foto {
+  max-width: 100%;
+  max-height: calc(100dvh - 190px);
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.visor__foto.cargada { opacity: 1; }
+
+.visor__cerrar, .visor__nav {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(252 248 247 / 0.9);
+  color: var(--tinta);
+  cursor: pointer;
+}
+.visor__cerrar svg, .visor__nav svg { width: 22px; height: 22px; }
+.visor__cerrar { position: absolute; top: var(--e3); right: var(--e3); z-index: 1; }
+.visor__nav { position: absolute; top: 50%; translate: 0 -50%; }
+.visor__nav--ant { left: var(--e3); }
+.visor__nav--sig { right: var(--e3); }
+.visor__cerrar:hover, .visor__nav:hover { background: var(--superficie); }
+
+.visor__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3) var(--e6);
+  padding: var(--e4) var(--e6);
+}
+.visor__categoria { margin: 0; font-size: 0.8125rem; color: var(--tinta-suave); }
+.visor__nombre { margin: 0; font-family: var(--display); font-size: 1.5rem; font-weight: 500; line-height: 1.2; }
+.visor__precio { margin: 0; font-weight: 600; }
+.visor__precio:empty { display: none; }
+
+/* ---------- Aparición al scrollear ---------- */
+
+/* .anima la pone js/aparecer.js solo si el sistema no pide reducir movimiento:
+   sin JS o con movimiento reducido, todo está visible desde el principio. */
+.anima [data-aparecer] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  transition-delay: var(--retraso, 0ms);
+}
+.anima [data-aparecer].visible { opacity: 1; transform: none; }

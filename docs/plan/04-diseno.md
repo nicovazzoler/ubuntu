@@ -1,0 +1,362 @@
+# Plan 4 — Diseño
+
+Sistema visual de la página: color, tipografía, espaciado, jerarquía y
+comportamiento responsive.
+
+> Actualizado: la paleta sale del logo (`assets/marca/logo.webp`), y las
+> tarjetas de producto ya no muestran precio.
+
+---
+
+## 1. Principio rector
+
+**El producto es la foto. El diseño desaparece.**
+
+En un catálogo artesanal, cualquier cosa que compita visualmente con la
+imagen del producto está de más: fondos con textura, bordes gruesos, sombras
+marcadas, colores saturados. El rol del diseño acá es ser un marco neutro y
+consistente que haga que 12 fotos sacadas con distinta luz parezcan la misma
+marca.
+
+El logo ya define ese tono: line art fino, crema, mucho aire. La página tiene
+que sentirse igual.
+
+## 2. Color
+
+Los tres colores salen directo del archivo del logo:
+
+| | Hex | De dónde |
+|---|---|---|
+| Crema | `#FCF8F7` | fondo del logo |
+| Taupe | `#7F756D` | trazo del dibujo y tipografía "UBUNTU" |
+| Salvia | `#CCCEC2` | la mancha verde detrás de la vela |
+
+### 2.1 El problema del taupe
+
+El taupe del logo **no alcanza para texto**. Sobre el crema da un contraste
+de **4.27:1**, y el mínimo para texto normal es 4.5:1. Se lee bien en el logo
+porque ahí las letras son enormes; en un párrafo de 16px cansa la vista y no
+pasa accesibilidad.
+
+Esto pasa siempre que se dice "usemos los colores del logo": el logo es
+decorativo, el texto es funcional, y necesitan contrastes distintos.
+
+La solución no es cambiar la marca, es **derivar**: mismo tono, más oscuro.
+El resultado se sigue sintiendo Ubuntu, pero se lee.
+
+### 2.2 Tokens
+
+| Token | Valor | Contraste sobre crema | Uso |
+|---|---|---|---|
+| `--crema` | `#FCF8F7` | — | Fondo de la página |
+| `--superficie` | `#FFFFFF` | — | Tarjetas de producto |
+| `--tinta` | `#4A423B` | 9.3:1 ✅ | Texto principal |
+| `--tinta-suave` | `#6E645B` | 5.5:1 ✅ | Texto secundario, pie |
+| `--taupe` | `#7F756D` | 4.3:1 ⚠️ | **Solo** el logotipo del encabezado, íconos y bordes. Nunca texto corrido |
+| `--salvia` | `#CCCEC2` | 1.2:1 ❌ | **Solo** fondos y detalles. Nunca texto |
+| `--borde` | `#E8E0DA` | — | Divisores y bordes de tarjeta, 1px |
+| `--accion` | `#5A5049` | 7.4:1 ✅ | Fondo de botón primario, con texto crema |
+| `--accion-hover` | `#423A34` | — | Hover / pressed |
+| `--wsp` | `#25D366` | — | Solo botones de WhatsApp, **con texto oscuro** |
+| `--sobre-wsp` | `#1F2A22` | 7.50:1 sobre `--wsp` | Texto e ícono de los botones de WhatsApp |
+| `--wsp-hover` | `#4BDB82` | 8.32:1 con `--sobre-wsp` | Hover: aclara, no oscurece |
+| `--wsp-icono` | `#128C7E` | 4.14:1 sobre blanco | Ícono chico de la tarjeta |
+
+Los títulos de sección van en `--tinta-suave`, no en `--taupe`. Se probó con
+el taupe y no pasa: a 18px (celular) y 22px (escritorio) el texto no califica
+como "grande" para WCAG, y la excepción arranca recién en 24px. El
+`--tinta-suave` mantiene el tono apagado y llega a 5.5:1.
+
+Reglas:
+
+- **No hay color de acento.** La marca es monocromática cálida: el contraste
+  lo hace el peso y el tamaño, no el color. Meter un terracota o un dorado
+  "para que resalte" rompe el tono del logo.
+- El verde de WhatsApp es la única excepción, porque es un color que la gente
+  reconoce sin leer. **Lleva texto oscuro, nunca blanco**: blanco sobre
+  `#25D366` da 1.98:1. Estuvo así en la primera versión y se corrigió.
+- El salvia se usa en **superficies grandes**: el bloque
+  de "contanos tu idea", el chip de categoría activo. Nunca en tipografía.
+- Modo oscuro: **no va en el v1.** Duplica el trabajo de tokens y las fotos de
+  producto sobre fondo oscuro se ven peor.
+
+Desde la versión 2 la página alterna secciones claras (crema, arena) y
+oscuras (`--noche`, `#4A423B`). Tabla, contrastes y mecanismo en el Plan 6 §4.
+
+## 3. Tipografía
+
+El logo usa una serif clásica en mayúsculas con mucho espacio entre letras.
+Eso se replica:
+
+| Rol | Fuente | Uso |
+|---|---|---|
+| Display | **Cormorant Garamond** | Lema del hero, títulos de sección |
+| Texto | **Inter** | Todo lo demás, incluidos nombres de producto |
+
+Cormorant es la Google Font que más se acerca al logo. Los títulos de sección
+van en **mayúsculas con `letter-spacing` de ~0.18em**, igual que "UBUNTU" y
+"estudio" en el logo. Ese tracking es la firma visual de la marca y sale
+gratis.
+
+El hero es la excepción: "Hecho a mano, pensado para vos" va en caja normal,
+no en mayúsculas. Un lema de 30 caracteres en mayúsculas espaciadas ocupa
+tres renglones en un celular y se vuelve difícil de leer.
+
+### Escala
+
+Base `1rem = 16px`. Los títulos usan tamaño fluido para no saltar entre
+breakpoints.
+
+| Nivel | Tamaño | Fuente | Peso | Interlineado |
+|---|---|---|---|---|
+| Lema (h1) | 2rem → 3.25rem | Cormorant | 500 | 1.15 |
+| Sección (h2) | 1.125rem → 1.375rem | Cormorant, mayúsculas, tracking 0.18em | 500 | 1.2 |
+| Producto (h3) | 1rem | Inter | 500 | 1.3 |
+| Cuerpo | 1rem | Inter | 400 | 1.6 |
+| Chico (pie) | 0.875rem | Inter | 400 | 1.5 |
+
+- Nunca texto de cuerpo por debajo de 16px en móvil: iOS hace zoom solo.
+- Ancho de línea máximo **65 caracteres** en párrafos.
+- Dos familias, dos pesos cada una. Nada más.
+
+## 4. Espaciado
+
+Escala de 4px. Todos los márgenes y paddings salen de acá:
+
+`4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96`
+
+**Ningún hueco de la página puede ser un número que no elegiste.** El caso
+típico es un `<p>` o un `<h2>` que se queda con el margen por defecto del
+navegador y lo suma al padding que sí decidiste: el resultado es un 62 donde
+esperabas 48, y a partir de ahí la escala deja de significar nada.
+
+### 4.1 Los dos tokens que cambian con el ancho
+
+El ritmo vertical es lo único responsive del sistema, y vive en dos tokens en
+vez de repartido en media queries por toda la hoja:
+
+| Token | Móvil | ≥768px | Para qué |
+|---|---|---|---|
+| `--seccion` | 48px | 96px | aire arriba y abajo de cada sección |
+| `--titulo-gap` | 24px | 32px | del título a su contenido |
+
+### 4.2 Dos secciones seguidas no suman sus aires
+
+Si `.catalogo` pone 96 abajo y `.nosotros` 96 arriba, el hueco real es 192 y
+nadie lo decidió. La regla:
+
+```
+.seccion + .seccion { padding-block-start: 0; }
+```
+
+La de abajo se apoya en la de arriba. **Con una banda de color en el medio
+sí se suman**, porque ahí el borde se ve y cada lado necesita su propio aire:
+por eso la franja de envíos tiene 96 arriba (del hero) y 96 abajo (del
+catálogo), y el bloque de cierre conserva su padding propio.
+
+| Dónde | Móvil | Escritorio |
+|---|---|---|
+| Margen lateral de la página | 16px | auto, ancho máximo 1200px |
+| Separación entre secciones | 48px | 96px |
+| Separación título → contenido | 24px | 32px |
+| Título → su bajada | 12px | 12px |
+| Padding interno de tarjeta | 8 / 12 / 12 | 8 / 16 / 16 |
+| Gap de la grilla | 12px | 24px |
+
+El título y su bajada son **un par**, no dos bloques: van a 12px entre sí y el
+aire grande queda del otro lado. Si se los separa con el mismo hueco que al
+contenido, la bajada deja de leerse como parte del título.
+
+El error más frecuente: poner el mismo espacio entre todo. **El espacio
+arriba de un título tiene que ser claramente mayor que el de abajo**, o el
+título parece pertenecer al bloque anterior.
+
+Esta marca pide **más aire del que parece necesario**. El logo tiene el
+dibujo flotando en medio de un campo de crema vacío; si la página apretuja
+los bloques, deja de parecerse a sí misma.
+
+## 5. Grilla del catálogo
+
+| Ancho de pantalla | Columnas |
+|---|---|
+| < 768px | 2 |
+| 768–1100px | 3 |
+| > 1100px | 4 |
+
+**Dos columnas en el celular, no una.** Con una columna hay que scrollear
+media hora para ver 15 productos.
+
+La grilla es fluida: columnas de ancho mínimo fijo que se acomodan solas, en
+vez de tres breakpoints escritos a mano.
+
+### 5.1 Tarjeta de producto
+
+Sin precio, la tarjeta tiene tres cosas:
+
+1. **Imagen**, relación de aspecto fija **4:5**, recortada.
+2. **Nombre** del producto (máx. 2 renglones, con puntos suspensivos si se pasa).
+3. **Botón de consulta** de WhatsApp.
+
+El nombre lleva `min-height` de dos renglones aunque ocupe uno solo. Sin eso,
+en una misma fila el botón queda a distinta altura en cada tarjeta según
+cuánto mida el nombre, y la fila se ve desprolija. Se nota en celular, donde
+las tarjetas son angostas y muchos nombres pasan a dos líneas.
+
+El aire dentro de la tarjeta respeta proximidad: **foto → nombre 8px, nombre →
+botón 12px o más.** La foto y el nombre son el producto; el botón es otra
+cosa. Al revés, el ojo agrupa mal.
+
+Cuando un producto sí tiene precio en el nombre del archivo (Plan 1 §3.2), se
+muestra entre el nombre y el botón, en `--tinta`, peso 600. La tarjeta tiene
+que verse bien con y sin esa línea: si el precio cambia la altura, la grilla
+queda dentada. Se resuelve alineando el botón abajo.
+
+#### Por qué 4:5 y no cuadrado
+
+Habíamos planeado recorte 1:1. Con las fotos reales no se puede: **20 de las
+24 son verticales 9:16** (900×1600, formato historia de Instagram), y el
+producto está chico, en el centro, con pared arriba y mesa abajo.
+
+| Recorte | Altura que sobrevive |
+|---|---|
+| 1:1 | 56% |
+| **4:5** | **70%** |
+| 3:4 | 75% |
+
+Un cuadrado se come casi la mitad del alto y en varias fotos corta la base
+del producto. 4:5 conserva bastante más, es el formato de post de Instagram
+(donde estas fotos van a vivir igual), y en dos columnas de celular da
+tarjetas de ~215px de alto, que es cómodo.
+
+El recorte se ancla **apenas por debajo del centro** (`object-position: center
+55%`), porque el producto siempre está en el tercio medio-bajo del encuadre.
+Centrado puro le corta la base a varios.
+
+Las 4 fotos que no son 9:16 (tres 3:4 y una 0.46) entran en el mismo
+contenedor sin problema: pierden unos pocos píxeles de alto.
+
+Detalles que importan:
+
+- **La relación de aspecto se reserva antes de que cargue la imagen.** Si no,
+  la página salta mientras cargan las fotos y el usuario toca lo que no
+  quería. Es el problema más visible de un catálogo con imágenes remotas.
+- Mientras carga, el hueco va en crema, no en gris.
+- `loading="lazy"` en todas las imágenes salvo las primeras 4.
+- Bordes redondeados suaves (8–12px) y borde de 1px en vez de sombra.
+- **Dos gestos por tarjeta** (desde la versión 2): la foto abre el visor en
+  grande, "Consultar" va directo a WhatsApp. Antes toda la tarjeta era un
+  link a WhatsApp; con el visor hay que separarlos, y el botón de consulta
+  sigue a un toque de distancia.
+
+### 5.2 Filtros de categoría
+
+Con 24 productos, **van**. Las categorías son las cinco carpetas del Drive:
+
+`Todos · Velas · Velas con sticker · Comunión · Souvenirs · Deco`
+
+Fila de chips arriba de la grilla; en móvil scrollean horizontalmente. El
+activo lleva fondo `--accion` con texto crema; los inactivos, borde de 1px y
+`--tinta-suave`.
+
+Seis chips es el límite de lo cómodo. Por eso la carpeta
+`Velas en frasco de vidrio con sticker` hay que acortarla en Drive: como chip
+ocupa dos renglones y desarma la fila.
+
+## 6. Botones
+
+| Tipo | Aspecto | Uso |
+|---|---|---|
+| Primario | Fondo `--accion`, texto crema | "Ver catálogo" |
+| Secundario | Transparente, borde 1px `--taupe` | Acciones alternativas |
+| WhatsApp | Fondo `--wsp` + ícono | Cierre de página y botón flotante |
+| Consulta de tarjeta | Borde 1px `--borde`, texto `--tinta-suave`, ícono verde; en hover se llena de verde | El botón de cada producto |
+
+La última fila salió de ver la página armada: con 24 tarjetas, 24 botones
+verdes sólidos tapaban la paleta y la grilla terminaba pareciendo una página
+de spam. El verde queda en los dos CTA que importan y como ícono en cada
+tarjeta, que alcanza para que se lea "esto abre WhatsApp".
+
+- Altura mínima **44px** (48 en el flotante).
+- Estados obligatorios: normal, hover, **focus visible**, pressed.
+- Transiciones de 150ms. Nada de animaciones de entrada por scroll: en una
+  grilla de productos marean.
+
+## 7. Estados de la página
+
+Hay que diseñar los tres, no solo el feliz:
+
+- **Cargando**: esqueletos en crema con la forma de la tarjeta, misma cantidad
+  que columnas × 2. No un spinner centrado.
+- **Vacío**: texto corto y botón "Ver todo".
+- **Error** (Drive no responde y no hay cache): mensaje breve + botón de
+  WhatsApp. Nunca una pantalla en blanco: si no se puede mostrar el catálogo,
+  al menos que puedan escribir.
+
+## 8. Accesibilidad — mínimos no negociables
+
+- Toda imagen con `alt` = nombre del producto.
+- Un solo `<h1>`, secciones en `<h2>`, productos en `<h3>`. Sin saltos.
+- Navegable con teclado, con foco visible.
+- El color nunca es la única señal (el chip activo también cambia peso).
+- Respetar los contrastes de la tabla de §2.2. El taupe y el salvia son las
+  dos trampas.
+
+## 9. Performance
+
+En este proyecto, performance **es** diseño: el catálogo son fotos y se abre
+desde un celular con datos móviles.
+
+- Imágenes servidas ya redimensionadas al ancho que se muestra (Plan 1),
+  nunca la foto original del celular.
+- Dos fuentes, **auto-hospedadas** en `assets/fuentes/` (subsets latin, woff2,
+  `font-display: swap`). Sin pedido a Google en cada visita: una dependencia
+  menos, una conexión menos y nada que se caiga si Google no responde.
+- Sin librerías de UI ni frameworks CSS.
+- Objetivo: **primera pantalla usable en menos de 2s en 4G**.
+
+## 10. Las fotos
+
+Esta es la palanca más grande del proyecto, y no se resuelve con CSS.
+
+Las fotos actuales están sacadas de noche, con luz de techo, sobre la mesa de
+madera del comedor y contra una pared gris. Se entiende qué es cada producto,
+pero se ven como fotos de WhatsApp, no como un catálogo. El diseño puede
+darles un marco prolijo; no puede cambiar la luz.
+
+Lo que más sube la calidad, por orden de impacto y sin gastar casi nada:
+
+1. **Luz de día, al lado de una ventana, sin sol directo.** Es gratis y es el
+   80% de la diferencia. La luz de techo de noche genera sombras duras y
+   vuelve amarillo lo que es blanco — en velas color crema eso se nota mucho.
+2. **Un fondo liso y siempre el mismo.** Una cartulina blanca o crema de
+   librería, apoyada contra algo, curvada para que no se vea la línea donde
+   termina la mesa. Hoy hay pared gris, pared azul, madera clara, madera
+   oscura, tela lavanda y un fondo amarillo: la grilla se ve desordenada
+   aunque los productos sean lindos.
+3. **Que el producto llene más el encuadre.** Hoy ocupa como un tercio; el
+   resto es pared y mesa. Acercarse (o recortar antes de subir) hace que en
+   una tarjeta de 170px se vea el producto y no el ambiente.
+4. **Foto vertical 4:5 directamente**, que es lo que la página va a usar. Si
+   la sacan en 4:5, no se recorta nada.
+
+No hace falta cámara ni trípode ni aro de luz. Ventana, cartulina y acercarse.
+
+### Dos archivos para arreglar
+
+- **`Comunión/Set comunión.webp`** no es una foto de producto: es una placa
+  de Instagram con el logo, el texto "COMUNIONES" y un collage. En la grilla,
+  al lado de fotos de productos sueltos, desentona. Va a `_borradores/` hasta
+  tener una foto real del set.
+- **`Comunión/Vela cruz grande.jpeg`** tiene barras negras arriba y abajo: es
+  una captura de historia recortada. Hay que recortarlas o volver a sacar la
+  foto.
+
+## 11. Qué falta
+
+- [x] Logo (`assets/marca/logo.webp`) y paleta derivada.
+- [x] Logo en PNG con fondo transparente (`assets/marca/isotipo.png`),
+      recortado del original.
+- [x] Versión horizontal: el isotipo al lado del nombre escrito en Cormorant
+      con el tracking de la marca, en vez de una imagen. Escala mejor y pesa
+      cero.
+- [ ] Referencias visuales: quedó en que las buscamos nosotros.
