@@ -170,6 +170,20 @@ de este tamaño.
   página cae a un `catalogo.json` versionado en el repo, que es una copia del
   último estado conocido. **Nunca se muestra una página vacía.**
 
+**Respaldo por foto** (`js/imagenes.js`). Publicada la página, algunas fotos
+de Drive no cargaban: Google corta descargas con 403 de forma intermitente, y
+la misma foto baja bien un segundo después. Cada imagen que falla:
+
+1. reintenta una vez, tras una espera al azar de 0,8 a 1,6 s (para que no
+   reintenten todas juntas);
+2. si vuelve a fallar, usa la foto del mismo producto en la copia local
+   (se busca por categoría + nombre);
+3. si el producto es nuevo y todavía no está en la copia, muestra el isotipo.
+
+Nunca queda una imagen rota. Por eso importa correr
+`node herramientas/copia-local.mjs` cuando cambian los productos: es lo que
+hace que el paso 2 tenga de dónde sacar la foto.
+
 ### 3.6 Contrato de datos
 
 La página no sabe qué es Drive. Consume una lista de objetos así:

@@ -1,5 +1,6 @@
 import { formatearPrecio } from './catalogo.js';
 import { linkProducto } from './whatsapp.js';
+import { visorConRespaldo } from './imagenes.js';
 
 // Foto grande de un producto, con anterior/siguiente dentro de la lista que se
 // está mostrando (respeta el filtro de categoría). Usa <dialog> nativo: el
@@ -7,6 +8,7 @@ import { linkProducto } from './whatsapp.js';
 
 const visor = document.querySelector('#visor');
 const foto = visor.querySelector('#visor-foto');
+const ponerFoto = visorConRespaldo(foto);
 const estado = { lista: [], i: 0 };
 
 export function abrirVisor(lista, i) {
@@ -23,7 +25,7 @@ function mostrar(i) {
 
   foto.classList.remove('cargada');
   foto.onload = () => foto.classList.add('cargada');
-  foto.src = p.imagenGrande;
+  ponerFoto(p);
   foto.alt = p.nombre;
   visor.querySelector('#visor-nombre').textContent = p.nombre;
   visor.querySelector('#visor-categoria').textContent = p.categoria;
