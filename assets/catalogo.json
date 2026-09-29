@@ -90,23 +90,23 @@
     "md5": "cd604c907728174f5085ef91d19ef433"
   },
   {
-    "id": "velas--cubo-de-vela-corazon",
-    "nombre": "Cubo de vela (corazón)",
-    "orden": "Cubo de vela (corazón).jpeg",
+    "id": "velas--cubo-corazon",
+    "nombre": "Cubo (corazón)",
+    "orden": "Cubo (corazón).jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--cubo-de-vela-corazon.jpeg",
-    "mini": "assets/productos/mini/velas--cubo-de-vela-corazon.webp",
+    "imagen": "assets/productos/velas--cubo-corazon.jpeg",
+    "mini": "assets/productos/mini/velas--cubo-corazon.webp",
     "md5": "ca793960cf643c7f2643411b3aeab609"
   },
   {
-    "id": "velas--cubo-de-vela",
-    "nombre": "Cubo de vela",
-    "orden": "Cubo de vela.jpeg",
+    "id": "velas--cubo",
+    "nombre": "Cubo",
+    "orden": "Cubo.jpeg",
     "precio": null,
     "categoria": "Velas",
-    "imagen": "assets/productos/velas--cubo-de-vela.jpeg",
-    "mini": "assets/productos/mini/velas--cubo-de-vela.webp",
+    "imagen": "assets/productos/velas--cubo.jpeg",
+    "mini": "assets/productos/mini/velas--cubo.webp",
     "md5": "4afaba15bff19e1670de0b2158d49eec"
   },
   {
