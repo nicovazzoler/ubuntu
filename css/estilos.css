@@ -571,6 +571,13 @@ body { padding-bottom: 0; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
+/* Producto nuevo cuya foto no bajó de Drive y todavía no está en la copia local. */
+.foto-reemplazo {
+  object-fit: contain !important;
+  padding: 22%;
+  background: var(--tono-crema);
+}
+
 /* ---------- Visor de fotos ---------- */
 
 .sin-scroll { overflow: hidden; }
