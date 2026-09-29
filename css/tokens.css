@@ -15,12 +15,13 @@
   --wsp: #25D366;
   --wsp-hover: #1EAE53;
 
-  /* Tonos de fondo por sección. Todos dejan el texto por encima de 4.5:1
-     (el más justo es salvia: --tinta-suave da 4.61). */
-  --tono-crema: #FCF8F7;
-  --tono-arena: #F5EFE8;
-  --tono-salvia: #E4E7DD;
-  --tono-lino: #EEE7E0;
+  /* Fondos de las secciones claras. --tinta-suave queda en 4.89 y 4.59:1. */
+  --tono-crema: #F3EBE2;
+  --tono-arena: #EDE4D8;
+
+  /* Secciones oscuras (intro, quiénes somos, cierre, pie). Es el mismo
+     marrón que la tinta: el texto claro encima da 8.4:1. */
+  --noche: #4A423B;
   --fondo: var(--tono-crema);   /* lo va cambiando js/tonos.js al scrollear */
 
   /* Tipografía */

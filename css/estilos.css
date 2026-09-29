@@ -75,6 +75,16 @@ img { display: block; max-width: 100%; }
   transition: border-color var(--transicion);
 }
 .encabezado[data-scrolleado="true"] { border-bottom-color: var(--borde); }
+/* Sobre una sección oscura el encabezado también se oscurece (lo marca js/tonos.js). */
+:root[data-cabecera="oscura"] .encabezado {
+  --tinta: #F3ECE4;
+  --tinta-suave: #D3C7BA;
+  --taupe: #E3D6C5;
+  --borde: rgb(255 255 255 / 0.14);
+  background: color-mix(in srgb, var(--noche) 92%, transparent);
+}
+:root[data-cabecera="oscura"] .marca img { filter: brightness(1.9) saturate(0.8); }
+:root[data-cabecera="oscura"] .icono-link:hover { background: rgb(255 255 255 / 0.1); }
 .encabezado__fila {
   display: flex;
   align-items: center;
@@ -138,7 +148,7 @@ img { display: block; max-width: 100%; }
   width: min(90vw, 760px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(236 218 186 / 0.75) 0%, rgb(236 218 186 / 0.25) 38%, transparent 68%);
+  background: radial-gradient(circle, rgb(230 190 130 / 0.30) 0%, rgb(230 190 130 / 0.10) 40%, transparent 68%);
   animation: luz-entra 2.4s ease-out both, respirar 7s ease-in-out 2.4s infinite;
 }
 @keyframes luz-entra { from { opacity: 0; transform: scale(0.85); } }
@@ -218,7 +228,20 @@ img { display: block; max-width: 100%; }
 /* Dos secciones seguidas no suman sus aires: la de abajo se apoya en la de
    arriba. Con una banda de color en el medio sí, porque el borde se ve. */
 .seccion { padding-block: var(--seccion); }
-.seccion:not([hidden]) + .seccion { padding-block-start: 0; }
+.seccion:not([hidden]) + .seccion:not([data-tema]) { padding-block-start: 0; }
+
+/* Secciones oscuras: redefinen los colores de texto para lo que tienen adentro.
+   Los componentes siguen usando var(--tinta) y compañía sin saber del tema. */
+[data-tema="oscuro"] {
+  --tinta: #F3ECE4;
+  --tinta-suave: #D3C7BA;
+  --taupe: #E3D6C5;
+  --borde: rgb(255 255 255 / 0.14);
+  background: var(--noche);
+  color: var(--tinta);
+}
+/* Dos oscuras seguidas son un solo bloque: no suman aire. */
+.nosotros + .cierre { padding-block-start: 0; }
 
 .hero { text-align: center; }
 .hero__logo { width: clamp(96px, 22vw, 132px); margin: 0 auto var(--e6); }
@@ -481,12 +504,12 @@ img { display: block; max-width: 100%; }
   margin-top: var(--e8);
   padding: var(--e8);
   border-radius: var(--radio);
-  background: color-mix(in srgb, var(--superficie) 70%, transparent);
+  background: var(--tono-crema);   /* panel claro: el isotipo es trazo fino y sobre el oscuro se pierde */
 }
 .nosotros__marca img { width: min(40%, 180px); height: auto; }
 
 @media (min-width: 900px) {
-  .nosotros {
+  .nosotros__grid {
     display: grid;
     grid-template-columns: 7fr 5fr;
     gap: var(--e16);

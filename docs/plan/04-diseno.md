@@ -76,8 +76,8 @@ Reglas:
 - Modo oscuro: **no va en el v1.** Duplica el trabajo de tokens y las fotos de
   producto sobre fondo oscuro se ven peor.
 
-Desde la versión 2 el fondo de la página cambia de tono por sección
-(crema, arena, salvia, lino). Tabla y contrastes en el Plan 6 §4.
+Desde la versión 2 la página alterna secciones claras (crema, arena) y
+oscuras (`--noche`, `#4A423B`). Tabla, contrastes y mecanismo en el Plan 6 §4.
 
 ## 3. Tipografía
 
