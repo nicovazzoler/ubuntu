@@ -135,7 +135,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   display: grid;
   place-items: center;
-  min-height: min(calc(100svh - 64px), 820px);   /* la primera pantalla entera, menos el encabezado */
+  min-height: clamp(380px, 62svh, 680px);   /* no ocupa toda la pantalla: abajo asoma el hero */
   padding: var(--e12) var(--e4);
   overflow: hidden;
   text-align: center;
@@ -149,7 +149,7 @@ img { display: block; max-width: 100%; }
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle, rgb(230 190 130 / 0.30) 0%, rgb(230 190 130 / 0.10) 40%, transparent 68%);
-  animation: luz-entra 2.4s ease-out both, respirar 7s ease-in-out 2.4s infinite;
+  animation: luz-entra 1.2s ease-out both, respirar 7s ease-in-out 1.2s infinite;
 }
 @keyframes luz-entra { from { opacity: 0; transform: scale(0.85); } }
 @keyframes respirar {
@@ -172,14 +172,15 @@ img { display: block; max-width: 100%; }
 /* Cada letra aparece desenfocada y se asienta, una detrás de otra. */
 .intro__letras span {
   display: inline-block;
-  animation: letra 1.4s cubic-bezier(.2, .7, .2, 1) both;
+  animation: letra 0.7s cubic-bezier(.2, .7, .2, 1) both;
 }
-.intro__letras span:nth-child(1) { animation-delay: 0.20s; }
-.intro__letras span:nth-child(2) { animation-delay: 0.34s; }
-.intro__letras span:nth-child(3) { animation-delay: 0.48s; }
-.intro__letras span:nth-child(4) { animation-delay: 0.62s; }
-.intro__letras span:nth-child(5) { animation-delay: 0.76s; }
-.intro__letras span:nth-child(6) { animation-delay: 0.90s; }
+/* Toda la secuencia queda asentada al segundo: la última letra y el lema terminan a 1,0 s. */
+.intro__letras span:nth-child(1) { animation-delay: 0.00s; }
+.intro__letras span:nth-child(2) { animation-delay: 0.06s; }
+.intro__letras span:nth-child(3) { animation-delay: 0.12s; }
+.intro__letras span:nth-child(4) { animation-delay: 0.18s; }
+.intro__letras span:nth-child(5) { animation-delay: 0.24s; }
+.intro__letras span:nth-child(6) { animation-delay: 0.30s; }
 @keyframes letra {
   from { opacity: 0; transform: translateY(0.12em); filter: blur(8px); }
 }
@@ -191,7 +192,7 @@ img { display: block; max-width: 100%; }
   margin: var(--e6) auto;
   background: var(--taupe);
   transform-origin: center;
-  animation: linea 1s ease 1.6s both;
+  animation: linea 0.5s ease 0.25s both;
 }
 @keyframes linea { from { transform: scaleX(0); } }
 
@@ -202,7 +203,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--tinta-suave);
-  animation: aparece 1.2s ease 2.1s both;
+  animation: aparece 0.65s ease 0.35s both;
 }
 @keyframes aparece { from { opacity: 0; transform: translateY(6px); } }
 
@@ -214,7 +215,7 @@ img { display: block; max-width: 100%; }
   display: grid; place-items: center;
   width: 44px; height: 44px;
   color: var(--tinta-suave);
-  animation: aparece 1s ease 3s both, flotar 2.4s ease-in-out 4s infinite;
+  animation: aparece 0.6s ease 1s both, flotar 2.4s ease-in-out 1.6s infinite;
 }
 .intro__bajar svg { width: 26px; height: 26px; }
 @keyframes flotar { 50% { transform: translateY(6px); } }
