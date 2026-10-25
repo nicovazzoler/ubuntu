@@ -1,16 +1,13 @@
 import { CONFIG } from './config.js';
 
-// Único archivo que sabe de dónde salen los productos. El resto de la página
-// consume la lista que devuelve obtenerProductos() sin preguntar por la fuente:
-// cambiar a Sheets es reescribir este archivo y nada más.
+// Único archivo que sabe de dónde salen los productos: cambiar Drive por otra
+// fuente es reescribir este archivo y nada más.
 
 const API = 'https://www.googleapis.com/drive/v3/files';
 const CARPETA = 'application/vnd.google-apps.folder';
 
-// Devuelve enseguida lo último conocido (lo que quedó guardado en el navegador o,
-// si es la primera visita, la copia local) y consulta Drive por detrás: si hay
-// cambios, llama a alActualizar con la lista nueva. Así la página no espera a
-// Drive para mostrar algo, y Drive sigue mandando sobre nombres y productos.
+// Devuelve enseguida lo último conocido (navegador o copia local) y consulta
+// Drive por detrás: si hay cambios, llama a alActualizar con la lista nueva.
 export async function obtenerProductos(alActualizar) {
   const local = await leerCopiaLocal().catch(() => []);
   if (!CONFIG.drive.apiKey) return local;
@@ -47,9 +44,8 @@ async function consultar(condicion) {
   return files;
 }
 
-// Un pedido por carpeta, todos en paralelo. Un solo pedido con
-// "'a' in parents or 'b' in parents" sería más prolijo, pero con API key
-// (acceso anónimo) Drive lo rechaza con 403 aunque cada carpeta sola responda.
+// Un pedido por carpeta: con API key, Drive responde 403 a
+// "'a' in parents or 'b' in parents" aunque cada carpeta sola ande.
 async function hijosDe(ids) {
   const listas = await Promise.all(ids.map((id) => consultar(`'${id}' in parents`)));
   return listas.flat();
@@ -94,20 +90,16 @@ function aProducto(archivo, categorias, delSitio) {
 
 export const clave = (p) => `${p.categoria}|${p.nombre}`;
 
-// La foto original, pedida por la API oficial. Sirve tal cual se subió, sin
-// redimensionar: por eso estado.html avisa si una pesa demasiado. El endpoint
-// de miniaturas (lh3.googleusercontent.com) redimensiona, pero no está
-// documentado y respondió 403 en las pruebas. Si hace falta achicar fotos, la
-// migración prevista es Cloudinary (Plan 1 §3.4).
+// La original sin redimensionar (estado.html avisa si pesa mucho). El endpoint
+// de miniaturas, lh3.googleusercontent.com, no está documentado y da 403.
 const imagen = (id) => `${API}/${id}?alt=media&key=${CONFIG.drive.apiKey}`;
 
 const PESO_MAX = 500 * 1024;
 
 const oculto = (nombre) => nombre.startsWith('_');
 
-// Agrupados por categoría (mismo orden que los filtros) y, adentro, por nombre
-// de archivo: así "01. Vela de ángel" queda primera aunque se muestre sin el
-// número. numeric hace que "2." vaya antes que "10.".
+// Adentro de cada categoría ordena por nombre de archivo, con el "01." que no
+// se muestra. numeric: "2." va antes que "10.".
 const porCategoria = (a, b) =>
   a.categoria.localeCompare(b.categoria, 'es') ||
   (a.orden || a.nombre).localeCompare(b.orden || b.nombre, 'es', { numeric: true });
@@ -124,7 +116,6 @@ export function parsearNombre(archivo) {
   const corte = sinOrden.lastIndexOf(' - ');
   if (corte === -1) return { nombre: sinOrden, precio: null };
 
-  // Solo cuenta como precio si son puros dígitos.
   const cola = sinOrden.slice(corte + 3);
   if (!/^\d+$/.test(cola)) return { nombre: sinOrden, precio: null };
 

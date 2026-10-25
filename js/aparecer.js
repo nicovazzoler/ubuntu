@@ -1,6 +1,5 @@
-// Los bloques entran con un fundido corto la primera vez que aparecen en
-// pantalla. Solo bloques de sección: las tarjetas de la grilla quedan quietas,
-// porque 24 cosas moviéndose a la vez marean (Plan 4 §6).
+// Fundido corto la primera vez que un bloque de sección entra en pantalla.
+// Las tarjetas de la grilla no: 24 cosas moviéndose a la vez marean.
 
 const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -9,7 +8,7 @@ const observador = reducir ? null : new IntersectionObserver(
     for (const e of entradas) {
       if (!e.isIntersecting) continue;
       e.target.classList.add('visible');
-      observador.unobserve(e.target);   // una sola vez
+      observador.unobserve(e.target);
     }
   },
   { rootMargin: '0px 0px -10% 0px' }

@@ -1,10 +1,8 @@
 import { CONFIG } from './config.js';
 import { clave } from './catalogo.js';
 
-// Google corta a veces las descargas de Drive (403 intermitente): la misma foto
-// baja bien un segundo después. Cada imagen que falla reintenta una vez y, si
-// sigue fallando, usa la foto de la copia local; si el producto es nuevo y no
-// está en la copia, muestra el isotipo en vez de la imagen rota.
+// Drive corta a veces descargas con 403 y la misma foto baja bien un segundo
+// después. Si una imagen falla: reintento, foto de la copia local, isotipo.
 
 const REEMPLAZO = 'assets/marca/isotipo.png';
 let copiaLocal = null;   // se carga recién con la primera falla

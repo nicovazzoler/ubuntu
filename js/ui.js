@@ -167,7 +167,6 @@ function bordeEncabezado() {
   ).observe(marca);
 }
 
-// Los links de contacto salen de config.js, no del HTML.
 function enlazarContacto() {
   document.querySelectorAll('[data-wsp]').forEach((el) => {
     el.href = el.dataset.wsp === 'idea' ? linkIdea() : linkGeneral();
