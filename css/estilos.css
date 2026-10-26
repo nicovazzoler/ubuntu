@@ -283,9 +283,8 @@ img { display: block; max-width: 100%; }
 }
 .hero__acciones { display: flex; flex-wrap: wrap; gap: var(--e3); justify-content: center; }
 
-/* Va después de las reglas base del hero: a igual especificidad gana la
-   última. En escritorio el hero ocupa el ancho: texto a la izquierda, foto a la derecha.
-   El isotipo sale porque ya está en el encabezado. */
+/* Después de las reglas base del hero: a igual especificidad gana la última.
+   El isotipo se oculta porque ya está en el encabezado. */
 @media (min-width: 900px) {
   .hero {
     display: grid;
@@ -565,7 +564,7 @@ img { display: block; max-width: 100%; }
 
 /* El flotante no puede tapar el último producto. */
 body { padding-bottom: 0; }
-.pie { padding-bottom: calc(var(--e12) + 60px); }   /* deja lugar al botón flotante */
+.pie { padding-bottom: calc(var(--e12) + 60px); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

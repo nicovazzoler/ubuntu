@@ -1,16 +1,6 @@
-// Regenera la copia local de respaldo (assets/productos + assets/catalogo.json)
-// con lo que hay hoy en la carpeta de Drive. La página la usa si Drive no
-// responde, así que conviene correrlo cada vez que cambian los productos.
-//
-//   npm install --prefix herramientas     (una sola vez, instala sharp)
-//   node herramientas/copia-local.mjs
-//
-// Además de la foto original (para el visor) genera una versión chica en
-// assets/productos/mini/ para las tarjetas: 600px de ancho en webp. Las
-// originales pesan ~120 KB y miden 900x1600 para tarjetas de ~170px en el celular.
-//
-// La API key está restringida por dominio: el pedido se hace con el Referer de
-// localhost:8000, que es uno de los permitidos.
+// Regenera la copia local desde Drive: originales, miniaturas webp y
+// assets/catalogo.json. Corre cada hora en Actions; a mano:
+//   npm install --prefix herramientas && node herramientas/copia-local.mjs
 
 import { copyFile, mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { CONFIG } from '../js/config.js';
@@ -63,10 +53,8 @@ const porCarpeta = await Promise.all(
 const archivos = [...sueltos, ...porCarpeta.flat()]
   .filter((f) => EXTENSION[f.mimeType] && !oculto(f.name));
 
-// md5Checksum es la huella que Drive calcula de cada archivo: si no cambió, la
-// foto (y su versión chica) se reutilizan de la copia anterior en vez de
-// bajarse de nuevo. Corre cada hora en GitHub Actions: sin esto serían 24
-// descargas por hora aunque nada cambie, justo lo que hace que Google frene.
+// Si el md5 de Drive no cambió se reusa la copia anterior: bajar las 24 fotos
+// cada hora es justo lo que hace que Google frene con 403.
 const anterior = new Map();
 try {
   for (const p of JSON.parse(await readFile('assets/catalogo.json', 'utf8'))) if (p.md5) anterior.set(p.md5, p);
