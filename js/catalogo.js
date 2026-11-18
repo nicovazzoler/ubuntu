@@ -131,6 +131,7 @@ async function leerCopiaLocal() {
   return crudo.map((item) => ({
     id: item.id,
     nombre: item.nombre,
+    orden: item.orden,
     precio: typeof item.precio === 'number' ? item.precio : null,
     categoria: item.categoria || 'Otros',
     imagen: item.mini || item.imagen,   // versión chica para tarjetas
