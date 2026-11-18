@@ -106,15 +106,21 @@ muestra precio: muestra el botón de consulta.
 
 ### 3.3 Qué pasa si escriben mal el nombre
 
-La página `estado.html` está implementada y avisa, archivo por archivo, qué
-se muestra y qué no.
+Con el precio opcional, casi nada rompe. Una foto con el nombre que le puso
+la cámara (`IMG_20240912.jpg`) se muestra igual, con ese nombre: queda feo pero
+la página sigue andando.
 
-Con el precio opcional, casi nada rompe. Lo único que queda feo es un
-archivo que sigue con el nombre que le puso la cámara. Esos no se muestran, y
-aparecen listados en una página oculta `estado.html` que dice, literal:
+La página `estado.html` (sin link desde el sitio y fuera de los buscadores)
+revisa la carpeta archivo por archivo y avisa:
 
-> `IMG_20240912.jpg` — el nombre del archivo es el nombre del producto.
-> Renombralo a algo como `Vela de soja lavanda.jpg`
+| Aviso | Cuándo |
+|---|---|
+| error | el archivo no es una imagen: no se muestra |
+| aviso | está suelto en la raíz: va a "Otros" |
+| aviso | pesa más de 500 KB |
+| aviso | el final parece un precio pero no son solo números (`- $4.500`) |
+| oculto | empieza con `_`: no se muestra, por si fue sin querer |
+| ok | se muestra, con o sin precio |
 
 Esa página es el manual de uso en vivo. Sin eso, el primer typo termina en un
 mensaje de WhatsApp a las 11 de la noche preguntando por qué desapareció una
@@ -162,8 +168,8 @@ está (producto nuevo o renombrado), la pide a Drive:
 https://www.googleapis.com/drive/v3/files/<id>?alt=media&key=<API key>
 ```
 
-Hasta que se corre `node herramientas/copia-local.mjs` y se publica, ese
-producto carga desde Drive, más lento; después, desde el sitio.
+Hasta la próxima copia automática (cada hora, §4) ese producto carga desde
+Drive, más lento; después, desde el sitio.
 
 ### 3.5 Carga instantánea y fallback
 
@@ -186,9 +192,8 @@ la misma foto baja bien un segundo después. Cada imagen que falla:
    (se busca por categoría + nombre);
 3. si el producto es nuevo y todavía no está en la copia, muestra el isotipo.
 
-Nunca queda una imagen rota. Por eso importa correr
-`node herramientas/copia-local.mjs` cuando cambian los productos: es lo que
-hace que el paso 2 tenga de dónde sacar la foto.
+Nunca queda una imagen rota. El paso 2 tiene de dónde sacar la foto porque la
+copia local se regenera sola cada hora (§4).
 
 ### 3.6 Contrato de datos
 
@@ -196,12 +201,13 @@ La página no sabe qué es Drive. Consume una lista de objetos así:
 
 | campo | tipo | ejemplo | notas |
 |---|---|---|---|
-| `id` | string | `1a2B3c...` | id del archivo, sirve de key |
+| `id` | string | `1a2B3c...` | id del archivo en Drive (en la copia local, `velas--oso`) |
 | `nombre` | string | `Vela de soja lavanda` | ya sin el precio ni el prefijo de orden |
+| `orden` | string | `01. Vela de ángel.jpg` | nombre de archivo completo, solo para ordenar |
 | `precio` | number \| null | `4500` | `null` = no se muestra precio |
 | `categoria` | string | `Velas` | nombre de la subcarpeta, `Otros` si está suelto |
-| `imagen` | string (URL) | `https://...=w800` | versión redimensionada |
-| `imagenGrande` | string (URL) | `https://...=w1600` | para el detalle / zoom |
+| `imagen` | string (URL) | `assets/productos/mini/velas--oso.webp` | para la tarjeta; de Drive si no está en la copia |
+| `imagenGrande` | string (URL) | `assets/productos/velas--oso.jpeg` | original, para el visor |
 
 Cambiar de Drive a Sheets, a Airtable o a un JSON estático = escribir otra
 función que devuelva esta misma lista. El resto de la página no se toca.
@@ -217,19 +223,16 @@ ID: 1WCDLU_cJfaxKQIlLdzfhsQec2gwo1j-Q
 ```
 
 - [x] Carpeta creada y compartida por link.
-- [x] Subcarpetas de categorías creadas: `Velas` (12), `Velas en frasco de
-      vidrio con sticker` (4), `Comunión` (4), `Souvenirs` (2), `Deco` (2).
-- [x] 24 productos cargados, **todos con el nombre correcto**. No hay nada
-      que renombrar: los nombres ya son el nombre del producto, sin precio.
-- [ ] Acortar `Velas en frasco de vidrio con sticker` → `Velas con sticker`
-      (como chip de filtro el nombre largo no entra, Plan 4 §5.2).
-- [ ] Mover `Comunión/Set comunión.webp` a `_borradores/`: es una placa de
-      Instagram, no una foto de producto.
-- [ ] **Proyecto en Google Cloud, Drive API habilitada, API key restringida
-      al dominio del sitio.** Es lo único que falta: el código ya está
-      escrito y probado contra una respuesta simulada de Drive. Se pega la
-      key en `js/config.js` (`drive.apiKey`) y la página deja de usar la
-      copia local.
+- [x] Subcarpetas de categorías: `Velas` (12), `Velas con sticker` (4),
+      `Comunión` (4), `Souvenirs` (2), `Deco` (2). La de stickers se acortó
+      porque como chip de filtro el nombre largo no entraba (Plan 4 §5.2).
+- [x] 24 productos cargados, **todos con el nombre correcto**.
+- [x] `Set comunión` queda, como `01. Set comunión`: es una placa de
+      Instagram y no una foto de producto, pero se dejó a propósito como
+      ejemplo y portada de Comunión.
+- [x] Proyecto en Google Cloud con la Drive API, API key restringida a esa API
+      y a los dominios `localhost:8000` y `ubuntu-estudio.pages.dev`, y sin
+      facturación. La key está en `js/config.js` (`drive.apiKey`).
 
 Copia local: `assets/productos/` (originales), `assets/productos/mini/`
 (versión chica) y `assets/catalogo.json`. De ahí salen las fotos del sitio y es
