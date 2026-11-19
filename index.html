@@ -23,6 +23,9 @@
 <link rel="icon" href="assets/marca/isotipo.png">
 <link rel="preload" href="assets/fuentes/cormorant-garamond-500-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fuentes/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fuentes/pinyon-script-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/portada.webp">
+<meta name="theme-color" content="#1A1614">
 <link rel="stylesheet" href="css/fuentes.css">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/estilos.css">
@@ -32,85 +35,96 @@
 <header class="encabezado" id="encabezado">
   <div class="contenedor encabezado__fila">
     <a class="marca" href="#">
-      <img src="assets/marca/isotipo.png" alt="" width="34">
+      <img src="assets/marca/isotipo.png" alt="" width="30">
       <span class="marca__texto">
         <span class="marca__nombre">UBUNTU</span>
         <span class="marca__bajada">Estudio</span>
       </span>
     </a>
+    <nav class="encabezado__nav" aria-label="Secciones">
+      <a href="#categorias">Categorías</a>
+      <a href="#catalogo">Productos</a>
+      <a href="#nosotros">Nosotros</a>
+    </nav>
     <div class="encabezado__acciones">
       <a class="icono-link" data-ig href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Ubuntu Estudio">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
       </a>
-      <a class="icono-link" data-wsp="general" href="#" target="_blank" rel="noopener noreferrer" aria-label="Escribinos por WhatsApp">
+      <a class="boton boton--llama encabezado__wsp" data-wsp="general" href="#" target="_blank" rel="noopener noreferrer" aria-label="Escribinos por WhatsApp">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        <span>Escribinos</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <!-- Portada animada: se ve como un video en loop, pero es texto con CSS.
-       Nítido a cualquier tamaño, no pesa nada y el texto se edita acá. -->
-  <section class="intro" data-tema="oscuro" aria-label="Ubuntu Estudio">
-    <div class="intro__luz" aria-hidden="true"></div>
-    <div class="intro__contenido">
-      <p class="intro__marca">
-        <span class="solo-lectores">Ubuntu</span>
-        <span class="intro__letras" aria-hidden="true"><span>U</span><span>B</span><span>U</span><span>N</span><span>T</span><span>U</span></span>
-      </p>
-      <span class="intro__linea" aria-hidden="true"></span>
-      <p class="intro__lema">Recuerdos que permanecen</p>
-    </div>
-    <a class="intro__bajar" href="#hero" aria-label="Ver más">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-    </a>
-  </section>
-
-  <section class="seccion hero contenedor" id="hero" data-tono="crema">
+  <section class="hero contenedor" id="inicio">
+    <div class="hero__luz" aria-hidden="true"></div>
     <div class="hero__texto">
-      <img class="hero__logo" src="assets/marca/isotipo.png" alt="" width="132">
-      <h1>Hecho a mano, pensado para vos</h1>
+      <p class="manuscrita hero__acento">hecho a mano</p>
+      <h1>Recuerdos que permanecen</h1>
       <p class="hero__bajada">Velas, souvenirs y objetos de deco artesanales, para transformar espacios y momentos.</p>
-      <div class="hero__acciones">
-        <a class="boton boton--primario" href="#catalogo">Ver catálogo</a>
-        <a class="boton boton--secundario" data-wsp="general" href="#" target="_blank" rel="noopener noreferrer">Escribinos</a>
-      </div>
+      <a class="boton boton--contorno" data-wsp="general" href="#" target="_blank" rel="noopener noreferrer">Escribinos</a>
     </div>
-    <figure class="hero__imagen">
-      <img src="assets/hero.jpg" alt="Velas de comunión: cuenco, cruz y ángel sobre lino" width="1096" height="638">
-    </figure>
+    <div class="hero__arco">
+      <figure class="arco arco--llama">
+        <img src="assets/portada.webp" alt="Velón personalizado con moño" width="640" height="1138">
+      </figure>
+      <a class="hero__catalogo" href="#catalogo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 3 4 4.5 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 0-7z"/></svg>
+        Ver<br>catálogo
+      </a>
+    </div>
   </section>
 
-  <section class="seccion categorias contenedor" id="categorias" data-tono="arena" hidden>
-    <h2 class="titulo-seccion">Categorías</h2>
+  <section class="seccion categorias contenedor" id="categorias" hidden>
+    <p class="etiqueta">categorías</p>
+    <h2 class="titulo-seccion">Elegí por categoría</h2>
     <ul class="categorias__lista" id="categorias-lista"></ul>
   </section>
 
-  <section class="seccion catalogo contenedor" id="catalogo" data-tono="arena">
+  <section class="seccion razones contenedor">
+    <div class="razones__titulo">
+      <p class="etiqueta">por qué Ubuntu</p>
+      <h2>Cada pieza se hace <span class="manuscrita">de a una</span></h2>
+      <p>Para acompañarlos en fechas especiales y en el día a día.</p>
+    </div>
+    <ol class="razones__lista">
+      <li><span class="razones__numero">01</span><div><h3>Hecho a mano</h3><p>Velas, souvenirs y deco, una pieza a la vez.</p></div></li>
+      <li><span class="razones__numero">02</span><div><h3>Personalizados</h3><p>Velones y souvenirs con el nombre y la fecha de tu evento.</p></div></li>
+      <li><span class="razones__numero">03</span><div><h3>Fechas especiales</h3><p>Comuniones, bautismos y revelaciones de género.</p></div></li>
+      <li><span class="razones__numero">04</span><div><h3>Por WhatsApp</h3><p>Tocá un producto y te llega la consulta armada.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="seccion catalogo contenedor" id="catalogo">
+    <p class="etiqueta">catálogo</p>
     <h2 class="titulo-seccion">Nuestros productos</h2>
     <p class="catalogo__intro">Cada pieza se hace de a una. Tocá la que te guste y escribinos.</p>
     <div class="filtros" id="filtros" role="group" aria-label="Filtrar por categoría"></div>
     <ul class="grilla" id="grilla"></ul>
   </section>
 
-  <section class="seccion nosotros" data-tema="oscuro">
-   <div class="contenedor nosotros__grid">
-    <div class="nosotros__texto">
-      <h2 class="titulo-seccion">Quiénes somos</h2>
-      <p>Somos un emprendimiento familiar que trabaja con mucho amor y dedicación para acompañarlos tanto en fechas especiales como en el día a día. Nos dedicamos a la creación de objetos artesanales, pensados para transformar espacios y momentos.</p>
+  <section class="nosotros" id="nosotros">
+    <div class="contenedor nosotros__grid">
+      <figure class="arco nosotros__foto">
+        <img src="assets/hero.jpg" alt="Velas de comunión: cuenco, cruz y ángel sobre lino" width="1096" height="638" loading="lazy">
+      </figure>
+      <div class="nosotros__texto">
+        <p class="manuscrita nosotros__acento">nosotros</p>
+        <h2 class="titulo-seccion">Un emprendimiento familiar</h2>
+        <p>Somos un emprendimiento familiar que trabaja con mucho amor y dedicación para acompañarlos tanto en fechas especiales como en el día a día. Nos dedicamos a la creación de objetos artesanales, pensados para transformar espacios y momentos.</p>
+      </div>
     </div>
-    <div class="nosotros__marca" aria-hidden="true">
-      <img src="assets/marca/isotipo.png" alt="" width="504" height="488" loading="lazy">
-    </div>
-   </div>
   </section>
 
-  <section class="cierre" data-tema="oscuro">
-    <div class="contenedor">
+  <section class="cierre">
+    <div class="cierre__luz" aria-hidden="true"></div>
+    <div class="contenedor cierre__contenido">
       <h2>¿Tenés una idea?</h2>
       <p>Escribinos por WhatsApp tu consulta o la idea que tengas, y la creamos.</p>
-      <a class="boton boton--wsp" data-wsp="idea" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="boton boton--llama boton--grande" data-wsp="idea" href="#" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.7 1-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
         Escribinos por WhatsApp
       </a>
@@ -118,7 +132,7 @@
   </section>
 </main>
 
-<footer class="pie" data-tema="oscuro">
+<footer class="pie">
   <div class="contenedor pie__fila">
     <p>Ubuntu Estudio · Morón, Buenos Aires</p>
     <div class="pie__redes">
@@ -157,7 +171,7 @@
       <h2 class="visor__nombre" id="visor-nombre"></h2>
       <p class="visor__precio" id="visor-precio"></p>
     </div>
-    <a class="boton boton--wsp" id="visor-consultar" href="#" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+    <a class="boton boton--llama" id="visor-consultar" href="#" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
   </div>
 </dialog>
 

@@ -79,7 +79,7 @@ js/
   imagenes.js              respaldo cuando una foto no carga
   visor.js                 foto grande con anterior/siguiente
   whatsapp.js              links wa.me con el mensaje armado
-  tonos.js, aparecer.js    tono de fondo por sección y fundido al scrollear
+  aparecer.js              fundido de los bloques al scrollear
 assets/
   catalogo.json            copia local de la lista (la escribe el bot)
   productos/               fotos originales y mini/ en webp (las escribe el bot)

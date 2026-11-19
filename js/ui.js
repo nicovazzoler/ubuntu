@@ -1,7 +1,6 @@
 import { obtenerProductos, categoriasDe, formatearPrecio } from './catalogo.js';
 import { linkProducto, linkGeneral, linkIdea } from './whatsapp.js';
 import { CONFIG } from './config.js';
-import { seguirTonos } from './tonos.js';
 import { abrirVisor } from './visor.js';
 import { aparecer } from './aparecer.js';
 import { conRespaldo } from './imagenes.js';
@@ -25,6 +24,7 @@ function tarjeta(p, i, lista) {
       <img class="tarjeta__foto" src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async">
     </button>
     <div class="tarjeta__cuerpo">
+      <p class="tarjeta__categoria">${p.categoria}</p>
       <h3 class="tarjeta__nombre">${p.nombre}</h3>
       ${precio}
       <a class="tarjeta__accion" href="${linkProducto(p)}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Consultar</a>
@@ -117,7 +117,7 @@ function dibujarError() {
   filtros.replaceChildren();
   grilla.innerHTML = `<li class="aviso">
       <p>No pudimos cargar el catálogo en este momento.<br>Escribinos y te mostramos todo por WhatsApp.</p>
-      <a class="boton boton--wsp" href="${linkGeneral()}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Escribinos</a>
+      <a class="boton boton--llama" href="${linkGeneral()}" target="_blank" rel="noopener noreferrer">${ICONO_WSP} Escribinos</a>
     </li>`;
 }
 
@@ -147,10 +147,10 @@ async function iniciar() {
   }
 }
 
-// El flotante entra recién cuando la primera pantalla (la intro) salió de vista.
+// El flotante entra recién cuando la portada salió de vista.
 function botonFlotante() {
   const flotante = document.querySelector('#flotante');
-  const portada = document.querySelector('.intro');
+  const portada = document.querySelector('.hero');
   new IntersectionObserver(
     ([entrada]) => flotante.setAttribute('data-visible', String(!entrada.isIntersecting)),
     { rootMargin: '-120px 0px 0px 0px' }
@@ -177,9 +177,9 @@ function enlazarContacto() {
 }
 
 enlazarContacto();
-aparecer('.hero__texto, .hero__imagen', 120);
-aparecer('.titulo-seccion, .catalogo__intro, .nosotros__texto, .nosotros__marca, .cierre .contenedor');
-seguirTonos();
+aparecer('.hero__texto, .hero__arco', 120);
+aparecer('.razones__titulo, .catalogo .titulo-seccion, .catalogo__intro, .nosotros__foto, .nosotros__texto, .cierre__contenido');
+aparecer('.razones__lista > li', 90);
 iniciar();
 botonFlotante();
 bordeEncabezado();

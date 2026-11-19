@@ -21,6 +21,7 @@ la estructura del código y la carga de productos están en el
 | 4 | [Diseño](04-diseno.md) | Paleta del logo, contraste, tipografía, espaciado, fotos |
 | 5 | [Stack](05-stack.md) | HTML, CSS y JS a mano. Sin framework, sin build |
 | 6 | [Versión 2](06-v2.md) | Intro animada, escritorio, tonos por sección, visor de fotos |
+| 7 | [Versión 3](07-v3.md) | Rediseño oscuro: arcos, naranja de vela, pensado para el celular |
 
 ## Datos de la marca
 
@@ -60,6 +61,7 @@ Hecho:
 - [x] Sitio publicado en Cloudflare Pages.
 - [x] Copia local automática cada hora.
 - [x] Versión 2: escritorio, tonos por sección, visor e intro animada.
+- [x] Versión 3: rediseño oscuro a partir de dos referencias de Dribbble.
 
 Pendiente:
 
